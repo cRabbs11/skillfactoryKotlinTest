@@ -33,6 +33,28 @@ class MainActivity : AppCompatActivity() {
             showToast("настройки")
         }
 
+        binding.topAppBar.setNavigationOnClickListener {
+            showToast("onNavigationClick")
+        }
+
+        binding.topAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.fav -> {
+                    showToast("onFavClick")
+                    true
+                }
+                R.id.search -> {
+                    showToast("onSearchClick")
+                    true
+                }
+                R.id.more -> {
+                    showToast("onMoreClick")
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     private fun showToast(text: String) {
