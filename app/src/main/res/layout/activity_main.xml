@@ -16,6 +16,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/top_menu_drawable" />
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="SkillFactory"
+            app:titleTextColor="@color/white"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/ic_round_menu_24"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:text="@string/copyrights"
         android:linksClickable="true"
@@ -163,7 +178,7 @@
 
     <Button
         android:id="@+id/btn_favorites"
-        android:text="@string/btn_favorites"
+        android:text="@string/favorites"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/bottom_menu_container"
