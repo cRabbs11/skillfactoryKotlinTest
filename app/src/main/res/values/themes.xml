@@ -20,4 +20,13 @@
         <item name="colorPrimaryVariant">@color/yellow_bright</item>
         <item name="colorOnPrimary">@color/orange</item>
     </style>
+
+    <style name="MyTheme.TextSizeSmall">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+    
+    <style name="MyTheme.NewButton" parent="ThemeOverlay.MaterialComponents">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorOnPrimary">@color/blue</item>
+    </style>
 </resources>
