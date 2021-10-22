@@ -8,8 +8,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SkillFactoryKotlinTest">
-        <activity android:name=".MainActivity">
+        android:theme="@style/MyTheme">
+        <activity android:name=".MainActivity"
+            android:theme="@style/MyTheme.TextSizeSmall">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -164,8 +164,7 @@
         app:layout_constraintStart_toStartOf="@id/bottom_menu_container"
         app:layout_constraintEnd_toEndOf="@id/bottom_menu_container"
         android:layout_marginTop="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:background="@drawable/sample_ripple"/>
 
     <Button
         android:id="@+id/btn_favorites"
@@ -177,8 +176,7 @@
         app:layout_constraintStart_toStartOf="@id/bottom_menu_container"
         app:layout_constraintEnd_toEndOf="@id/bottom_menu_container"
         android:layout_marginTop="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:background="@drawable/sample_ripple"/>
 
     <Button
         android:id="@+id/btn_later"
@@ -190,8 +188,7 @@
         app:layout_constraintStart_toStartOf="@id/bottom_menu_container"
         app:layout_constraintEnd_toEndOf="@id/bottom_menu_container"
         android:layout_marginTop="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:background="@drawable/sample_ripple"/>
 
     <Button
         android:id="@+id/btn_compilations"
@@ -203,8 +200,7 @@
         app:layout_constraintStart_toStartOf="@id/bottom_menu_container"
         app:layout_constraintEnd_toEndOf="@id/bottom_menu_container"
         android:layout_marginTop="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:background="@drawable/sample_ripple"/>
 
     <Button
         android:id="@+id/btn_options"
@@ -217,7 +213,6 @@
         app:layout_constraintEnd_toEndOf="@id/bottom_menu_container"
         android:layout_marginTop="@dimen/small_margin"
         android:layout_marginBottom="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:background="@drawable/sample_ripple"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

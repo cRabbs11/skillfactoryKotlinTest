@@ -176,8 +176,7 @@
         app:layout_constraintStart_toStartOf="@id/bottom_menu_container"
         app:layout_constraintEnd_toStartOf="@id/btn_favorites"
         android:layout_marginStart="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        style="@style/RoundButton"/>
 
     <Button
         android:id="@+id/btn_favorites"
@@ -189,8 +188,7 @@
         app:layout_constraintStart_toEndOf="@id/btn_main_menu"
         app:layout_constraintEnd_toStartOf="@id/btn_later"
         android:layout_marginStart="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        style="@style/RoundButton.WhiteText"/>
 
     <Button
         android:id="@+id/btn_later"
@@ -202,8 +200,7 @@
         app:layout_constraintStart_toEndOf="@id/btn_favorites"
         app:layout_constraintEnd_toStartOf="@id/btn_compilations"
         android:layout_marginStart="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:background="@drawable/sample_ripple" />
 
     <Button
         android:id="@+id/btn_compilations"
@@ -215,8 +212,7 @@
         app:layout_constraintStart_toEndOf="@id/btn_later"
         app:layout_constraintEnd_toStartOf="@id/btn_options"
         android:layout_marginStart="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:background="@drawable/sample_ripple" />
 
     <Button
         android:id="@+id/btn_options"
@@ -230,7 +226,7 @@
         android:layout_marginStart="@dimen/small_margin"
         android:layout_marginEnd="@dimen/small_margin"
         android:background="@drawable/sample_ripple"
-        android:textSize="@dimen/text_size_small"/>
+        android:theme="@style/MyTheme.NewButton"/>
 
     <FrameLayout
         android:id="@+id/bottom_menu_container"
