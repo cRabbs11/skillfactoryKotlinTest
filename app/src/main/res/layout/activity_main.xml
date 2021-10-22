@@ -106,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/test_poster_2"/>
 
             </androidx.cardview.widget.CardView>
@@ -137,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 android:src="@drawable/test_poster_3"/>
 
         </androidx.cardview.widget.CardView>
@@ -155,6 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 android:src="@drawable/test_poster_5"/>
 
         </androidx.cardview.widget.CardView>
