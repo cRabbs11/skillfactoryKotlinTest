@@ -29,4 +29,13 @@
         <item name="colorPrimary">@color/orange</item>
         <item name="colorOnPrimary">@color/blue</item>
     </style>
+
+    <style name="RoundButton" parent="Widget.MaterialComponents.Button">
+        <item name="background">@drawable/sample_ripple</item>
+        <item name="cornerRadius">@dimen/corner_radius_normal</item>
+    </style>
+
+    <style name="RoundButton.WhiteText">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>
