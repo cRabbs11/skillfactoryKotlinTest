@@ -176,7 +176,8 @@
         app:layout_constraintStart_toStartOf="@id/bottom_menu_container"
         app:layout_constraintEnd_toStartOf="@id/btn_favorites"
         android:layout_marginStart="@dimen/small_margin"
-        style="@style/RoundButton"/>
+        style="@style/RoundButton"
+        android:textAppearance="@style/TextShadow"/>
 
     <Button
         android:id="@+id/btn_favorites"
@@ -188,7 +189,8 @@
         app:layout_constraintStart_toEndOf="@id/btn_main_menu"
         app:layout_constraintEnd_toStartOf="@id/btn_later"
         android:layout_marginStart="@dimen/small_margin"
-        style="@style/RoundButton.WhiteText"/>
+        style="@style/RoundButton.WhiteText"
+        android:textAppearance="@style/TextShadowDoubleSize"/>
 
     <Button
         android:id="@+id/btn_later"
