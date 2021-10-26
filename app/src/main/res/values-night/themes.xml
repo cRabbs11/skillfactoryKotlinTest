@@ -16,8 +16,8 @@
 
     <style name="MyTheme" parent="Theme.MaterialComponents">
 
-        <item name="colorPrimary">@color/orange</item>
-        <item name="colorPrimaryVariant">@color/yellow_bright</item>
-        <item name="colorOnPrimary">@color/blue</item>
+        <item name="colorPrimary">@color/green_dark</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/red_dark</item>
     </style>
 </resources>
