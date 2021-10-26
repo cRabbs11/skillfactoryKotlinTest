@@ -15,27 +15,41 @@ class MainActivity : AppCompatActivity() {
         println("test git")
 
         binding.topAppBar.setNavigationOnClickListener {
-            showToast("onNavigationClick")
+            showToast("onMenuClick")
         }
 
         binding.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.fav -> {
-                    showToast("onFavClick")
+                R.id.settings -> {
+                    showToast("onSettingsClick")
                     true
                 }
                 R.id.search -> {
                     showToast("onSearchClick")
                     true
                 }
-                R.id.more -> {
-                    showToast("onMoreClick")
+                else -> false
+            }
+        }
+
+
+        binding.bottomNavView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.compile -> {
+                    showToast("подборки")
+                    true
+                }
+                R.id.fav -> {
+                    showToast("избранное")
+                    true
+                }
+                R.id.later -> {
+                    showToast("позже")
                     true
                 }
                 else -> false
             }
         }
-
     }
 
     private fun showToast(text: String) {
