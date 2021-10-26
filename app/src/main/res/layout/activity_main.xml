@@ -5,18 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <FrameLayout
-        android:id="@+id/top_menu_container"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/button_menu_height"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/top_menu_drawable" />
+    tools:context=".MainActivity"
+    android:background="@drawable/drawable_background_orange_white_green">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,18 +25,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
+        android:id="@+id/copirights_text"
         android:text="@string/copyrights"
         android:linksClickable="true"
         android:autoLink="web"
-        android:layout_marginTop="@dimen/sample_margin"
         android:textSize="@dimen/text_size_normal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="@id/top_menu_container"
-        app:layout_constraintStart_toStartOf="@id/top_menu_container"
-        app:layout_constraintEnd_toEndOf="@id/top_menu_container"
-        />
+        app:layout_constraintTop_toBottomOf="@id/app_bar_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
         android:id="@+id/center_menu_container"
@@ -53,13 +45,13 @@
         android:layout_marginTop="@dimen/sample_margin"
         android:layout_marginEnd="@dimen/sample_margin"
         android:layout_marginBottom="@dimen/sample_margin"
-        android:background="@color/pink"
+
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/bottom_menu_container"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_menu_container"
+        app:layout_constraintTop_toBottomOf="@id/copirights_text"
         app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
@@ -67,7 +59,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_margin="@dimen/margin_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,8 +68,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/small_margin"
-                app:cardBackgroundColor="@color/pink"
+                android:layout_margin="@dimen/margin_small"
+
                 app:cardCornerRadius="@dimen/corner_radius_normal"
                 app:cardElevation="@dimen/elevation_small"
                 android:layout_weight="1">
@@ -92,22 +84,23 @@
 
             </androidx.cardview.widget.CardView>
 
+
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/small_margin"
-                app:cardBackgroundColor="@color/pink"
+                android:layout_margin="@dimen/margin_small"
                 app:cardCornerRadius="@dimen/corner_radius_normal"
                 app:cardElevation="@dimen/elevation_small"
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/image_view_2"
+                    android:id="@+id/image_view_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/test_poster_2"/>
+                    android:src="@drawable/test_poster_3"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -117,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_margin="@dimen/small_margin"
+        android:layout_margin="@dimen/margin_small"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -127,8 +120,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/small_margin"
-            app:cardBackgroundColor="@color/pink"
+            android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
             app:cardElevation="@dimen/elevation_small"
             android:layout_weight="1">
@@ -146,8 +138,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/small_margin"
-            app:cardBackgroundColor="@color/pink"
+            android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
             app:cardElevation="@dimen/elevation_small"
             android:layout_weight="1">
@@ -166,77 +157,13 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_main_menu"
-        android:text="@string/btn_main_menu"
-        android:layout_width="0dp"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bottom_menu_container"
-        app:layout_constraintBottom_toBottomOf="@id/bottom_menu_container"
-        app:layout_constraintStart_toStartOf="@id/bottom_menu_container"
-        app:layout_constraintEnd_toStartOf="@id/btn_favorites"
-        android:layout_marginStart="@dimen/small_margin"
-        style="@style/RoundButton"
-        android:textAppearance="@style/TextShadow"/>
-
-    <Button
-        android:id="@+id/btn_favorites"
-        android:text="@string/favorites"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bottom_menu_container"
-        app:layout_constraintBottom_toBottomOf="@id/bottom_menu_container"
-        app:layout_constraintStart_toEndOf="@id/btn_main_menu"
-        app:layout_constraintEnd_toStartOf="@id/btn_later"
-        android:layout_marginStart="@dimen/small_margin"
-        style="@style/RoundButton.WhiteText"
-        android:textAppearance="@style/TextShadowDoubleSize"/>
-
-    <Button
-        android:id="@+id/btn_later"
-        android:text="@string/btn_later"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bottom_menu_container"
-        app:layout_constraintBottom_toBottomOf="@id/bottom_menu_container"
-        app:layout_constraintStart_toEndOf="@id/btn_favorites"
-        app:layout_constraintEnd_toStartOf="@id/btn_compilations"
-        android:layout_marginStart="@dimen/small_margin"
-        android:background="@drawable/sample_ripple" />
-
-    <Button
-        android:id="@+id/btn_compilations"
-        android:text="@string/btn_compilations"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bottom_menu_container"
-        app:layout_constraintBottom_toBottomOf="@id/bottom_menu_container"
-        app:layout_constraintStart_toEndOf="@id/btn_later"
-        app:layout_constraintEnd_toStartOf="@id/btn_options"
-        android:layout_marginStart="@dimen/small_margin"
-        android:background="@drawable/sample_ripple" />
-
-    <Button
-        android:id="@+id/btn_options"
-        android:text="@string/btn_options"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bottom_menu_container"
-        app:layout_constraintBottom_toBottomOf="@id/bottom_menu_container"
-        app:layout_constraintStart_toEndOf="@id/btn_compilations"
-        app:layout_constraintEnd_toEndOf="@id/bottom_menu_container"
-        android:layout_marginStart="@dimen/small_margin"
-        android:layout_marginEnd="@dimen/small_margin"
-        android:background="@drawable/sample_ripple"
-        android:theme="@style/MyTheme.NewButton"/>
-
-    <FrameLayout
-        android:id="@+id/bottom_menu_container"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/button_menu_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/green"/>
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
