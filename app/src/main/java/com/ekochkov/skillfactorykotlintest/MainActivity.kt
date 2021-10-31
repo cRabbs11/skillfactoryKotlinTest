@@ -2,6 +2,7 @@ package com.ekochkov.skillfactorykotlintest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainBinding
 
@@ -11,28 +12,43 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        println("test git")
 
-        binding.btnMainMenu.setOnClickListener {
-            showToast("главное меню")
+        binding.topAppBar.setNavigationOnClickListener {
+            showToast(resources.getResourceName(R.string.main_menu))
         }
 
-        binding.btnFavorites.setOnClickListener {
-            showToast("избранное")
+        binding.topAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.settings -> {
+                    showToast(resources.getResourceName(R.string.settings))
+                    true
+                }
+                R.id.search -> {
+                    showToast(resources.getResourceName(R.string.search))
+                    true
+                }
+                else -> false
+            }
         }
 
-        binding.btnLater.setOnClickListener {
-            showToast("посмотреть позже")
-        }
 
-        binding.btnCompilations.setOnClickListener {
-            showToast("подборки")
+        binding.bottomNavView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.compile -> {
+                    showToast(resources.getResourceName(R.string.compilations))
+                    true
+                }
+                R.id.fav -> {
+                    showToast(resources.getResourceName(R.string.favorites))
+                    true
+                }
+                R.id.later -> {
+                    showToast(resources.getResourceName(R.string.later))
+                    true
+                }
+                else -> false
+            }
         }
-
-        binding.btnOptions.setOnClickListener {
-            showToast("настройки")
-        }
-
     }
 
     private fun showToast(text: String) {

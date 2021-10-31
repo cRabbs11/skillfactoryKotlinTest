@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/compile"
+        android:icon="@drawable/ic_baseline_collections_24"
+        android:title="@string/compilations"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/fav"
+        android:icon="@drawable/ic_round_favorite_border_24"
+        android:title="@string/favorites"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/later"
+        android:title="@string/later"
+        android:icon="@drawable/ic_baseline_watch_later_24"
+        app:showAsAction="always"/>
+</menu>
