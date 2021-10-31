@@ -12,20 +12,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        println("test git")
 
         binding.topAppBar.setNavigationOnClickListener {
-            showToast("onMenuClick")
+            showToast(resources.getResourceName(R.string.main_menu))
         }
 
         binding.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.settings -> {
-                    showToast("onSettingsClick")
+                    showToast(resources.getResourceName(R.string.settings))
                     true
                 }
                 R.id.search -> {
-                    showToast("onSearchClick")
+                    showToast(resources.getResourceName(R.string.search))
                     true
                 }
                 else -> false
@@ -36,15 +35,15 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.compile -> {
-                    showToast("подборки")
+                    showToast(resources.getResourceName(R.string.compilations))
                     true
                 }
                 R.id.fav -> {
-                    showToast("избранное")
+                    showToast(resources.getResourceName(R.string.favorites))
                     true
                 }
                 R.id.later -> {
-                    showToast("позже")
+                    showToast(resources.getResourceName(R.string.later))
                     true
                 }
                 else -> false
