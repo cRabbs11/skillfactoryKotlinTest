@@ -14,17 +14,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.topAppBar.setNavigationOnClickListener {
-            showToast(resources.getResourceName(R.string.main_menu))
+            showToast(resources.getString(R.string.main_menu))
         }
 
         binding.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.settings -> {
-                    showToast(resources.getResourceName(R.string.settings))
+                    showToast(resources.getString(R.string.settings))
                     true
                 }
                 R.id.search -> {
-                    showToast(resources.getResourceName(R.string.search))
+                    showToast(resources.getString(R.string.search))
                     true
                 }
                 else -> false
@@ -35,15 +35,15 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.compile -> {
-                    showToast(resources.getResourceName(R.string.compilations))
+                    showToast(resources.getString(R.string.compilations))
                     true
                 }
                 R.id.fav -> {
-                    showToast(resources.getResourceName(R.string.favorites))
+                    showToast(resources.getString(R.string.favorites))
                     true
                 }
                 R.id.later -> {
-                    showToast(resources.getResourceName(R.string.later))
+                    showToast(resources.getString(R.string.later))
                     true
                 }
                 else -> false

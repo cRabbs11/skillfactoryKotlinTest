@@ -52,7 +52,8 @@
         app:layout_constraintTop_toBottomOf="@id/copirights_text"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:layoutAnimation="@anim/popin_layout">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -60,7 +61,8 @@
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
             app:cardElevation="@dimen/elevation_small"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:stateListAnimator="@animator/sample_state_animator">
 
             <ImageView
                 android:id="@+id/image_view_1"
@@ -68,7 +70,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_poster_1"/>
+                android:src="@drawable/test_poster_1" />
 
         </androidx.cardview.widget.CardView>
 
@@ -78,28 +80,11 @@
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
             app:cardElevation="@dimen/elevation_small"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:stateListAnimator="@animator/sample_state_animator">
 
             <ImageView
-                android:id="@+id/image_view_2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="centerCrop"
-                android:src="@drawable/test_poster_2"/>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_small"
-            app:cardCornerRadius="@dimen/corner_radius_normal"
-            app:cardElevation="@dimen/elevation_small"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/image_view_4"
+                android:id="@+id/image_view_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -114,7 +99,29 @@
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
             app:cardElevation="@dimen/elevation_small"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:clickable="true"
+            android:stateListAnimator="@animator/sample_state_animator">
+
+            <ImageView
+                android:id="@+id/image_view_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/test_poster_4"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_small"
+            app:cardCornerRadius="@dimen/corner_radius_normal"
+            app:cardElevation="@dimen/elevation_small"
+            android:layout_weight="1"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/image_view_5"
@@ -135,6 +142,6 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"/>
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
