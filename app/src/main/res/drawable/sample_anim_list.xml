@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <item android:duration="500"
+        android:drawable="@drawable/test_poster_1"/>
+
+    <item android:duration="500"
+        android:drawable="@drawable/ic_baseline_self_improvement_100"/>
+
+    <item android:duration="500"
+        android:drawable="@drawable/test_poster_3"/>
+
+    <item android:duration="500"
+        android:drawable="@drawable/test_poster_4"/>
+
+    <item android:duration="500"
+        android:drawable="@drawable/test_poster_5"/>
+
+</animation-list>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <objectAnimator
+            android:duration="100"
+            android:valueType="floatType"
+            android:propertyName="rotationY"
+            android:valueTo="10"
+            />
+    </item>
+
+    <item>
+        <objectAnimator
+            android:duration="200"
+            android:valueType="floatType"
+            android:propertyName="rotationY"
+            android:interpolator="@android:interpolator/decelerate_quad"
+            android:valueTo="0"
+            />
+
+    </item>
+</selector>
