@@ -59,7 +59,10 @@
             android:layout_columnWeight="1"
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
-            app:cardElevation="@dimen/elevation_small">
+            app:cardElevation="@dimen/elevation_small"
+            android:clickable="true"
+            android:stateListAnimator="@animator/sample_state_animator">
+
             <ImageView
                 android:id="@+id/image_view_1"
                 android:layout_width="match_parent"
@@ -76,7 +79,9 @@
             android:layout_columnWeight="1"
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
-            app:cardElevation="@dimen/elevation_small">
+            app:cardElevation="@dimen/elevation_small"
+            android:clickable="true"
+            android:stateListAnimator="@animator/sample_state_animator">
 
             <ImageView
                 android:id="@+id/image_view_3"
@@ -95,7 +100,9 @@
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
             app:cardElevation="@dimen/elevation_small"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:clickable="true"
+            android:stateListAnimator="@animator/sample_state_animator">
 
             <ImageView
                 android:id="@+id/image_view_4"
@@ -107,6 +114,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_5"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_rowWeight="1"
@@ -114,18 +122,30 @@
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/corner_radius_normal"
             app:cardElevation="@dimen/elevation_small"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:clickable="true">
 
             <ImageView
                 android:id="@+id/image_view_5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_poster_5"/>
+                android:src="@drawable/test_poster_5" />
 
         </androidx.cardview.widget.CardView>
 
     </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_container"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:animateLayoutChanges="true"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"
