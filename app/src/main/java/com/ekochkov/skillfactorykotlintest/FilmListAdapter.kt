@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class FilmListAdapter : RecyclerView.Adapter<FilmItemHolder>() {
+class FilmListAdapter(private val onClickListener: OnItemClickListener) : RecyclerView.Adapter<FilmItemHolder>() {
 
     var filmList = ArrayList<Film>()
 
@@ -22,10 +22,17 @@ class FilmListAdapter : RecyclerView.Adapter<FilmItemHolder>() {
         holder.titleText.text = film.title
         holder.descrText.text = film.descr
         holder.poster.setImageResource(film.poster)
+        holder.itemView.setOnClickListener {
+            onClickListener.onClick(film)
+        }
     }
 
     override fun getItemCount(): Int {
         return filmList.size
+    }
+
+    interface OnItemClickListener {
+        fun onClick(film: Film)
     }
 }
 

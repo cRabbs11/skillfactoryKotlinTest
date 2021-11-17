@@ -1,8 +1,10 @@
 package com.ekochkov.skillfactorykotlintest
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +22,16 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainRecyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = FilmListAdapter()
+        val adapter = FilmListAdapter(object: FilmListAdapter.OnItemClickListener{
+            override fun onClick(film: Film) {
+                val bundle = Bundle()
+                bundle.putParcelable("film", film)
+                val intent = Intent(this@MainActivity, FilmPageActivity::class.java)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+        })
+
         binding.recyclerView.itemAnimator = ItemFilmAnimator(this)
         binding.recyclerView.adapter = adapter
         adapter.filmList = filmList
