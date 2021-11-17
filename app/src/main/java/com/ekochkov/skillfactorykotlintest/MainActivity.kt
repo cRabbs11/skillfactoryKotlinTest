@@ -35,6 +35,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        val diff = FilmDiff(adapter.filmList, setFilms())
+        val diffResult = DiffUtil.calculateDiff(diff)
+        adapter.filmList.clear()
+        adapter.filmList.addAll(setFilms())
+        diffResult.dispatchUpdatesTo(adapter)
+
         //binding.container!!.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         //binding.container!!.layoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(this, R.animator.sample_animator))
         binding.topAppBar.setNavigationOnClickListener {
@@ -59,12 +66,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.compile -> {
                     showToast(resources.getString(R.string.compilations))
-
-                    val diff = FilmDiff(adapter.filmList, setFilms())
-                    val diffResult = DiffUtil.calculateDiff(diff)
-                    adapter.filmList.clear()
-                    adapter.filmList.addAll(setFilms())
-                    diffResult.dispatchUpdatesTo(adapter)
 
                     //if (binding.cardView5.alpha==1F) {
                     //    binding.cardView5.animate()
