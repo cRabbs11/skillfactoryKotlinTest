@@ -17,8 +17,10 @@
     <style name="MyTheme" parent="Theme.MaterialComponents.Light">
 
         <item name="colorPrimary">@color/green_light</item>
+        <item name="colorPrimaryDark">@color/green_dark</item>
         <item name="colorPrimaryVariant">@color/orange_bright</item>
         <item name="colorOnPrimary">@color/red</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
     </style>
 
     <style name="MyTheme.TextSizeSmall">
