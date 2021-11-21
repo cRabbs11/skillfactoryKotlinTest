@@ -1,8 +1,10 @@
 package com.ekochkov.skillfactorykotlintest
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +22,16 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainRecyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = FilmListAdapter()
+        val adapter = FilmListAdapter(object: FilmListAdapter.OnItemClickListener{
+            override fun onClick(film: Film) {
+                val bundle = Bundle()
+                bundle.putParcelable("film", film)
+                val intent = Intent(this@MainActivity, FilmPageActivity::class.java)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+        })
+
         binding.recyclerView.itemAnimator = ItemFilmAnimator(this)
         binding.recyclerView.adapter = adapter
         adapter.filmList = filmList
@@ -35,6 +46,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        val diff = FilmDiff(adapter.filmList, setFilms())
+        val diffResult = DiffUtil.calculateDiff(diff)
+        adapter.filmList.clear()
+        adapter.filmList.addAll(setFilms())
+        diffResult.dispatchUpdatesTo(adapter)
+
         //binding.container!!.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         //binding.container!!.layoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(this, R.animator.sample_animator))
         binding.topAppBar.setNavigationOnClickListener {
@@ -59,12 +77,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.compile -> {
                     showToast(resources.getString(R.string.compilations))
-
-                    val diff = FilmDiff(adapter.filmList, setFilms())
-                    val diffResult = DiffUtil.calculateDiff(diff)
-                    adapter.filmList.clear()
-                    adapter.filmList.addAll(setFilms())
-                    diffResult.dispatchUpdatesTo(adapter)
 
                     //if (binding.cardView5.alpha==1F) {
                     //    binding.cardView5.animate()
