@@ -2,12 +2,11 @@ package com.ekochkov.skillfactorykotlintest
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityFilmPageWithBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_film_page.view.*
+
 
 class FilmPageWithBottomSheetActivity: AppCompatActivity() {
 
@@ -39,6 +38,6 @@ class FilmPageWithBottomSheetActivity: AppCompatActivity() {
 
         binding.includeContent.text.text=film.descr
         binding.toolbar.title=film.title
-        binding.toolbarLayout.image.setImageResource(film.poster)
+        binding.image.setImageResource(film.poster)
     }
 }
