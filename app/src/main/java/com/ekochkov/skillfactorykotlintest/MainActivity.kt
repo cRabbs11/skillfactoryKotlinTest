@@ -105,7 +105,68 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
 
+
+
+    fun showTimePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+        val timePicker = TimePickerDialog.OnTimeSetListener { view, hour, minute ->
+            val time = "$hour $minute"
+            showToast(time)
+        }
+        TimePickerDialog(this, timePicker, currentHour, currentMinute, true).show()
+    }
+
+    fun showDateTimePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            val date = "$year $month $dayOfMonth"
+
+            val timePicker = TimePickerDialog.OnTimeSetListener { view, hour, minute ->
+                val time = "$hour $minute $date"
+                showToast(time)
+            }
+            TimePickerDialog(this, timePicker, currentHour, currentMinute, true).show()
+        }, currentYear, currentMonth, currentDay).show()
+    }
+
+    fun showAlertDialog() {
+        AlertDialog.Builder(ContextThemeWrapper(this, R.style.MyDialog))
+                .setTitle("На выход?")
+                .setIcon(R.drawable.ic_baseline_settings_24)
+                .setPositiveButton("Офкорс") {_,_ ->
+                    finish()
+                }
+                .setNegativeButton("Ноуп") {_,_ ->
+
+                }
+                .setNeutralButton("Донт Ноу") {_,_ ->
+                    showToast("Думай")
+                }
+                .show()
+    }
+
+    fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH)
+        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+
+        DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            val time = "$year $month $dayOfMonth"
+            showToast(time)
+        }, currentYear, currentMonth, currentDay).show()
 
     }
 
