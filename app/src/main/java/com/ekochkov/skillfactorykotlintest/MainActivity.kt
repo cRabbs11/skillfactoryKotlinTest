@@ -107,6 +107,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private var backPressed = 0L
+    companion object {
+        const val TIME_INTERVAL = 2000
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount==1) {
+            if (backPressed + TIME_INTERVAL> System.currentTimeMillis()) {
+                super.onBackPressed()
+                finish()
+            } else {
+                showToast("для выхода нажмите еще раз")
+            }
+            backPressed = System.currentTimeMillis()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     fun launchFilmPageFragment(film: Film) {
         val bundle = Bundle()
         bundle.putParcelable("film", film)
