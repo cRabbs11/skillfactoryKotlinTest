@@ -54,4 +54,9 @@
         <item name="android:shadowRadius">10</item>
         <item name="android:shadowColor">@android:color/black</item>
     </style>
+
+    <style name="MyDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@android:color/holo_red_dark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>
