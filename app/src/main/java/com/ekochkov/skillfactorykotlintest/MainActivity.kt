@@ -107,7 +107,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun launchFilmPageFragment(film: Film) {
+        val bundle = Bundle()
+        bundle.putParcelable("film", film)
 
+        val tag = "film_page_fragment"
+
+        val fragment = FilmPageFragment()
+        fragment.arguments = bundle
+
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_placeholder, fragment, tag)
+                .addToBackStack(null)
+                .commit()
+    }
 
     fun showTimePickerDialog() {
         val calendar = Calendar.getInstance()
