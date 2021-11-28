@@ -9,10 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/sample_margin"
         android:textColor="@android:color/black"
-        android:textSize="25sp"
-        android:text="Быть или не быть?">
+        android:textSize="@dimen/text_size_big"
+        android:text="@string/be_or_not_to_be">
     </TextView>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,19 +21,19 @@
             android:id="@+id/btn_y"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Быть">
+            android:text="@string/be">
         </Button>
         <Button
             android:id="@+id/btn_n"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Не быть">
+            android:text="@string/not_to_be">
         </Button>
         <Button
             android:id="@+id/btn_other"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Эээ...">
+            android:text="@string/other">
         </Button>
     </LinearLayout>
 </LinearLayout>
