@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 
 
-class FilmPageFragment: Fragment() {
+class FilmPageFragment : Fragment() {
 
     lateinit var binding: FragmentFilmPageBinding
 
@@ -21,8 +21,8 @@ class FilmPageFragment: Fragment() {
 
         }
 
-        binding.includeContent.text.text=film.descr
-        binding.toolbar.title=film.title
+        binding.includeContent.text.text = film.descr
+        binding.toolbar.title = film.title
         binding.image.setImageResource(film.poster)
 
         return binding.root
