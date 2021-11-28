@@ -13,6 +13,9 @@ import androidx.fragment.app.FragmentTransaction
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import java.util.*
 
+private const val TAG_HOME_FRAGMENT = "home_fragment"
+private const val TAG_FILM_PAGE_FRAGMENT = "film_page_fragment"
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,11 +23,9 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainRecyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val tag1 = "home_fragment"
-
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragment_placeholder, HomeFragment(), tag1)
+            .add(R.id.fragment_placeholder, HomeFragment(), TAG_HOME_FRAGMENT)
             .addToBackStack(null)
             .commit()
 
@@ -87,14 +88,12 @@ class MainActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putParcelable("film", film)
 
-        val tag = "film_page_fragment"
-
         val fragment = FilmPageFragment()
         fragment.arguments = bundle
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder, fragment, tag)
+                .replace(R.id.fragment_placeholder, fragment, TAG_FILM_PAGE_FRAGMENT)
                 .addToBackStack(null)
                 .commit()
     }
@@ -151,7 +150,6 @@ class MainActivity : AppCompatActivity() {
         val currentYear = calendar.get(Calendar.YEAR)
         val currentMonth = calendar.get(Calendar.MONTH)
         val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
-
 
         DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
             val time = "$year $month $dayOfMonth"
