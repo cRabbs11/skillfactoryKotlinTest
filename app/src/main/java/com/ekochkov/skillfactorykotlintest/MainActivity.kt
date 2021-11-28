@@ -71,12 +71,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount==1) {
-            if (backPressed + TIME_INTERVAL> System.currentTimeMillis()) {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
                 super.onBackPressed()
                 finish()
             } else {
-                showToast("для выхода нажмите еще раз")
+                showToast(resources.getString(R.string.tap_again_to_exit))
             }
             backPressed = System.currentTimeMillis()
         } else {
