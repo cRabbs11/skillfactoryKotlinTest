@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     fun launchFilmPageFragment(film: Film) {
         val bundle = Bundle()
-        bundle.putParcelable("film", film)
+        bundle.putParcelable(FilmPageFragment.FILM_OBJECT, film)
 
         val fragment = FilmPageFragment()
         fragment.arguments = bundle

@@ -10,12 +10,16 @@ import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 
 class FilmPageFragment : Fragment() {
 
+    companion object {
+        const val FILM_OBJECT = "film"
+    }
+
     lateinit var binding: FragmentFilmPageBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentFilmPageBinding.inflate(inflater, container, false)
 
-        val film = arguments?.get("film") as Film
+        val film = arguments?.get(FILM_OBJECT) as Film
 
         binding.fab.setOnClickListener {
 
