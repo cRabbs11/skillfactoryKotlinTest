@@ -18,4 +18,5 @@
 
     <dimen name="text_size_small">10sp</dimen>
     <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_big">25sp</dimen>
 </resources>

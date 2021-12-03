@@ -10,5 +10,13 @@
     <string name="settings">Настройки</string>
     <string name="copyrights">информация с сайта www.kinopoisk.ru</string>
     <string name="film_name">название фильма</string>
+    <string name="tap_again_to_exit">для выхода нажмите еще раз</string>
+
+
+    <!-- строки для примеров -->
+    <string name="be_or_not_to_be">Быть или не быть?</string>
+    <string name="be">Быть</string>
+    <string name="not_to_be">Не быть</string>
+    <string name="other">Эээ...</string>
 
 </resources>
