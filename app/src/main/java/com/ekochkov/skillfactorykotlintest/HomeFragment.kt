@@ -27,21 +27,23 @@ class HomeFragment : Fragment() {
 
     private val filmList = ArrayList<Film>()
     private lateinit var  binding: FragmentHomeBinding
+    var sharedTransitionPosition = "transition1"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        postponeEnterTransition()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
-            override fun onClick(film: Film) {
-                (activity as MainActivity).launchFilmPageFragment(film)
+        val adapter = FilmListAdapter(this, object: FilmListAdapter.OnItemClickListener<Film> {
+            override fun onClick(film: Film, sharedView: View) {
+                (activity as MainActivity).launchFilmPageFragment(film, sharedView)
             }
         })
 

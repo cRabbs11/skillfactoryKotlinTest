@@ -1,13 +1,15 @@
 package com.ekochkov.skillfactorykotlintest
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
-class FilmListAdapter(private val onClickListener: OnItemClickListener) : RecyclerView.Adapter<FilmItemHolder>() {
+class FilmListAdapter(val fragment: HomeFragment, private val onClickListener: OnItemClickListener<Film>) : RecyclerView.Adapter<FilmItemHolder>() {
 
     var filmList = ArrayList<Film>()
 
@@ -22,8 +24,14 @@ class FilmListAdapter(private val onClickListener: OnItemClickListener) : Recycl
         holder.titleText.text = film.title
         holder.descrText.text = film.descr
         holder.poster.setImageResource(film.poster)
+        holder.poster.transitionName = "transition${position}"
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(film)
+            onClickListener.onClick(film, holder.poster)
+        }
+
+        if (holder.poster.transitionName==fragment.sharedTransitionPosition) {
+            fragment.startPostponedEnterTransition()
+            Log.d("BMTH", "onBindHolder")
         }
     }
 
@@ -31,8 +39,8 @@ class FilmListAdapter(private val onClickListener: OnItemClickListener) : Recycl
         return filmList.size
     }
 
-    interface OnItemClickListener {
-        fun onClick(film: Film)
+    interface OnItemClickListener<T> {
+        fun onClick(film: T, sharedView: View)
     }
 }
 

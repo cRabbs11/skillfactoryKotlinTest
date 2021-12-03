@@ -5,11 +5,9 @@ import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextThemeWrapper
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentTransaction
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import java.util.*
 
@@ -84,16 +82,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun launchFilmPageFragment(film: Film) {
+    fun launchFilmPageFragment(film: Film, sharedView: View) {
         val bundle = Bundle()
         bundle.putParcelable(FilmPageFragment.FILM_OBJECT, film)
-
+        bundle.putString("transition", sharedView.transitionName)
         val fragment = FilmPageFragment()
         fragment.arguments = bundle
 
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_placeholder, fragment, TAG_FILM_PAGE_FRAGMENT)
+                .addSharedElement(sharedView, sharedView.transitionName)
                 .addToBackStack(null)
                 .commit()
     }
