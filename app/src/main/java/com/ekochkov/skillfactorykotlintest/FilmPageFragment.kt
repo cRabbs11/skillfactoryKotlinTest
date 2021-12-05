@@ -1,5 +1,6 @@
 package com.ekochkov.skillfactorykotlintest
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +27,13 @@ class FilmPageFragment : Fragment() {
         }
 
         binding.fabShare.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, "Look at this: ${film.title} \n\n ${film.descr}"
+            )
+            intent.type = "text/plain"
 
+            startActivity(Intent.createChooser(intent, "Share:"))
         }
 
         binding.includeContent.text.text = film.descr
