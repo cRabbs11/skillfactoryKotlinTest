@@ -8,8 +8,9 @@
     tools:context=".MainActivity"
     android:background="@drawable/drawable_background_orange_white_green">
 
-    <FrameLayout
-        android:id="@+id/fragment_placeholder"
+    <fragment
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:id="@+id/nav_host_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
