@@ -21,7 +21,11 @@ class FilmPageFragment : Fragment() {
 
         val film = arguments?.get(FILM_OBJECT) as Film
 
-        binding.fab.setOnClickListener {
+        binding.fabFav.setOnClickListener {
+
+        }
+
+        binding.fabShare.setOnClickListener {
 
         }
 
