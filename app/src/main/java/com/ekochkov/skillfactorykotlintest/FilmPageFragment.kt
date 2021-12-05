@@ -21,6 +21,7 @@ class FilmPageFragment : Fragment() {
         binding = FragmentFilmPageBinding.inflate(inflater, container, false)
 
         val film = arguments?.get(FILM_OBJECT) as Film
+        setFavIcon(film)
 
         binding.fabFav.setOnClickListener {
             film.isInFav = !film.isInFav
