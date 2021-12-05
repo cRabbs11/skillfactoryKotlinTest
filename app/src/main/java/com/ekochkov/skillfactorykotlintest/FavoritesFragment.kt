@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFavoritesBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
+import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 
 
 class FavoritesFragment : Fragment() {
@@ -47,6 +49,13 @@ class FavoritesFragment : Fragment() {
                 }
             }
         })
+
+        val newFilmList = FilmRepository.getFilmListInFav()
+        val diff = FilmDiff(adapter.filmList, newFilmList)
+        val diffResult = DiffUtil.calculateDiff(diff)
+        adapter.filmList.clear()
+        adapter.filmList.addAll(newFilmList)
+        diffResult.dispatchUpdatesTo(adapter)
 
     }
 
