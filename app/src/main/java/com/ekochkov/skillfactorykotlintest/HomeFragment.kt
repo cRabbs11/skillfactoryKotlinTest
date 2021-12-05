@@ -25,7 +25,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
 
-    private val filmList = ArrayList<Film>()
     private lateinit var  binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -60,9 +59,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        adapter.filmList = filmList
-        val filmRepository = FilmRepository
-        val newFilmList = filmRepository.getFilmList()
+        val newFilmList = FilmRepository.getFilmList()
         val diff = FilmDiff(adapter.filmList, newFilmList)
         val diffResult = DiffUtil.calculateDiff(diff)
         adapter.filmList.clear()
