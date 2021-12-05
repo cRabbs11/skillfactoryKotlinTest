@@ -23,7 +23,8 @@ class FilmPageFragment : Fragment() {
         val film = arguments?.get(FILM_OBJECT) as Film
 
         binding.fabFav.setOnClickListener {
-
+            film.isInFav = !film.isInFav
+            setFavIcon(film)
         }
 
         binding.fabShare.setOnClickListener {
@@ -41,5 +42,13 @@ class FilmPageFragment : Fragment() {
         binding.image.setImageResource(film.poster)
 
         return binding.root
+    }
+
+    private fun setFavIcon(film: Film) {
+        if (film.isInFav) {
+            binding.fabFav.setImageResource(R.drawable.ic_baseline_favorite_24)
+        } else {
+            binding.fabFav.setImageResource(R.drawable.ic_round_favorite_border_24)
+        }
     }
 }
