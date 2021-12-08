@@ -1,5 +1,6 @@
 package com.ekochkov.skillfactorykotlintest
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,9 +21,21 @@ class FilmPageFragment : Fragment() {
         binding = FragmentFilmPageBinding.inflate(inflater, container, false)
 
         val film = arguments?.get(FILM_OBJECT) as Film
+        setFavIcon(film)
 
-        binding.fab.setOnClickListener {
+        binding.fabFav.setOnClickListener {
+            film.isInFav = !film.isInFav
+            setFavIcon(film)
+        }
 
+        binding.fabShare.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, "Look at this: ${film.title} \n\n ${film.descr}"
+            )
+            intent.type = "text/plain"
+
+            startActivity(Intent.createChooser(intent, "Share:"))
         }
 
         binding.includeContent.text.text = film.descr
@@ -30,5 +43,13 @@ class FilmPageFragment : Fragment() {
         binding.image.setImageResource(film.poster)
 
         return binding.root
+    }
+
+    private fun setFavIcon(film: Film) {
+        if (film.isInFav) {
+            binding.fabFav.setImageResource(R.drawable.ic_baseline_favorite_24)
+        } else {
+            binding.fabFav.setImageResource(R.drawable.ic_round_favorite_border_24)
+        }
     }
 }

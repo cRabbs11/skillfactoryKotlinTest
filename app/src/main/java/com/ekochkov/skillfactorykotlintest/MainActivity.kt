@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragment_placeholder, HomeFragment(), TAG_HOME_FRAGMENT)
+            .add(R.id.nav_host_fragment, HomeFragment(), TAG_HOME_FRAGMENT)
             .addToBackStack(null)
             .commit()
 
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.fav -> {
                     showToast(resources.getString(R.string.favorites))
+                    launchFavoritesFragment()
                     //if (binding.container!!.childCount>0) {
                     //    binding.container!!.removeViewAt(binding.container!!.childCount-1)
                     //}
@@ -84,6 +85,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun launchFavoritesFragment() {
+
+        val fragment = FavoritesFragment()
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.nav_host_fragment, fragment, TAG_FILM_PAGE_FRAGMENT)
+            .addToBackStack(null)
+            .commit()
+    }
+
     fun launchFilmPageFragment(film: Film) {
         val bundle = Bundle()
         bundle.putParcelable(FilmPageFragment.FILM_OBJECT, film)
@@ -93,7 +105,7 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_placeholder, fragment, TAG_FILM_PAGE_FRAGMENT)
+                .replace(R.id.nav_host_fragment, fragment, TAG_FILM_PAGE_FRAGMENT)
                 .addToBackStack(null)
                 .commit()
     }

@@ -9,29 +9,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.ekochkov.skillfactorykotlintest.databinding.FragmentHomeBinding
+import com.ekochkov.skillfactorykotlintest.databinding.FragmentFavoritesBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FirstFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HomeFragment : Fragment() {
+class FavoritesFragment : Fragment() {
 
-    private lateinit var  binding: FragmentHomeBinding
+    private lateinit var  binding: FragmentFavoritesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,30 +50,13 @@ class HomeFragment : Fragment() {
             }
         })
 
-        val newFilmList = FilmRepository.getFilmList()
+        val newFilmList = FilmRepository.getFilmListInFav()
         val diff = FilmDiff(adapter.filmList, newFilmList)
         val diffResult = DiffUtil.calculateDiff(diff)
         adapter.filmList.clear()
         adapter.filmList.addAll(newFilmList)
         diffResult.dispatchUpdatesTo(adapter)
 
-        binding.topAppBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.settings -> {
-                    showToast(resources.getString(R.string.settings))
-                    true
-                }
-                R.id.search -> {
-                    showToast(resources.getString(R.string.search))
-                    true
-                }
-                else -> false
-            }
-        }
-
-        binding.topAppBar.setNavigationOnClickListener {
-            showToast(resources.getString(R.string.main_menu))
-        }
     }
 
     private fun showToast(text: String) {
@@ -102,10 +76,7 @@ class HomeFragment : Fragment() {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+
             }
     }
 }
