@@ -79,6 +79,7 @@ class HomeFragment : Fragment() {
 
     private fun searchFilmByTitle(query: String) {
         val list = FilmRepository.getFilmByTitleQuery(query)
+        updateRecyclerView(list)
     }
 
     private fun showToast(text: String) {
