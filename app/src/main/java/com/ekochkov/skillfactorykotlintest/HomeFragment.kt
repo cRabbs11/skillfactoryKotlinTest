@@ -53,6 +53,9 @@ class HomeFragment : Fragment() {
             }
 
         })
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+        }
 
         adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
