@@ -38,6 +38,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText!=null) {
+                    searchFilmByTitle(newText)
+                }
+                return true
+            }
+
+        })
+
         val adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
                 (activity as MainActivity).launchFilmPageFragment(film)
@@ -65,24 +79,10 @@ class HomeFragment : Fragment() {
         adapter.filmList.clear()
         adapter.filmList.addAll(newFilmList)
         diffResult.dispatchUpdatesTo(adapter)
+    }
 
-        binding.topAppBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.settings -> {
-                    showToast(resources.getString(R.string.settings))
-                    true
-                }
-                R.id.search -> {
-                    showToast(resources.getString(R.string.search))
-                    true
-                }
-                else -> false
-            }
-        }
-
-        binding.topAppBar.setNavigationOnClickListener {
-            showToast(resources.getString(R.string.main_menu))
-        }
+    private fun searchFilmByTitle(query: String) {
+        val list = FilmRepository.getFilmByTitleQuery(query)
     }
 
     private fun showToast(text: String) {
