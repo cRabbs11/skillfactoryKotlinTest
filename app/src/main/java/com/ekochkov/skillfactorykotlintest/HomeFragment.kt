@@ -25,6 +25,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
 
+    private lateinit var adapter: FilmListAdapter
     private lateinit var  binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -52,7 +53,7 @@ class HomeFragment : Fragment() {
 
         })
 
-        val adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
+        adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
                 (activity as MainActivity).launchFilmPageFragment(film)
             }
@@ -73,12 +74,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        val newFilmList = FilmRepository.getFilmList()
-        val diff = FilmDiff(adapter.filmList, newFilmList)
-        val diffResult = DiffUtil.calculateDiff(diff)
-        adapter.filmList.clear()
-        adapter.filmList.addAll(newFilmList)
-        diffResult.dispatchUpdatesTo(adapter)
+        updateRecyclerView(FilmRepository.getFilmList())
     }
 
     private fun searchFilmByTitle(query: String) {
@@ -87,6 +83,14 @@ class HomeFragment : Fragment() {
 
     private fun showToast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateRecyclerView(films: ArrayList<Film>) {
+        val diff = FilmDiff(adapter.filmList, films)
+        val diffResult = DiffUtil.calculateDiff(diff)
+        adapter.filmList.clear()
+        adapter.filmList.addAll(films)
+        diffResult.dispatchUpdatesTo(adapter)
     }
 
     companion object {
