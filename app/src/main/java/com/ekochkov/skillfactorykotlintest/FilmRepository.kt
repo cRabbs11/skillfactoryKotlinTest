@@ -8,6 +8,17 @@ object FilmRepository {
         return filmList
     }
 
+    fun getFilmByTitleQuery(query: String): ArrayList<Film> {
+        val list = ArrayList<Film>()
+
+        filmList.forEach {
+            if (it.title.toLowerCase().contains(query.toLowerCase())) {
+                list.add(it)
+            }
+        }
+        return list
+    }
+
     fun getFilmListInFav() : ArrayList<Film> {
         val list = arrayListOf<Film>()
         filmList.forEach {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentHomeBinding
@@ -25,6 +26,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
 
+    private lateinit var adapter: FilmListAdapter
     private lateinit var  binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -38,7 +40,22 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
+        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText!=null) searchFilmByTitle(newText)
+                return true
+            }
+
+        })
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+        }
+
+        adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
                 (activity as MainActivity).launchFilmPageFragment(film)
             }
@@ -59,34 +76,24 @@ class HomeFragment : Fragment() {
             }
         })
 
-        val newFilmList = FilmRepository.getFilmList()
-        val diff = FilmDiff(adapter.filmList, newFilmList)
-        val diffResult = DiffUtil.calculateDiff(diff)
-        adapter.filmList.clear()
-        adapter.filmList.addAll(newFilmList)
-        diffResult.dispatchUpdatesTo(adapter)
+        updateRecyclerView(FilmRepository.getFilmList())
+    }
 
-        binding.topAppBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.settings -> {
-                    showToast(resources.getString(R.string.settings))
-                    true
-                }
-                R.id.search -> {
-                    showToast(resources.getString(R.string.search))
-                    true
-                }
-                else -> false
-            }
-        }
-
-        binding.topAppBar.setNavigationOnClickListener {
-            showToast(resources.getString(R.string.main_menu))
-        }
+    private fun searchFilmByTitle(query: String) {
+        val list = FilmRepository.getFilmByTitleQuery(query)
+        updateRecyclerView(list)
     }
 
     private fun showToast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateRecyclerView(films: ArrayList<Film>) {
+        val diff = FilmDiff(adapter.filmList, films)
+        val diffResult = DiffUtil.calculateDiff(diff)
+        adapter.filmList.clear()
+        adapter.filmList.addAll(films)
+        diffResult.dispatchUpdatesTo(adapter)
     }
 
     companion object {
