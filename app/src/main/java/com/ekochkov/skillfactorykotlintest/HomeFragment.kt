@@ -46,9 +46,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText!=null) {
-                    searchFilmByTitle(newText)
-                }
+                if (newText!=null) searchFilmByTitle(newText)
                 return true
             }
 
