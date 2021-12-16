@@ -34,6 +34,12 @@ class HomeFragment : Fragment() {
 
     private lateinit var adapter: FilmListAdapter
     private lateinit var  binding: FragmentHomeBinding
+    private var isFragmentCreate = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isFragmentCreate = true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +62,13 @@ class HomeFragment : Fragment() {
             duration = 350
         }
 
-        TransitionManager.go(scene, myTransition)
+        if (isFragmentCreate) {
+            TransitionManager.go(scene, myTransition)
+            isFragmentCreate = false
+        } else {
+            TransitionManager.go(scene)
+        }
+
         val sceneBinding = MergeHomeScreenSceneBinding.bind(scene.sceneRoot)
 
         sceneBinding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
