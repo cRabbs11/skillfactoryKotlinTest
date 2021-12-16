@@ -2,6 +2,7 @@ package com.ekochkov.skillfactorykotlintest
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Scene
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
+import androidx.transition.TransitionSet
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentHomeBinding
+import com.ekochkov.skillfactorykotlintest.databinding.MergeHomeScreenSceneBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 
@@ -40,7 +46,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        val scene = Scene.getSceneForLayout(binding.homeFragmentRoot, R.layout.merge_home_screen_scene, requireContext())
+
+        val searchSlide = Slide(Gravity.START).addTarget(R.id.search_view)
+        val recyclerSlide = Slide(Gravity.END).addTarget(R.id.recycler_view)
+        val myTransition = TransitionSet().apply {
+            addTransition(searchSlide)
+            addTransition(recyclerSlide)
+            duration = 350
+        }
+
+        TransitionManager.go(scene, myTransition)
+        val sceneBinding = MergeHomeScreenSceneBinding.bind(scene.sceneRoot)
+
+        sceneBinding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -51,8 +70,8 @@ class HomeFragment : Fragment() {
             }
 
         })
-        binding.searchView.setOnClickListener {
-            binding.searchView.isIconified = false
+        sceneBinding.searchView.setOnClickListener {
+            sceneBinding.searchView.isIconified = false
         }
 
         adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
@@ -62,16 +81,14 @@ class HomeFragment : Fragment() {
         })
 
         val parallaxPosterDecorator = OffsetFilmItemDecoration()
-
-        binding.recyclerView.itemAnimator = ItemFilmAnimator(requireContext())
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(parallaxPosterDecorator)
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        sceneBinding.recyclerView.itemAnimator = ItemFilmAnimator(requireContext())
+        sceneBinding.recyclerView.adapter = adapter
+        sceneBinding.recyclerView.addItemDecoration(parallaxPosterDecorator)
+        sceneBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                Log.d("BMTH", "dx: $dx dy: $dy")
-                if (recyclerView.childCount > 3) {
-                    val view = recyclerView.getChildAt(2)
+                if (sceneBinding.recyclerView.childCount > 3) {
+                    val view = sceneBinding.recyclerView.getChildAt(2)
                 }
             }
         })
