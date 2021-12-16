@@ -32,6 +32,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
 
+    init {
+        exitTransition = Slide(Gravity.START).apply { duration = 400; mode = Slide.MODE_OUT }
+        reenterTransition = Slide(Gravity.START).apply { duration = 400; }
+    }
+
     private lateinit var adapter: FilmListAdapter
     private lateinit var  binding: FragmentHomeBinding
     private var isFragmentCreate = false

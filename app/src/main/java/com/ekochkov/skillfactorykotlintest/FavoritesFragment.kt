@@ -2,6 +2,7 @@ package com.ekochkov.skillfactorykotlintest
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +10,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Slide
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFavoritesBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 
 
 class FavoritesFragment : Fragment() {
+
+    init {
+        enterTransition = Slide(Gravity.END).apply { duration = 400 }
+        returnTransition = Slide(Gravity.END).apply { duration = 400; mode = Slide.MODE_OUT }
+    }
 
     private lateinit var  binding: FragmentFavoritesBinding
 
