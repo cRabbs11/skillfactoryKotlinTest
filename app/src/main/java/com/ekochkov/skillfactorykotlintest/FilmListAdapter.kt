@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class FilmListAdapter(private val onClickListener: OnItemClickListener) : RecyclerView.Adapter<FilmItemHolder>() {
 
@@ -21,7 +22,12 @@ class FilmListAdapter(private val onClickListener: OnItemClickListener) : Recycl
         val film = filmList[position]
         holder.titleText.text = film.title
         holder.descrText.text = film.descr
-        holder.poster.setImageResource(film.poster)
+
+        Glide.with(holder.itemView)
+            .load(film.poster)
+            .centerCrop()
+            .into(holder.poster)
+
         holder.itemView.setOnClickListener {
             onClickListener.onClick(film)
         }

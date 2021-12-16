@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.transition.Slide
+import com.bumptech.glide.Glide
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 
 
@@ -47,7 +48,11 @@ class FilmPageFragment : Fragment() {
 
         binding.includeContent.text.text = film.descr
         binding.toolbar.title = film.title
-        binding.image.setImageResource(film.poster)
+        Glide.with(requireContext())
+                .load(film.poster)
+                .centerCrop()
+                .into(binding.image)
+        //binding.image.setImageResource(film.poster)
 
         return binding.root
     }
