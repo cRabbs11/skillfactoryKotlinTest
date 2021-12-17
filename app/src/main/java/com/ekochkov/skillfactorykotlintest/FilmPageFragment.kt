@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.transition.Fade
 import androidx.transition.Slide
+import androidx.transition.TransitionSet
 import com.bumptech.glide.Glide
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 
@@ -15,8 +17,15 @@ import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 class FilmPageFragment : Fragment() {
 
     init {
-        enterTransition = Slide(Gravity.END).apply { duration = 400 }
-        returnTransition = Slide(Gravity.END).apply { duration = 400; mode = Slide.MODE_OUT }
+        val slide = Slide(Gravity.END).addTarget(R.id.film_page_fragment_container)
+        val fade = Fade().addTarget(R.id.film_page_fragment_container)
+        val tranistion = TransitionSet().apply {
+            addTransition(slide)
+            addTransition(fade)
+            duration = 250
+        }
+        enterTransition = tranistion
+        returnTransition = tranistion
     }
 
     companion object {

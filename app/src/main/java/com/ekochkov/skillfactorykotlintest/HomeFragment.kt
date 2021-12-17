@@ -11,10 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Scene
-import androidx.transition.Slide
-import androidx.transition.TransitionManager
-import androidx.transition.TransitionSet
+import androidx.transition.*
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentHomeBinding
 import com.ekochkov.skillfactorykotlintest.databinding.MergeHomeScreenSceneBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
@@ -33,8 +30,15 @@ private const val ARG_PARAM2 = "param2"
 class HomeFragment : Fragment() {
 
     init {
-        exitTransition = Slide(Gravity.START).apply { duration = 400; mode = Slide.MODE_OUT }
-        reenterTransition = Slide(Gravity.START).apply { duration = 400; }
+        val slide = Slide(Gravity.START).addTarget(R.id.home_fragment_root)
+        val fade = Fade().addTarget(R.id.home_fragment_root)
+        val transition = TransitionSet().apply {
+            addTransition(slide)
+            addTransition(fade)
+            duration = 250
+        }
+        exitTransition = transition
+        reenterTransition = transition
     }
 
     private lateinit var adapter: FilmListAdapter

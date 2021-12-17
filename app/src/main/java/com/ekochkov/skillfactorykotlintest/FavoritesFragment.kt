@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
 import androidx.transition.Slide
+import androidx.transition.TransitionSet
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFavoritesBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
@@ -19,8 +21,22 @@ import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 class FavoritesFragment : Fragment() {
 
     init {
-        enterTransition = Slide(Gravity.END).apply { duration = 400 }
-        returnTransition = Slide(Gravity.END).apply { duration = 400; mode = Slide.MODE_OUT }
+        val enterSlide = Slide(Gravity.END).addTarget(R.id.fav_fragment_root)
+        val exitSlide = Slide(Gravity.START).addTarget(R.id.fav_fragment_root)
+        val fade = Fade().addTarget(R.id.fav_fragment_root)
+        val enterTranistion = TransitionSet().apply {
+            addTransition(enterSlide)
+            addTransition(fade)
+            duration = 250
+        }
+        val exitTranistion = TransitionSet().apply {
+            addTransition(exitSlide)
+            addTransition(fade)
+            duration = 250
+        }
+        enterTransition = enterTranistion
+        returnTransition = enterTranistion
+        exitTransition = exitTranistion
     }
 
     private lateinit var  binding: FragmentFavoritesBinding
