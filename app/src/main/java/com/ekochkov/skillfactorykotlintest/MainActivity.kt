@@ -107,8 +107,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchFavoritesFragment() {
-        val fragment = HomeFragment()
-        launchFragment(fragment, null)
+        val fragment = getExistFragmentByTag(TAG_FAV_FRAGMENT)
+        launchFragment(fragment?: FavoritesFragment(), TAG_FAV_FRAGMENT)
     }
 
     fun launchFilmPageFragment(film: Film) {
