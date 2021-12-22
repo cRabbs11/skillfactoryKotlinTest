@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.compile -> {
                     showToast(resources.getString(R.string.compilations))
+                    launchCompilesFragment()
                     //if (binding.cardView5.alpha==1F) {
                     //    binding.cardView5.animate()
                     //            .setDuration(150)
@@ -104,6 +105,11 @@ class MainActivity : AppCompatActivity() {
     fun launchHomeFragment() {
         val fragment = getExistFragmentByTag(TAG_HOME_FRAGMENT)
         launchFragment(fragment?: HomeFragment(), TAG_HOME_FRAGMENT)
+    }
+
+    fun launchCompilesFragment() {
+        val fragment = getExistFragmentByTag(TAG_COMPILE_FRAGMENT)
+        launchFragment(fragment?: CompilesFragment(), TAG_COMPILE_FRAGMENT)
     }
 
     fun launchFavoritesFragment() {
