@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import java.util.*
@@ -84,26 +85,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun launchHomeFragment() {
-
-        val fragment = HomeFragment()
-
+    fun launchFragment(fragment: Fragment, tag: String?) {
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.nav_host_fragment, fragment, TAG_HOME_FRAGMENT)
-                .addToBackStack(null)
+                .addToBackStack(tag)
                 .commit()
     }
 
+    fun launchHomeFragment() {
+        val fragment = HomeFragment()
+        launchFragment(fragment, null)
+    }
+
     fun launchFavoritesFragment() {
-
-        val fragment = FavoritesFragment()
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.nav_host_fragment, fragment, TAG_FILM_PAGE_FRAGMENT)
-            .addToBackStack(null)
-            .commit()
+        val fragment = HomeFragment()
+        launchFragment(fragment, null)
     }
 
     fun launchFilmPageFragment(film: Film) {
@@ -113,11 +110,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = FilmPageFragment()
         fragment.arguments = bundle
 
-        supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment, TAG_FILM_PAGE_FRAGMENT)
-                .addToBackStack(null)
-                .commit()
+        launchFragment(fragment, TAG_FILM_PAGE_FRAGMENT)
     }
 
     fun showTimePickerDialog() {
