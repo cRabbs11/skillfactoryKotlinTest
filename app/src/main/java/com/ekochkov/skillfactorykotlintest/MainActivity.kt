@@ -16,6 +16,9 @@ import java.util.*
 
 private const val TAG_HOME_FRAGMENT = "home_fragment"
 private const val TAG_FILM_PAGE_FRAGMENT = "film_page_fragment"
+private const val TAG_FAV_FRAGMENT = "home_fragment"
+private const val TAG_LATER_FRAGMENT = "later_fragment"
+private const val TAG_COMPILE_FRAGMENT = "compile_fragment"
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
+                    launchHomeFragment()
                     true
                 }
                 R.id.compile -> {
@@ -85,11 +89,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getExistFragmentByTag(tag: String): Fragment? {
+    private fun getExistFragmentByTag(tag: String): Fragment? {
         return supportFragmentManager.findFragmentByTag(tag)
     }
 
-    fun launchFragment(fragment: Fragment, tag: String?) {
+    private fun launchFragment(fragment: Fragment, tag: String?) {
         supportFragmentManager
                 .beginTransaction()
                 .add(R.id.nav_host_fragment, fragment, TAG_HOME_FRAGMENT)
@@ -98,8 +102,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun launchHomeFragment() {
-        val fragment = HomeFragment()
-        launchFragment(fragment, null)
+        val fragment = getExistFragmentByTag(TAG_HOME_FRAGMENT)
+        launchFragment(fragment?: HomeFragment(), TAG_HOME_FRAGMENT)
     }
 
     fun launchFavoritesFragment() {
