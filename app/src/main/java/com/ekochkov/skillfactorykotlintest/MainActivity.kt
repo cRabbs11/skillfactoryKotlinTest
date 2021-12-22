@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     private fun launchFragment(fragment: Fragment, tag: String?) {
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.nav_host_fragment, fragment, TAG_HOME_FRAGMENT)
+                .replace(R.id.nav_host_fragment, fragment, tag)
                 .addToBackStack(tag)
                 .commit()
     }
