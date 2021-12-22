@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
+                R.id.home -> {
+                    true
+                }
                 R.id.compile -> {
                     showToast(resources.getString(R.string.compilations))
                     //if (binding.cardView5.alpha==1F) {
