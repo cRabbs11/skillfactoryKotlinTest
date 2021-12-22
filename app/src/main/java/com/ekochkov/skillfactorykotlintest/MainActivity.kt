@@ -16,7 +16,7 @@ import java.util.*
 
 private const val TAG_HOME_FRAGMENT = "home_fragment"
 private const val TAG_FILM_PAGE_FRAGMENT = "film_page_fragment"
-private const val TAG_FAV_FRAGMENT = "home_fragment"
+private const val TAG_FAV_FRAGMENT = "fav_fragment"
 private const val TAG_LATER_FRAGMENT = "later_fragment"
 private const val TAG_COMPILE_FRAGMENT = "compile_fragment"
 
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, fragment, tag)
-                .addToBackStack(tag)
+                .addToBackStack(null)
                 .commit()
     }
 
