@@ -23,11 +23,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainRecyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.nav_host_fragment, HomeFragment(), TAG_HOME_FRAGMENT)
-            .addToBackStack(null)
-            .commit()
+        launchHomeFragment()
 
         //binding.container!!.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         //binding.container!!.layoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(this, R.animator.sample_animator))
@@ -83,6 +79,17 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    fun launchHomeFragment() {
+
+        val fragment = HomeFragment()
+
+        supportFragmentManager
+                .beginTransaction()
+                .add(R.id.nav_host_fragment, fragment, TAG_HOME_FRAGMENT)
+                .addToBackStack(null)
+                .commit()
     }
 
     fun launchFavoritesFragment() {
