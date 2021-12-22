@@ -85,6 +85,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun getExistFragmentByTag(tag: String): Fragment? {
+        return supportFragmentManager.findFragmentByTag(tag)
+    }
+
     fun launchFragment(fragment: Fragment, tag: String?) {
         supportFragmentManager
                 .beginTransaction()
