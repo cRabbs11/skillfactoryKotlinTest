@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/drawable_background_orange_white_green">
+    android:background="@drawable/background_white_gray">
 
     <fragment
         android:name="androidx.navigation.fragment.NavHostFragment"
