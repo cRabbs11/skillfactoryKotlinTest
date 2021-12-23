@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.later -> {
                     showToast(resources.getString(R.string.later))
+                    launchLaterFragment()
                     //ObjectAnimator.ofFloat(binding.imageView3, View.SCALE_Y, 0.5F, 1F).start()
                     true
                 }
@@ -115,6 +116,11 @@ class MainActivity : AppCompatActivity() {
     fun launchFavoritesFragment() {
         val fragment = getExistFragmentByTag(TAG_FAV_FRAGMENT)
         launchFragment(fragment?: FavoritesFragment(), TAG_FAV_FRAGMENT)
+    }
+
+    fun launchLaterFragment() {
+        val fragment = getExistFragmentByTag(TAG_LATER_FRAGMENT)
+        launchFragment(fragment?: FavoritesFragment(), TAG_LATER_FRAGMENT)
     }
 
     fun launchFilmPageFragment(film: Film) {
