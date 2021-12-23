@@ -29,18 +29,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
 
-    init {
-        val slide = Slide(Gravity.START).addTarget(R.id.home_fragment_root)
-        val fade = Fade().addTarget(R.id.home_fragment_root)
-        val transition = TransitionSet().apply {
-            addTransition(slide)
-            addTransition(fade)
-            duration = 250
-        }
-        exitTransition = transition
-        reenterTransition = transition
-    }
-
     private lateinit var adapter: FilmListAdapter
     private lateinit var  binding: FragmentHomeBinding
     private var isFragmentCreate = false
@@ -60,27 +48,12 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val scene = Scene.getSceneForLayout(binding.homeFragmentRoot, R.layout.merge_home_screen_scene, requireContext())
-
-        val searchSlide = Slide(Gravity.START).addTarget(R.id.search_view)
-        val recyclerSlide = Slide(Gravity.END).addTarget(R.id.recycler_view)
-        val myTransition = TransitionSet().apply {
-            addTransition(searchSlide)
-            addTransition(recyclerSlide)
-            duration = 350
-        }
-
+        AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 1)
         if (isFragmentCreate) {
-            TransitionManager.go(scene, myTransition)
             isFragmentCreate = false
-        } else {
-            TransitionManager.go(scene)
         }
 
-        val sceneBinding = MergeHomeScreenSceneBinding.bind(scene.sceneRoot)
-
-        sceneBinding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -91,8 +64,8 @@ class HomeFragment : Fragment() {
             }
 
         })
-        sceneBinding.searchView.setOnClickListener {
-            sceneBinding.searchView.isIconified = false
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
         }
 
         adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
@@ -102,14 +75,14 @@ class HomeFragment : Fragment() {
         })
 
         val parallaxPosterDecorator = OffsetFilmItemDecoration()
-        sceneBinding.recyclerView.itemAnimator = ItemFilmAnimator(requireContext())
-        sceneBinding.recyclerView.adapter = adapter
-        sceneBinding.recyclerView.addItemDecoration(parallaxPosterDecorator)
-        sceneBinding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.recyclerView.itemAnimator = ItemFilmAnimator(requireContext())
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(parallaxPosterDecorator)
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (sceneBinding.recyclerView.childCount > 3) {
-                    val view = sceneBinding.recyclerView.getChildAt(2)
+                if (binding.recyclerView.childCount > 3) {
+                    val view = binding.recyclerView.getChildAt(2)
                 }
             }
         })
