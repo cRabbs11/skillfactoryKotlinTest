@@ -7,12 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.airbnb.lottie.LottieAnimationView
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import java.util.*
@@ -52,31 +49,15 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.compile -> {
-                    showToast(resources.getString(R.string.compilations))
                     launchCompilesFragment()
-                    //if (binding.cardView5.alpha==1F) {
-                    //    binding.cardView5.animate()
-                    //            .setDuration(150)
-                    //            .alpha(0.5F)
-                    //} else {
-                    //    binding.cardView5.animate()
-                    //            .setDuration(150)
-                    //            .alpha(1F)
-                    //}
                     true
                 }
                 R.id.fav -> {
-                    showToast(resources.getString(R.string.favorites))
                     launchFavoritesFragment()
-                    //if (binding.container!!.childCount>0) {
-                    //    binding.container!!.removeViewAt(binding.container!!.childCount-1)
-                    //}
                     true
                 }
                 R.id.later -> {
-                    showToast(resources.getString(R.string.later))
                     launchLaterFragment()
-                    //ObjectAnimator.ofFloat(binding.imageView3, View.SCALE_Y, 0.5F, 1F).start()
                     true
                 }
                 else -> false
