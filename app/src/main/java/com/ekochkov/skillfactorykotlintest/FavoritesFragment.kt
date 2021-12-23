@@ -20,25 +20,6 @@ import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 
 class FavoritesFragment : Fragment() {
 
-    init {
-        val enterSlide = Slide(Gravity.END).addTarget(R.id.fav_fragment_root)
-        val exitSlide = Slide(Gravity.START).addTarget(R.id.fav_fragment_root)
-        val fade = Fade().addTarget(R.id.fav_fragment_root)
-        val enterTranistion = TransitionSet().apply {
-            addTransition(enterSlide)
-            addTransition(fade)
-            duration = 250
-        }
-        val exitTranistion = TransitionSet().apply {
-            addTransition(exitSlide)
-            addTransition(fade)
-            duration = 250
-        }
-        enterTransition = enterTranistion
-        returnTransition = enterTranistion
-        exitTransition = exitTranistion
-    }
-
     private lateinit var  binding: FragmentFavoritesBinding
 
     override fun onCreateView(
@@ -51,6 +32,7 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 3)
 
         val adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
@@ -79,7 +61,6 @@ class FavoritesFragment : Fragment() {
         adapter.filmList.clear()
         adapter.filmList.addAll(newFilmList)
         diffResult.dispatchUpdatesTo(adapter)
-
     }
 
     private fun showToast(text: String) {
