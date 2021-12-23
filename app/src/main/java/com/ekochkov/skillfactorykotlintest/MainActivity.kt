@@ -1,16 +1,19 @@
 package com.ekochkov.skillfactorykotlintest
 
+import android.animation.Animator
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextThemeWrapper
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.airbnb.lottie.LottieAnimationView
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import java.util.*
 
@@ -22,13 +25,22 @@ private const val TAG_COMPILE_FRAGMENT = "compile_fragment"
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainRecyclerViewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainRecyclerViewBinding.inflate(layoutInflater)
+        binding = ActivityMainRecyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        launchHomeFragment()
-
+        runSplashScreen(1, object: Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator?) {}
+            override fun onAnimationCancel(p0: Animator?) {}
+            override fun onAnimationRepeat(p0: Animator?) {}
+            override fun onAnimationEnd(p0: Animator?) {
+                binding.lottieAnim.visibility = View.GONE
+                launchHomeFragment()
+            }
+        })
         //binding.container!!.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         //binding.container!!.layoutTransition.setAnimator(LayoutTransition.APPEARING, AnimatorInflater.loadAnimator(this, R.animator.sample_animator))
 
@@ -75,6 +87,13 @@ class MainActivity : AppCompatActivity() {
     private var backPressed = 0L
     companion object {
         const val TIME_INTERVAL = 2000
+    }
+
+    private fun runSplashScreen(repeatCount: Int, listener: Animator.AnimatorListener) {
+        val lottieAnimationView: LottieAnimationView = binding.lottieAnim
+        lottieAnimationView.repeatCount = repeatCount
+        lottieAnimationView.playAnimation()
+        lottieAnimationView.addAnimatorListener(listener)
     }
 
     override fun onBackPressed() {
