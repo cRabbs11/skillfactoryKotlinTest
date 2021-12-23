@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun runDoubleBackPressedToExit() {
+    private fun runDoubleBackPressedToExit() {
         if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed()
             finish()
