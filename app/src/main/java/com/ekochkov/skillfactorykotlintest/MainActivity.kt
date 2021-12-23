@@ -78,17 +78,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1) {
-            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-                super.onBackPressed()
-                finish()
-            } else {
-                showToast(resources.getString(R.string.tap_again_to_exit))
-            }
-            backPressed = System.currentTimeMillis()
-        } else {
+        val lastFragmentIndex = supportFragmentManager.backStackEntryCount - 1
+        if (lastFragmentIndex<0) {
             super.onBackPressed()
+        } else {
+            val lastFragmentTag = supportFragmentManager.getBackStackEntryAt(lastFragmentIndex).name
+            if (lastFragmentIndex >= 1 && lastFragmentTag == TAG_FILM_PAGE_FRAGMENT) {
+                super.onBackPressed()
+            } else {
+                runDoubleBackPressedToExit()
+            }
         }
+    }
+
+    fun runDoubleBackPressedToExit() {
+        if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            super.onBackPressed()
+            finish()
+        } else {
+            showToast(resources.getString(R.string.tap_again_to_exit))
+        }
+        backPressed = System.currentTimeMillis()
     }
 
     private fun getExistFragmentByTag(tag: String): Fragment? {
@@ -99,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, fragment, tag)
-                .addToBackStack(null)
+                .addToBackStack(tag)
                 .commit()
     }
 
