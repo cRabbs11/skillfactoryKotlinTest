@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         val fragment = getExistFragmentByTag(TAG_LATER_FRAGMENT)
         //Фрагмент с примерами векторной анимации
         //val fragment = VectorAnimationFragment()
-        launchFragment(fragment?: FavoritesFragment(), TAG_LATER_FRAGMENT)
+        launchFragment(fragment?: LaterFragment(), TAG_LATER_FRAGMENT)
     }
 
     fun launchFilmPageFragment(film: Film) {
