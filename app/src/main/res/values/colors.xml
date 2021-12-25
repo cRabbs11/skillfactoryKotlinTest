@@ -15,11 +15,24 @@
     <color name="blue_light_1">#5946FF</color>
     <color name="blue">#1B00FF</color>
     <color name="yellow_bright">#FFF100</color>
+
+
     <color name="orange">#FF9C00</color>
 
     <color name="green_light">#00A67C</color>
     <color name="orange_bright">#FF9E00</color>
     <color name="red">#EF002A</color>
+
+    <color name="yellow_bright_1">#FFDF00</color>
+    <color name="pink_dark">#C30083</color>
+    <color name="blue_dark">#0F4FA8</color>
+
+    <color name="purple">#680BAB</color>
+    <color name="green_1">#74E600</color>
+    <color name="orange_light">#FFB800</color>
+
+    <color name="red_1">#FF0000</color>
+    <color name="green_2">#00CC00</color>
 
     <color name="green_dark">#006C51</color>
     <color name="orange_dark">#A66600</color>

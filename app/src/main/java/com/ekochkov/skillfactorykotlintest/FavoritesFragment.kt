@@ -20,26 +20,8 @@ import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 
 class FavoritesFragment : Fragment() {
 
-    init {
-        val enterSlide = Slide(Gravity.END).addTarget(R.id.fav_fragment_root)
-        val exitSlide = Slide(Gravity.START).addTarget(R.id.fav_fragment_root)
-        val fade = Fade().addTarget(R.id.fav_fragment_root)
-        val enterTranistion = TransitionSet().apply {
-            addTransition(enterSlide)
-            addTransition(fade)
-            duration = 250
-        }
-        val exitTranistion = TransitionSet().apply {
-            addTransition(exitSlide)
-            addTransition(fade)
-            duration = 250
-        }
-        enterTransition = enterTranistion
-        returnTransition = enterTranistion
-        exitTransition = exitTranistion
-    }
-
     private lateinit var  binding: FragmentFavoritesBinding
+    private lateinit var adapter: FilmListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,8 +33,9 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 3)
 
-        val adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
+        adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
                 (activity as MainActivity).launchFilmPageFragment(film)
             }
@@ -60,18 +43,20 @@ class FavoritesFragment : Fragment() {
 
         val parallaxPosterDecorator = OffsetFilmItemDecoration()
 
-        binding.recyclerView.itemAnimator = ItemFilmAnimator(requireContext())
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(parallaxPosterDecorator)
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                Log.d("BMTH", "dx: $dx dy: $dy")
-                if (recyclerView.childCount > 3) {
-                    val view = recyclerView.getChildAt(2)
+        binding.recyclerView.apply {
+            itemAnimator = ItemFilmAnimator(requireContext())
+            adapter = adapter
+            addItemDecoration(parallaxPosterDecorator)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    Log.d("BMTH", "dx: $dx dy: $dy")
+                    if (recyclerView.childCount > 3) {
+                        val view = recyclerView.getChildAt(2)
+                    }
                 }
-            }
-        })
+            })
+        }
 
         val newFilmList = FilmRepository.getFilmListInFav()
         val diff = FilmDiff(adapter.filmList, newFilmList)
@@ -79,7 +64,6 @@ class FavoritesFragment : Fragment() {
         adapter.filmList.clear()
         adapter.filmList.addAll(newFilmList)
         diffResult.dispatchUpdatesTo(adapter)
-
     }
 
     private fun showToast(text: String) {

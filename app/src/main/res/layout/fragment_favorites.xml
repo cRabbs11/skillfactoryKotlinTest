@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fav_fragment_root"
+    android:background="@drawable/background_yellow_pink_blue"
+    android:visibility="invisible"
     tools:context=".HomeFragment">
 
     <TextView
