@@ -21,6 +21,7 @@ import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 class FavoritesFragment : Fragment() {
 
     private lateinit var  binding: FragmentFavoritesBinding
+    private lateinit var adapter: FilmListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +35,7 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 3)
 
-        val adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
+        adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
                 (activity as MainActivity).launchFilmPageFragment(film)
             }
@@ -42,18 +43,20 @@ class FavoritesFragment : Fragment() {
 
         val parallaxPosterDecorator = OffsetFilmItemDecoration()
 
-        binding.recyclerView.itemAnimator = ItemFilmAnimator(requireContext())
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(parallaxPosterDecorator)
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                Log.d("BMTH", "dx: $dx dy: $dy")
-                if (recyclerView.childCount > 3) {
-                    val view = recyclerView.getChildAt(2)
+        binding.recyclerView.apply {
+            itemAnimator = ItemFilmAnimator(requireContext())
+            adapter = adapter
+            addItemDecoration(parallaxPosterDecorator)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    Log.d("BMTH", "dx: $dx dy: $dy")
+                    if (recyclerView.childCount > 3) {
+                        val view = recyclerView.getChildAt(2)
+                    }
                 }
-            }
-        })
+            })
+        }
 
         val newFilmList = FilmRepository.getFilmListInFav()
         val diff = FilmDiff(adapter.filmList, newFilmList)

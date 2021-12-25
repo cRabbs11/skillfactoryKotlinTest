@@ -75,18 +75,19 @@ class HomeFragment : Fragment() {
         })
 
         val parallaxPosterDecorator = OffsetFilmItemDecoration()
-        binding.recyclerView.itemAnimator = ItemFilmAnimator(requireContext())
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(parallaxPosterDecorator)
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (binding.recyclerView.childCount > 3) {
-                    val view = binding.recyclerView.getChildAt(2)
+        binding.recyclerView.apply {
+            itemAnimator = ItemFilmAnimator(requireContext())
+            adapter = adapter
+            addItemDecoration(parallaxPosterDecorator)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (binding.recyclerView.childCount > 3) {
+                        val view = binding.recyclerView.getChildAt(2)
+                    }
                 }
-            }
-        })
-
+            })
+        }
         updateRecyclerView(FilmRepository.getFilmList())
     }
 
