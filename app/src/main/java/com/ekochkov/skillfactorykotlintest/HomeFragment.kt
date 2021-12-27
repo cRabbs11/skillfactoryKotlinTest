@@ -2,7 +2,7 @@ package com.ekochkov.skillfactorykotlintest
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
+
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.*
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentHomeBinding
-import com.ekochkov.skillfactorykotlintest.databinding.MergeHomeScreenSceneBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 
@@ -29,7 +28,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomeFragment : Fragment() {
 
-    private lateinit var adapter: FilmListAdapter
+    private lateinit var filmAdapter: FilmListAdapter
     private lateinit var  binding: FragmentHomeBinding
     private var isFragmentCreate = false
 
@@ -68,7 +67,7 @@ class HomeFragment : Fragment() {
             binding.searchView.isIconified = false
         }
 
-        adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
+        filmAdapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
                 (activity as MainActivity).launchFilmPageFragment(film)
             }
@@ -77,7 +76,7 @@ class HomeFragment : Fragment() {
         val parallaxPosterDecorator = OffsetFilmItemDecoration()
         binding.recyclerView.apply {
             itemAnimator = ItemFilmAnimator(requireContext())
-            adapter = adapter
+            adapter = filmAdapter
             addItemDecoration(parallaxPosterDecorator)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -101,11 +100,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateRecyclerView(films: ArrayList<Film>) {
-        val diff = FilmDiff(adapter.filmList, films)
+        val diff = FilmDiff(filmAdapter.filmList, films)
         val diffResult = DiffUtil.calculateDiff(diff)
-        adapter.filmList.clear()
-        adapter.filmList.addAll(films)
-        diffResult.dispatchUpdatesTo(adapter)
+        filmAdapter.filmList.clear()
+        filmAdapter.filmList.addAll(films)
+        diffResult.dispatchUpdatesTo(filmAdapter)
     }
 
     companion object {

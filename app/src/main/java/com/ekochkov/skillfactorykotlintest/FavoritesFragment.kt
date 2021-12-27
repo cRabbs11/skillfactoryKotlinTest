@@ -21,7 +21,7 @@ import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 class FavoritesFragment : Fragment() {
 
     private lateinit var  binding: FragmentFavoritesBinding
-    private lateinit var adapter: FilmListAdapter
+    private lateinit var filmAdapter: FilmListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,7 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 3)
 
-        adapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
+        filmAdapter = FilmListAdapter(object : FilmListAdapter.OnItemClickListener {
             override fun onClick(film: Film) {
                 (activity as MainActivity).launchFilmPageFragment(film)
             }
@@ -45,7 +45,7 @@ class FavoritesFragment : Fragment() {
 
         binding.recyclerView.apply {
             itemAnimator = ItemFilmAnimator(requireContext())
-            adapter = adapter
+            adapter = filmAdapter
             addItemDecoration(parallaxPosterDecorator)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -59,11 +59,11 @@ class FavoritesFragment : Fragment() {
         }
 
         val newFilmList = FilmRepository.getFilmListInFav()
-        val diff = FilmDiff(adapter.filmList, newFilmList)
+        val diff = FilmDiff(filmAdapter.filmList, newFilmList)
         val diffResult = DiffUtil.calculateDiff(diff)
-        adapter.filmList.clear()
-        adapter.filmList.addAll(newFilmList)
-        diffResult.dispatchUpdatesTo(adapter)
+        filmAdapter.filmList.clear()
+        filmAdapter.filmList.addAll(newFilmList)
+        diffResult.dispatchUpdatesTo(filmAdapter)
     }
 
     private fun showToast(text: String) {
