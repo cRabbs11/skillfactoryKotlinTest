@@ -17,8 +17,8 @@ import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 class FilmPageFragment : Fragment() {
 
     init {
-        val slide = Slide(Gravity.END).addTarget(R.id.film_page_fragment_container)
-        val fade = Fade().addTarget(R.id.film_page_fragment_container)
+        val slide = Slide(Gravity.END).addTarget(R.id.film_page_container)
+        val fade = Fade().addTarget(R.id.film_page_container)
         val tranistion = TransitionSet().apply {
             addTransition(slide)
             addTransition(fade)
