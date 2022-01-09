@@ -98,6 +98,11 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         endProgressRingAngle = value*progressRingAngleCoef
     }
 
+    override fun onDraw(canvas: Canvas) {
+        drawProgressRing(canvas)
+        drawText(canvas)
+    }
+
     private fun drawText(canvas: Canvas) {
         val message = String.format("%.1f", progressValue / 10f)
         //Получаем ширину и высоту текста, чтобы компенсировать их при отрисовке, чтобы текст был
