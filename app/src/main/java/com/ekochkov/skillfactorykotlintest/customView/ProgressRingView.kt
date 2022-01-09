@@ -16,6 +16,9 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private lateinit var ratingTextPaint : Paint
     private lateinit var backgroundPaint : Paint
 
+    private var centerX: Float = 0f
+    private var centerY: Float = 0f
+
     private val progressRingAngleCoef = 3.6f
     private val zeroRingAngle = 0f
     private val startProgressRingAngle = -90f
@@ -33,6 +36,30 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
 
         initPaint()
     }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        //Считаем полный размер с паддингами
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec) + paddingLeft + paddingRight
+
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec) + paddingBottom + paddingTop
+
+        val chosenWidth = chooseDimension(widthMode, widthSize)
+        val chosenHeight = chooseDimension(heightMode, heightSize)
+
+        val minSide = Math.min(chosenWidth, chosenHeight)
+        centerX = minSide.div(2f)
+        centerY = minSide.div(2f)
+
+        setMeasuredDimension(minSide, minSide)
+    }
+
+    private fun chooseDimension(mode: Int, size: Int) =
+            when (mode) {
+                MeasureSpec.AT_MOST, MeasureSpec.EXACTLY -> size
+                else -> 300
+            }
 
     private fun initPaint() {
         ratingRingPaint = Paint().apply {
