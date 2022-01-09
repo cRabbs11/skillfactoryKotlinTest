@@ -16,6 +16,7 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private lateinit var ratingTextPaint : Paint
     private lateinit var backgroundPaint : Paint
 
+    private var radius = 0f
     private var centerX: Float = 0f
     private var centerY: Float = 0f
 
@@ -53,6 +54,12 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         centerY = minSide.div(2f)
 
         setMeasuredDimension(minSide, minSide)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        if (width<height) {
+            radius = width / 2f
+        } else { radius = height / 2f}
     }
 
     private fun chooseDimension(mode: Int, size: Int) =
