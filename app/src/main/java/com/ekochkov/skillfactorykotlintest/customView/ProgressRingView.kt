@@ -13,6 +13,7 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
 
     private var progressValue: Int
     private var ringStrokeValue: Float
+    private var isAnimate = false
 
     private lateinit var ratingRingPaint : Paint
     private lateinit var ratingTextPaint : Paint
@@ -29,13 +30,16 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private val zeroRingAngle = 0f
     private val startProgressRingAngle = -90f
     private var endProgressRingAngle = zeroRingAngle
+    private var animateProgressRingAngle = zeroRingAngle
+    private var animateSpeed = 5f
 
     init {
-        val attributes = context.theme.obtainStyledAttributes(attributeSet, R.styleable.FilmRatingView, 0, 0)
+        val attributes = context.theme.obtainStyledAttributes(attributeSet, R.styleable.ProgressRingView, 0, 0)
 
         try {
             progressValue = attributes.getInt(R.styleable.ProgressRingView_progressValue, 0)
             ringStrokeValue = attributes.getFloat(R.styleable.ProgressRingView_ringStrokeValue, 10f)
+            isAnimate = attributes.getBoolean(R.styleable.ProgressRingView_isAnimateValue, false)
         } finally {
             attributes.recycle()
         }
@@ -133,7 +137,14 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         canvas.translate(centerX, centerY)
         ring.set(-scale, -scale, scale, scale)
         canvas.drawCircle(0f, 0f, radius, backgroundPaint)
-        canvas.drawArc(ring, startProgressRingAngle, endProgressRingAngle, false, ratingRingPaint)
+
+        if (isAnimate) {
+            animateProgressRingAngle+=animateSpeed
+            canvas.drawArc(ring, startProgressRingAngle, animateProgressRingAngle, false, ratingRingPaint)
+            if (animateProgressRingAngle<endProgressRingAngle) { invalidate() }
+        } else {
+            canvas.drawArc(ring, startProgressRingAngle, endProgressRingAngle, false, ratingRingPaint)
+        }
         //Восстанавливаем канвас
         canvas.restore()
     }
