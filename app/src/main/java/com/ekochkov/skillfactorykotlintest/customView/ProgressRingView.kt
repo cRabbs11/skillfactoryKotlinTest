@@ -98,6 +98,28 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         endProgressRingAngle = value*progressRingAngleCoef
     }
 
+    private fun drawText(canvas: Canvas) {
+        val message = String.format("%.1f", progressValue / 10f)
+        //Получаем ширину и высоту текста, чтобы компенсировать их при отрисовке, чтобы текст был
+        //точно в центре
+        val widths = FloatArray(message.length)
+        ratingTextPaint.getTextWidths(message, widths)
+        ratingTextPaint.textSize = getTextSize()
+
+        var advance = 0f
+        for (width in widths) advance += width
+        //Рисуем наш текст
+        canvas.drawText(message, centerX - advance / 2, centerY  + advance / 4, ratingTextPaint)
+    }
+
+    private fun getTextSize(): Float {
+        return if (width>height) {
+            height / 3f
+        } else {
+            width / 3f
+        }
+    }
+
     private fun drawProgressRing(canvas: Canvas) {
         //Здесь мы можем регулировать размер нашего кольца
         val scale = radius * ringSizeCoef
