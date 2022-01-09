@@ -1,7 +1,9 @@
 package com.ekochkov.skillfactorykotlintest.customView
 
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.RectF
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
@@ -15,6 +17,9 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private lateinit var ratingRingPaint : Paint
     private lateinit var ratingTextPaint : Paint
     private lateinit var backgroundPaint : Paint
+
+    private var ring = RectF()
+    private val ringSizeCoef = 0.8f
 
     private var radius = 0f
     private var centerX: Float = 0f
@@ -91,5 +96,18 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
 
     private fun calculateEndRatingLineValue(value: Int) {
         endProgressRingAngle = value*progressRingAngleCoef
+    }
+
+    private fun drawProgressRing(canvas: Canvas) {
+        //Здесь мы можем регулировать размер нашего кольца
+        val scale = radius * ringSizeCoef
+        //Сохраняем канвас
+        canvas.save()
+        canvas.translate(centerX, centerY)
+        ring.set(-scale, -scale, scale, scale)
+        canvas.drawCircle(0f, 0f, radius, backgroundPaint)
+        canvas.drawArc(ring, startProgressRingAngle, endProgressRingAngle, false, ratingRingPaint)
+        //Восстанавливаем канвас
+        canvas.restore()
     }
 }
