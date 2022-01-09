@@ -83,6 +83,7 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
             style = Paint.Style.STROKE
             strokeWidth = ringStrokeValue
             isAntiAlias = true
+            color = getPaintColor(progressValue)
         }
 
         ratingTextPaint = Paint().apply {
@@ -90,6 +91,7 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
             style = Paint.Style.FILL_AND_STROKE
             textSize = 60f
             typeface = Typeface.DEFAULT_BOLD
+            color = getPaintColor(progressValue)
         }
 
         backgroundPaint = Paint().apply {
@@ -152,6 +154,14 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     fun setProgress(value: Int) {
         progressValue = value
         calculateEndRatingLineValue(value)
+        initPaint()
         invalidate()
+    }
+
+    private fun getPaintColor(progress: Int): Int = when(progress) {
+        in 0 .. 25 -> context.getColor(R.color.red_1)
+        in 26 .. 50 -> context.getColor(R.color.orange_light)
+        in 51 .. 75 -> context.getColor(R.color.yellow)
+        else -> context.getColor(R.color.green)
     }
 }
