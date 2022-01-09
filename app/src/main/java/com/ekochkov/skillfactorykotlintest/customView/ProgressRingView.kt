@@ -16,6 +16,11 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private lateinit var ratingTextPaint : Paint
     private lateinit var backgroundPaint : Paint
 
+    private val progressRingAngleCoef = 3.6f
+    private val zeroRingAngle = 0f
+    private val startProgressRingAngle = -90f
+    private var endProgressRingAngle = zeroRingAngle
+
     init {
         val attributes = context.theme.obtainStyledAttributes(attributeSet, R.styleable.FilmRatingView, 0, 0)
 
@@ -48,5 +53,9 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
             color = context.getColor(R.color.gray)
             style = Paint.Style.FILL_AND_STROKE
         }
+    }
+
+    private fun calculateEndRatingLineValue(value: Int) {
+        endProgressRingAngle = value*progressRingAngleCoef
     }
 }
