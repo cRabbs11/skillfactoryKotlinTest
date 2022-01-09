@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ProgreesRingView">
+    <declare-styleable name="ProgressRingView">
         <attr name="progressValue" format="integer"/>
         <attr name="ringStrokeValue" format="float"/>
     </declare-styleable>
