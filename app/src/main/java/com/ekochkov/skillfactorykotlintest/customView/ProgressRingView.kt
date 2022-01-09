@@ -132,4 +132,10 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         //Восстанавливаем канвас
         canvas.restore()
     }
+
+    fun setProgress(value: Int) {
+        progressValue = value
+        calculateEndRatingLineValue(value)
+        invalidate()
+    }
 }
