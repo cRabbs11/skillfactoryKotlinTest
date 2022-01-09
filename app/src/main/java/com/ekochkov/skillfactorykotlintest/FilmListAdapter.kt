@@ -3,10 +3,9 @@ package com.ekochkov.skillfactorykotlintest
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ekochkov.skillfactorykotlintest.databinding.FilmItemLayoutBinding
 
 class FilmListAdapter(private val onClickListener: OnItemClickListener) : RecyclerView.Adapter<FilmItemHolder>() {
 
@@ -20,13 +19,13 @@ class FilmListAdapter(private val onClickListener: OnItemClickListener) : Recycl
 
     override fun onBindViewHolder(holder: FilmItemHolder, position: Int) {
         val film = filmList[position]
-        holder.titleText.text = film.title
-        holder.descrText.text = film.descr
+        holder.binding.titleText.text = film.title
+        holder.binding.descrText.text = film.descr
 
         Glide.with(holder.itemView)
             .load(film.poster)
             .centerCrop()
-            .into(holder.poster)
+            .into(holder.binding.imagePoster)
 
         holder.itemView.setOnClickListener {
             onClickListener.onClick(film)
@@ -43,15 +42,6 @@ class FilmListAdapter(private val onClickListener: OnItemClickListener) : Recycl
 }
 
 class FilmItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
-    val titleText: TextView
-    val descrText: TextView
-    val poster: ImageView
-
-    init {
-        titleText = itemView.findViewById(R.id.title_text)
-        descrText = itemView.findViewById(R.id.descr_text)
-        poster = itemView.findViewById(R.id.image_poster)
-    }
+    val binding = FilmItemLayoutBinding.bind(itemView)
 }
 
