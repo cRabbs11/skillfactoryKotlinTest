@@ -40,6 +40,15 @@
             app:layout_constraintTop_toBottomOf="@id/title_text"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+        <com.ekochkov.skillfactorykotlintest.customView.ProgressRingView
+            android:id="@+id/film_rating"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:ringStrokeValue="15"
+            app:isAnimateValue="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

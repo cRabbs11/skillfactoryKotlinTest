@@ -21,6 +21,7 @@ class FilmListAdapter(private val onClickListener: OnItemClickListener) : Recycl
         val film = filmList[position]
         holder.binding.titleText.text = film.title
         holder.binding.descrText.text = film.descr
+        holder.binding.filmRating.setProgress(film.rating)
 
         Glide.with(holder.itemView)
             .load(film.poster)
