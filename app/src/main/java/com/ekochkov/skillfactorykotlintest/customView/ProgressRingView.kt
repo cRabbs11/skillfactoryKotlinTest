@@ -11,6 +11,15 @@ import com.ekochkov.skillfactorykotlintest.R
 
 class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null): View(context, attributeSet) {
 
+    companion object {
+        private const val DEFAULT_PROGRESS_VALUE = 0
+        private const val DEFAULT_RING_STROKE_VALUE = 10f
+        private const val DEFAULT_IS_ANIMATE_VALUE = false
+        private const val DEFAULT_STYLE_ATTR_VALUE = 0
+        private const val DEFAULT_STYLE_RES_VALUE = 0
+        private const val DEFAULT_TEXT_SIZE_VALUE = 60f
+    }
+
     private var progressValue: Int
     private var ringStrokeValue: Float
     private var isAnimate = false
@@ -34,12 +43,12 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private var animateSpeed = 5f
 
     init {
-        val attributes = context.theme.obtainStyledAttributes(attributeSet, R.styleable.ProgressRingView, 0, 0)
+        val attributes = context.theme.obtainStyledAttributes(attributeSet, R.styleable.ProgressRingView, DEFAULT_STYLE_ATTR_VALUE, DEFAULT_STYLE_RES_VALUE)
 
         try {
-            progressValue = attributes.getInt(R.styleable.ProgressRingView_progressValue, 0)
-            ringStrokeValue = attributes.getFloat(R.styleable.ProgressRingView_ringStrokeValue, 10f)
-            isAnimate = attributes.getBoolean(R.styleable.ProgressRingView_isAnimateValue, false)
+            progressValue = attributes.getInt(R.styleable.ProgressRingView_progressValue, DEFAULT_PROGRESS_VALUE)
+            ringStrokeValue = attributes.getFloat(R.styleable.ProgressRingView_ringStrokeValue, DEFAULT_RING_STROKE_VALUE)
+            isAnimate = attributes.getBoolean(R.styleable.ProgressRingView_isAnimateValue, DEFAULT_IS_ANIMATE_VALUE)
         } finally {
             attributes.recycle()
         }
@@ -89,7 +98,7 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         ratingTextPaint = Paint().apply {
             color = context.getColor(R.color.green_dark)
             style = Paint.Style.FILL_AND_STROKE
-            textSize = 60f
+            textSize = DEFAULT_TEXT_SIZE_VALUE
             typeface = Typeface.DEFAULT_BOLD
             color = getPaintColor(progressValue)
         }
