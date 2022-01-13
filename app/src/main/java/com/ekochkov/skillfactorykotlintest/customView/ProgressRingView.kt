@@ -1,5 +1,6 @@
 package com.ekochkov.skillfactorykotlintest.customView
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -7,6 +8,7 @@ import android.graphics.RectF
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import com.ekochkov.skillfactorykotlintest.R
 
 class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null): View(context, attributeSet) {
@@ -18,6 +20,7 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         private const val DEFAULT_STYLE_ATTR_VALUE = 0
         private const val DEFAULT_STYLE_RES_VALUE = 0
         private const val DEFAULT_TEXT_SIZE_VALUE = 60f
+        private const val DEFAULT_ANIMATE_VALUE = 1000L
     }
 
     private var progressValue: Int
@@ -39,8 +42,15 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private val zeroRingAngle = 0f
     private val startProgressRingAngle = -90f
     private var endProgressRingAngle = zeroRingAngle
-    private var animateProgressRingAngle = zeroRingAngle
-    private var animateSpeed = 5f
+    private var progressRingAngle = zeroRingAngle
+    private val progressRingAnimator = ValueAnimator.ofFloat().apply {
+        duration = DEFAULT_ANIMATE_VALUE
+        interpolator = AccelerateDecelerateInterpolator()
+        addUpdateListener {
+            progressRingAngle = it.animatedValue as Float
+            invalidate()
+        }
+    }
 
     init {
         val attributes = context.theme.obtainStyledAttributes(attributeSet, R.styleable.ProgressRingView, DEFAULT_STYLE_ATTR_VALUE, DEFAULT_STYLE_RES_VALUE)
@@ -148,23 +158,28 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         canvas.translate(centerX, centerY)
         ring.set(-scale, -scale, scale, scale)
         canvas.drawCircle(0f, 0f, radius, backgroundPaint)
-
-        if (isAnimate) {
-            animateProgressRingAngle+=animateSpeed
-            canvas.drawArc(ring, startProgressRingAngle, animateProgressRingAngle, false, ratingRingPaint)
-            if (animateProgressRingAngle<endProgressRingAngle) { invalidate() }
-        } else {
-            canvas.drawArc(ring, startProgressRingAngle, endProgressRingAngle, false, ratingRingPaint)
-        }
+        canvas.drawArc(ring, startProgressRingAngle, progressRingAngle, false, ratingRingPaint)
         //Восстанавливаем канвас
         canvas.restore()
+    }
+
+    fun runAnimate() {
+        with(progressRingAnimator) {
+            setFloatValues(0f, endProgressRingAngle)
+            start()
+        }
     }
 
     fun setProgress(value: Int) {
         progressValue = value
         calculateEndRatingLineValue(value)
         initPaint()
-        invalidate()
+        if (isAnimate) {
+            runAnimate()
+        } else {
+            progressRingAngle = endProgressRingAngle
+            invalidate()
+        }
     }
 
     private fun getPaintColor(progress: Int): Int = when(progress) {
