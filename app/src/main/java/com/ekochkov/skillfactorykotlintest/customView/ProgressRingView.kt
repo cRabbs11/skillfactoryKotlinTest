@@ -21,6 +21,13 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         private const val DEFAULT_STYLE_RES_VALUE = 0
         private const val DEFAULT_TEXT_SIZE_VALUE = 60f
         private const val DEFAULT_ANIMATE_VALUE = 1000L
+        private const val ZERO_ANGLE_VALUE = 1000f
+        private const val DEFAULT_CENTER_X_VALUE = 0f
+        private const val DEFAULT_CENTER_Y_VALUE = 0f
+        private const val DEFAULT_RADIUS_VALUE = 0f
+        private const val START_PROGRESS_RING_POSITION_ANGLE = -90f
+        private const val PROGRESS_RING_ANGLE_COEF = 3.6f
+        private const val RING_SIZE_COEF = 0.8f
     }
 
     private var progressValue: Int
@@ -32,17 +39,15 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
     private lateinit var backgroundPaint : Paint
 
     private var ring = RectF()
-    private val ringSizeCoef = 0.8f
 
-    private var radius = 0f
-    private var centerX: Float = 0f
-    private var centerY: Float = 0f
+    private var radius = DEFAULT_RADIUS_VALUE
+    private var centerX = DEFAULT_CENTER_X_VALUE
+    private var centerY = DEFAULT_CENTER_Y_VALUE
 
-    private val progressRingAngleCoef = 3.6f
-    private val zeroRingAngle = 0f
-    private val startProgressRingAngle = -90f
-    private var endProgressRingAngle = zeroRingAngle
-    private var progressRingAngle = zeroRingAngle
+    private val progressRingAngleCoef = PROGRESS_RING_ANGLE_COEF
+    private val startProgressRingAngle = START_PROGRESS_RING_POSITION_ANGLE
+    private var endProgressRingAngle = ZERO_ANGLE_VALUE
+    private var progressRingAngle = ZERO_ANGLE_VALUE
     private val progressRingAnimator = ValueAnimator.ofFloat().apply {
         duration = DEFAULT_ANIMATE_VALUE
         interpolator = AccelerateDecelerateInterpolator()
@@ -152,7 +157,7 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
 
     private fun drawProgressRing(canvas: Canvas) {
         //Здесь мы можем регулировать размер нашего кольца
-        val scale = radius * ringSizeCoef
+        val scale = radius * RING_SIZE_COEF
         //Сохраняем канвас
         canvas.save()
         canvas.translate(centerX, centerY)
