@@ -9,6 +9,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.content.res.use
 import com.ekochkov.skillfactorykotlintest.R
 
 class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null): View(context, attributeSet) {
@@ -30,8 +31,8 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
         private const val RING_SIZE_COEF = 0.8f
     }
 
-    private var progressValue: Int
-    private var ringStrokeValue: Float
+    private var progressValue = DEFAULT_PROGRESS_VALUE
+    private var ringStrokeValue = DEFAULT_RING_STROKE_VALUE
     private var isAnimate = false
 
     private lateinit var ratingRingPaint : Paint
@@ -59,13 +60,10 @@ class ProgressRingView @JvmOverloads constructor(context: Context, attributeSet:
 
     init {
         val attributes = context.theme.obtainStyledAttributes(attributeSet, R.styleable.ProgressRingView, DEFAULT_STYLE_ATTR_VALUE, DEFAULT_STYLE_RES_VALUE)
-
-        try {
-            progressValue = attributes.getInt(R.styleable.ProgressRingView_progressValue, DEFAULT_PROGRESS_VALUE)
-            ringStrokeValue = attributes.getFloat(R.styleable.ProgressRingView_ringStrokeValue, DEFAULT_RING_STROKE_VALUE)
-            isAnimate = attributes.getBoolean(R.styleable.ProgressRingView_isAnimateValue, DEFAULT_IS_ANIMATE_VALUE)
-        } finally {
-            attributes.recycle()
+        attributes.use {
+            progressValue = it.getInt(R.styleable.ProgressRingView_progressValue, DEFAULT_PROGRESS_VALUE)
+            ringStrokeValue = it.getFloat(R.styleable.ProgressRingView_ringStrokeValue, DEFAULT_RING_STROKE_VALUE)
+            isAnimate = it.getBoolean(R.styleable.ProgressRingView_isAnimateValue, DEFAULT_IS_ANIMATE_VALUE)
         }
 
         initPaint()
