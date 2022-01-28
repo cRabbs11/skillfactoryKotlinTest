@@ -1,8 +1,7 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Fade
-import androidx.transition.Slide
-import androidx.transition.TransitionSet
+import com.ekochkov.skillfactorykotlintest.*
+import com.ekochkov.skillfactorykotlintest.data.FilmRepository
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFavoritesBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
+import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.utils.AnimationHelper
+import com.ekochkov.skillfactorykotlintest.view.activities.MainActivity
 
 
 class FavoritesFragment : Fragment() {

@@ -1,10 +1,11 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.activities
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityFilmPageWithBottomSheetBinding
+import com.ekochkov.skillfactorykotlintest.domain.Film
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 

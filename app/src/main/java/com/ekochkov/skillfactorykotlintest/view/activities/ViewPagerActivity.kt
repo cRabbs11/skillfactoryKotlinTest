@@ -1,12 +1,14 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.activities
 
-import android.graphics.Color.red
 import android.os.Bundle
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.ekochkov.skillfactorykotlintest.domain.PagerItem
+import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityViewPagerBinding
 import com.ekochkov.skillfactorykotlintest.databinding.ViewPagerItemBinding
+import com.ekochkov.skillfactorykotlintest.view.rv_adapters.ViewPagerAdapter
 
 class ViewPagerActivity: AppCompatActivity() {
 

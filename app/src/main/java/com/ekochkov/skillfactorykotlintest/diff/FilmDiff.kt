@@ -1,9 +1,9 @@
 package com.ekochkov.skillfactorykotlintest.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import com.ekochkov.skillfactorykotlintest.Film
+import com.ekochkov.skillfactorykotlintest.domain.Film
 
-class FilmDiff(private val oldList: ArrayList<Film>,private val newList: ArrayList<Film>) : DiffUtil.Callback() {
+class FilmDiff(private val oldList: ArrayList<Film>, private val newList: ArrayList<Film>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size
     }

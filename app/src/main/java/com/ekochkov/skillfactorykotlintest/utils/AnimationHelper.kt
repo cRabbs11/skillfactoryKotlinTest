@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.utils
 
 import android.app.Activity
 import android.view.View

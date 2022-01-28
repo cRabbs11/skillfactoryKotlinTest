@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.activities
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator

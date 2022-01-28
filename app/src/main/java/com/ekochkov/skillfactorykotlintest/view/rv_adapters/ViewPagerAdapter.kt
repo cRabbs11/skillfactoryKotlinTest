@@ -1,8 +1,11 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.rv_adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ekochkov.skillfactorykotlintest.domain.PagerItem
+import com.ekochkov.skillfactorykotlintest.R
+import com.ekochkov.skillfactorykotlintest.view.viewholders.ViewPagerHolder
 
 class ViewPagerAdapter: RecyclerView.Adapter<ViewPagerHolder>() {
 

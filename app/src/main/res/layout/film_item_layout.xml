@@ -40,7 +40,7 @@
             app:layout_constraintTop_toBottomOf="@id/title_text"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <com.ekochkov.skillfactorykotlintest.customView.ProgressRingView
+        <com.ekochkov.skillfactorykotlintest.view.customviews.ProgressRingView
             android:id="@+id/film_rating"
             android:layout_width="@dimen/rating_view_size_small"
             android:layout_height="@dimen/rating_view_size_small"

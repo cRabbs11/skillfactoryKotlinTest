@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -12,9 +12,15 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.*
+import com.ekochkov.skillfactorykotlintest.FilmListAdapter
+import com.ekochkov.skillfactorykotlintest.ItemFilmAnimator
+import com.ekochkov.skillfactorykotlintest.data.FilmRepository
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentHomeBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
+import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.utils.AnimationHelper
+import com.ekochkov.skillfactorykotlintest.view.activities.MainActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
