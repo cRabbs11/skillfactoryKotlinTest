@@ -3,34 +3,19 @@ package com.ekochkov.skillfactorykotlintest.data
 import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.domain.Film
 
-object FilmRepository {
+class FilmRepository {
 
-    private val filmList = setFilms()
+    val filmList = setFilms()
 
-    fun getFilmList() : ArrayList<Film> {
-        return filmList
-    }
-
-    fun getFilmByTitleQuery(query: String): ArrayList<Film> {
-        val list = ArrayList<Film>()
-
-        filmList.forEach {
-            if (it.title.toLowerCase().contains(query.toLowerCase())) {
-                list.add(it)
-            }
-        }
-        return list
-    }
-
-    fun getFilmListInFav() : ArrayList<Film> {
-        val list = arrayListOf<Film>()
-        filmList.forEach {
-            if (it.isInFav) {
-                list.add(it)
-            }
-        }
-        return list
-    }
+    //fun getFilmListInFav() : ArrayList<Film> {
+    //    val list = arrayListOf<Film>()
+    //    filmList.forEach {
+    //        if (it.isInFav) {
+    //            list.add(it)
+    //        }
+    //    }
+    //    return list
+    //}
 
     private fun setFilms(): ArrayList<Film> {
         val films = ArrayList<Film>()
