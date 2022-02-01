@@ -7,16 +7,6 @@ class FilmRepository {
 
     val filmList = setFilms()
 
-    //fun getFilmListInFav() : ArrayList<Film> {
-    //    val list = arrayListOf<Film>()
-    //    filmList.forEach {
-    //        if (it.isInFav) {
-    //            list.add(it)
-    //        }
-    //    }
-    //    return list
-    //}
-
     private fun setFilms(): ArrayList<Film> {
         val films = ArrayList<Film>()
         films.add(
