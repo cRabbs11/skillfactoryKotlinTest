@@ -15,6 +15,10 @@ class HomeFragmentViewModel: ViewModel() {
 
     init {
         //val films = interactor.getFilmsDB()
+        getFilmsFromTmdb()
+    }
+
+    private fun getFilmsFromTmdb() {
         interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
             override fun onSuccess(films: List<Film>) {
                 filmListLiveData.postValue(films)
@@ -25,7 +29,6 @@ class HomeFragmentViewModel: ViewModel() {
             }
 
         })
-
     }
 
     interface ApiCallback {
