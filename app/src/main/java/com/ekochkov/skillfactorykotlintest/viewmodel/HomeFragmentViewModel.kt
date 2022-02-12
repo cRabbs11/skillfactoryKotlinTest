@@ -1,8 +1,10 @@
 package com.ekochkov.skillfactorykotlintest.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ekochkov.skillfactorykotlintest.App
+import com.ekochkov.skillfactorykotlintest.BuildConfig
 import com.ekochkov.skillfactorykotlintest.domain.Film
 
 class HomeFragmentViewModel: ViewModel() {
@@ -19,8 +21,10 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     private fun getFilmsFromTmdb() {
+        isWaitingRequest = true
         interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
             override fun onSuccess(films: List<Film>) {
+                tmdbFilmListPage++
                 val oldList = filmListLiveData.value
                 val newList = if (oldList!=null) {
                     oldList + films
@@ -30,8 +34,19 @@ class HomeFragmentViewModel: ViewModel() {
                 isWaitingRequest = false
             }
 
-            override fun onFailure() {}
+            override fun onFailure() {
+                isWaitingRequest = false
+            }
         })
+    }
+
+    fun getLastVisibleFilmInList(lastVisible: Int) {
+        if (filmListSize-INVISIBLE_FILMS_UNTIL_NEW_REQUEST<=lastVisible && !isWaitingRequest) {
+            if (BuildConfig.DEBUG) {
+                Log.d("TAG", "new getFilms request")
+            }
+            getFilmsFromTmdb()
+        }
     }
 
     interface ApiCallback {
