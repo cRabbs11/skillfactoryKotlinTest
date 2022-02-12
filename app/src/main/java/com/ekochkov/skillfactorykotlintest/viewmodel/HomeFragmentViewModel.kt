@@ -8,7 +8,10 @@ import com.ekochkov.skillfactorykotlintest.domain.Film
 class HomeFragmentViewModel: ViewModel() {
     val filmListLiveData = MutableLiveData<List<Film>>()
     private var tmdbFilmListPage = 1
+    private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 1
     private var interactor = App.instance.interactor
+    private var filmListSize = 0
+    private var isWaitingRequest = false
 
     init {
         //val films = interactor.getFilmsDB()
