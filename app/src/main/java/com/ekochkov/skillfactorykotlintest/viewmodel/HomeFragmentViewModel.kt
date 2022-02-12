@@ -21,13 +21,16 @@ class HomeFragmentViewModel: ViewModel() {
     private fun getFilmsFromTmdb() {
         interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
             override fun onSuccess(films: List<Film>) {
-                filmListLiveData.postValue(films)
+                val oldList = filmListLiveData.value
+                val newList = if (oldList!=null) {
+                    oldList + films
+                } else { films }
+                filmListLiveData.postValue(newList)
+                filmListSize = newList.size
+                isWaitingRequest = false
             }
 
-            override fun onFailure() {
-
-            }
-
+            override fun onFailure() {}
         })
     }
 
