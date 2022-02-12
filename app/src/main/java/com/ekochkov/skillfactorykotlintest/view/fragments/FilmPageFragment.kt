@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.ekochkov.skillfactorykotlintest.domain.Film
 import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
 
 
 class FilmPageFragment : Fragment() {
@@ -60,7 +61,7 @@ class FilmPageFragment : Fragment() {
         binding.includeContent.text.text = film.descr
         binding.toolbar.title = film.title
         Glide.with(requireContext())
-                .load(film.poster)
+                .load(TmdbApiConstants.IMAGES_URL + "w780" + film.poster)
                 .centerCrop()
                 .into(binding.image)
         //binding.image.setImageResource(film.poster)
