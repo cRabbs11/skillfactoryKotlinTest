@@ -6,16 +6,21 @@ import androidx.lifecycle.ViewModel
 import com.ekochkov.skillfactorykotlintest.App
 import com.ekochkov.skillfactorykotlintest.BuildConfig
 import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.domain.Interactor
+import javax.inject.Inject
 
 class HomeFragmentViewModel: ViewModel() {
     val filmListLiveData = MutableLiveData<List<Film>>()
     private var tmdbFilmListPage = 1
     private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 2
-    private var interactor = App.instance.interactor
     private var filmListSize = 0
     private var isWaitingRequest = false
 
+    @Inject
+    lateinit var interactor : Interactor
+
     init {
+        App.instance.dagger.inject(this)
         //val films = interactor.getFilmsDB()
         getFilmsFromTmdb()
     }
