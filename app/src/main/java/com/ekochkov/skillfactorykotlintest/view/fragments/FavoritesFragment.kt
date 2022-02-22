@@ -28,7 +28,7 @@ class FavoritesFragment : Fragment() {
     private lateinit var filmAdapter: FilmListAdapter
 
     private val viewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(FavoritesFragmentViewModel::class.java)
+        ViewModelProvider(this).get(FavoritesFragmentViewModel::class.java)
     }
 
     private var filmsDBInFav = listOf<Film>()
