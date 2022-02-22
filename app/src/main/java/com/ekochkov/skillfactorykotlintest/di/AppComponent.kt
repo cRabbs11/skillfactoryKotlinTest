@@ -3,6 +3,7 @@ package com.ekochkov.skillfactorykotlintest.di
 import com.ekochkov.skillfactorykotlintest.di.modules.DatabaseModule
 import com.ekochkov.skillfactorykotlintest.di.modules.DomainModule
 import com.ekochkov.skillfactorykotlintest.di.modules.RemoteModule
+import com.ekochkov.skillfactorykotlintest.viewmodel.FavoritesFragmentViewModel
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
 import dagger.Component
 import javax.inject.Singleton
@@ -19,4 +20,5 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(homeFragmentViewModel: HomeFragmentViewModel)
+    fun inject(favoritesFragmentViewModel: FavoritesFragmentViewModel)
 }
