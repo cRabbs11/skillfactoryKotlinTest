@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.activities
 
 import android.animation.Animator
 import android.app.DatePickerDialog
@@ -11,7 +11,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
+import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
+import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.view.fragments.*
 import java.util.*
 
 private const val TAG_HOME_FRAGMENT = "home_fragment"

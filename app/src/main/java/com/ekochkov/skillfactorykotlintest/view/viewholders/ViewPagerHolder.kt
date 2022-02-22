@@ -1,7 +1,8 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.ekochkov.skillfactorykotlintest.domain.PagerItem
 import com.ekochkov.skillfactorykotlintest.databinding.ViewPagerItemBinding
 
 

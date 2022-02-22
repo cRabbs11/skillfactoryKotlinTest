@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest.customView
+package com.ekochkov.skillfactorykotlintest.view.customviews
 
 import android.animation.ValueAnimator
 import android.content.Context

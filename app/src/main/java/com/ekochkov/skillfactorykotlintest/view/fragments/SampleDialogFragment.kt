@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle

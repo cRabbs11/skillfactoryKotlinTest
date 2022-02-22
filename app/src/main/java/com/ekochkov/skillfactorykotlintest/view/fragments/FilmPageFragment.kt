@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,8 @@ import androidx.transition.Fade
 import androidx.transition.Slide
 import androidx.transition.TransitionSet
 import com.bumptech.glide.Glide
+import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 
 

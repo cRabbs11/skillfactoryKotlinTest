@@ -1,4 +1,4 @@
-package com.ekochkov.skillfactorykotlintest
+package com.ekochkov.skillfactorykotlintest.view.fragments
 
 import android.os.Bundle
 import android.view.*
@@ -7,6 +7,7 @@ import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.fragment.app.Fragment
 import androidx.transition.*
+import com.ekochkov.skillfactorykotlintest.utils.AnimationHelper
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentLaterBinding
 
 class LaterFragment: Fragment() {
