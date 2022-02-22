@@ -1,14 +1,18 @@
 package com.ekochkov.skillfactorykotlintest.data.entity
 
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants.SERIALIZED_NAME_PAGE
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants.SERIALIZED_NAME_RESULTS
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants.SERIALIZED_NAME_TOTAL_PAGES
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants.SERIALIZED_NAME_TOTAL_RESULTS
 import com.google.gson.annotations.SerializedName
 
 data class PopularFilmsDataDTO(
-    @SerializedName("page")
+    @SerializedName(SERIALIZED_NAME_PAGE)
     val page: Int,
-    @SerializedName("results")
+    @SerializedName(SERIALIZED_NAME_RESULTS)
     val tmdbFilms: List<TmdbFilm>,
-    @SerializedName("total_pages")
+    @SerializedName(SERIALIZED_NAME_TOTAL_PAGES)
     val total_pages: Int,
-    @SerializedName("total_results")
+    @SerializedName(SERIALIZED_NAME_TOTAL_RESULTS)
     val total_results: Int
 )

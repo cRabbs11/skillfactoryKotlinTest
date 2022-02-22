@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit
 class App: Application() {
     lateinit var repo: FilmRepository
     lateinit var interactor: Interactor
+    private val CALL_TIMEOUT_MILLI_30 = 30L
 
     override fun onCreate() {
         super.onCreate()
@@ -21,8 +22,8 @@ class App: Application() {
         repo = FilmRepository()
 
         val okHttpClient = OkHttpClient.Builder()
-                .callTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
+                .callTimeout(CALL_TIMEOUT_MILLI_30, TimeUnit.SECONDS)
+                .readTimeout(CALL_TIMEOUT_MILLI_30, TimeUnit.SECONDS)
                 .addInterceptor(HttpLoggingInterceptor().apply {
                     if(BuildConfig.DEBUG) {
                         level = HttpLoggingInterceptor.Level.BASIC
