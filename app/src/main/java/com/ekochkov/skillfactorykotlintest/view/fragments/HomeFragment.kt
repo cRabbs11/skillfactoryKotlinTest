@@ -11,6 +11,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.*
 import com.ekochkov.skillfactorykotlintest.FilmListAdapter
@@ -67,7 +68,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.filmListLiveData.observe(viewLifecycleOwner, Observer<List<Film>> {
+        viewModel.filmListLiveData.observe(viewLifecycleOwner, {
             filmsDB = it
         })
 
@@ -103,11 +104,11 @@ class HomeFragment : Fragment() {
             adapter = filmAdapter
             addItemDecoration(parallaxPosterDecorator)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (binding.recyclerView.childCount > 3) {
-                        val view = binding.recyclerView.getChildAt(2)
-                    }
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    val layoutManager = (binding.recyclerView.layoutManager as LinearLayoutManager)
+                    val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                    viewModel.getLastVisibleFilmInList(lastVisiblePosition)
                 }
             })
         }

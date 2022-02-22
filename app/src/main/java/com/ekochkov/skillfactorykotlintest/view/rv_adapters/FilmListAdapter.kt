@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ekochkov.skillfactorykotlintest.databinding.FilmItemLayoutBinding
 import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
 
 class FilmListAdapter(private val onClickListener: OnItemClickListener) : RecyclerView.Adapter<FilmItemHolder>() {
 
@@ -25,7 +26,7 @@ class FilmListAdapter(private val onClickListener: OnItemClickListener) : Recycl
         holder.binding.filmRating.setProgress(film.rating)
 
         Glide.with(holder.itemView)
-            .load(film.poster)
+            .load(TmdbApiConstants.IMAGES_URL + "w342" + film.poster)
             .centerCrop()
             .into(holder.binding.imagePoster)
 
