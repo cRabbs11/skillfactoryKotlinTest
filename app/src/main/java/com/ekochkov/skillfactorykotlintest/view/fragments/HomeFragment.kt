@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.filmListLiveData.observe(viewLifecycleOwner, Observer<List<Film>> {
+        viewModel.filmListLiveData.observe(viewLifecycleOwner, {
             filmsDB = it
         })
 
