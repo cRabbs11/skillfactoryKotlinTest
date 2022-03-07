@@ -1,10 +1,12 @@
 package com.ekochkov.skillfactorykotlintest.viewmodel
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ekochkov.skillfactorykotlintest.App
 import com.ekochkov.skillfactorykotlintest.BuildConfig
+import com.ekochkov.skillfactorykotlintest.data.KEY_DEFAULT_TYPE_CATEGORY
 import com.ekochkov.skillfactorykotlintest.domain.Film
 import com.ekochkov.skillfactorykotlintest.domain.Interactor
 import com.ekochkov.skillfactorykotlintest.utils.BindsTestInterface
@@ -17,6 +19,15 @@ class HomeFragmentViewModel: ViewModel() {
     private var filmListSize = 0
     private var isWaitingRequest = false
 
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _: SharedPreferences, key: String ->
+        when (key) {
+            KEY_DEFAULT_TYPE_CATEGORY -> {
+                refreshFilms()
+            }
+        }
+    }
+
+
     @Inject
     lateinit var interactor : Interactor
 
@@ -26,7 +37,7 @@ class HomeFragmentViewModel: ViewModel() {
     init {
         App.instance.dagger.inject(this)
         //val films = interactor.getFilmsDB()
-
+        setChangeTypeCategoryListener()
         testClass.doSomething()
         getFilmsFromTmdb()
     }
@@ -51,6 +62,10 @@ class HomeFragmentViewModel: ViewModel() {
         })
     }
 
+    private fun setChangeTypeCategoryListener() {
+        interactor.registerPrefListener(prefListener)
+    }
+
     fun refreshFilms() {
         filmListLiveData.postValue(listOf())
         tmdbFilmListPage = 1
@@ -64,6 +79,11 @@ class HomeFragmentViewModel: ViewModel() {
             }
             getFilmsFromTmdb()
         }
+    }
+
+    override fun onCleared() {
+        interactor.unregisterPrefListener(prefListener)
+        super.onCleared()
     }
 
     interface ApiCallback {

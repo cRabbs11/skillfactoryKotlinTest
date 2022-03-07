@@ -1,5 +1,6 @@
 package com.ekochkov.skillfactorykotlintest.domain
 
+import android.content.SharedPreferences
 import com.ekochkov.skillfactorykotlintest.data.FilmRepository
 import com.ekochkov.skillfactorykotlintest.data.PreferenceProvider
 import com.ekochkov.skillfactorykotlintest.data.entity.PopularFilmsDataDTO
@@ -34,5 +35,13 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
 
     fun setDefaultTypeCategory(typeCategory: String) {
         preferenceProvider.saveDefaultTypeCategory(typeCategory)
+    }
+
+    fun registerPrefListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        preferenceProvider.registerPrefListener(listener)
+    }
+
+    fun unregisterPrefListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
+        preferenceProvider.unregisterPrefListener(listener)
     }
 }
