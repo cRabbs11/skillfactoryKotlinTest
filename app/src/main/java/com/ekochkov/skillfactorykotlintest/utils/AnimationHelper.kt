@@ -9,7 +9,7 @@ import kotlin.math.hypot
 import kotlin.math.roundToInt
 
 object AnimationHelper {
-    private const val menuItems = 4
+    private const val menuItems = 5
     private const val menuItemCenterDivider = 2
     private const val firstItemСoef = 1
 
