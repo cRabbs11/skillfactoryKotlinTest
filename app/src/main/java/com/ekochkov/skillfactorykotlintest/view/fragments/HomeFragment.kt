@@ -112,6 +112,11 @@ class HomeFragment : Fragment() {
                 }
             })
         }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refreshFilms()
+            binding.swipeRefresh.isRefreshing = false
+        }
         updateRecyclerView(filmsDB)
     }
 
