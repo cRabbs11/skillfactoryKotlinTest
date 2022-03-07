@@ -19,10 +19,17 @@
         android:text="@string/compiles_type_on_home_fragment"/>
 
     <RadioGroup
+        android:id="@+id/category_type_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         app:layout_constraintTop_toBottomOf="@+id/settings_header">
+
+        <RadioButton
+            android:id="@+id/popular_movies"
+            android:text="@string/popular_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <RadioButton
             android:id="@+id/now_playing_movies"
