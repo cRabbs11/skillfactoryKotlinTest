@@ -18,6 +18,8 @@
     <string name="latest_movies">новинки</string>
     <string name="upcoming_movies">скоро в кино</string>
     <string name="top_rated_movies">самые рейтинговые</string>
+    <string name="popular_movies">популярные</string>
+
 
 
     <!-- строки для примеров -->
