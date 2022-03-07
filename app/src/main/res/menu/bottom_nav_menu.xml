@@ -25,4 +25,10 @@
         android:title="@string/later"
         android:icon="@drawable/ic_baseline_watch_later_24"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="always"/>
 </menu>
