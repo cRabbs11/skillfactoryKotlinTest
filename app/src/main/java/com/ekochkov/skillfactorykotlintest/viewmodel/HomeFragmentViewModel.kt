@@ -51,6 +51,12 @@ class HomeFragmentViewModel: ViewModel() {
         })
     }
 
+    fun refreshFilms() {
+        filmListLiveData.postValue(listOf())
+        tmdbFilmListPage = 1
+        getFilmsFromTmdb()
+    }
+
     fun getLastVisibleFilmInList(lastVisible: Int) {
         if (filmListSize-INVISIBLE_FILMS_UNTIL_NEW_REQUEST<=lastVisible && !isWaitingRequest) {
             if (BuildConfig.DEBUG) {
