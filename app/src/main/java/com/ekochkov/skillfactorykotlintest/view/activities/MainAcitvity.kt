@@ -22,6 +22,7 @@ private const val TAG_FILM_PAGE_FRAGMENT = "film_page_fragment"
 private const val TAG_FAV_FRAGMENT = "fav_fragment"
 private const val TAG_LATER_FRAGMENT = "later_fragment"
 private const val TAG_COMPILE_FRAGMENT = "compile_fragment"
+private const val TAG_SETTINGS_FRAGMENT = "settings_fragment"
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,6 +62,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.later -> {
                     launchLaterFragment()
+                    true
+                }
+                R.id.settings -> {
+                    launchSettingsFragment()
                     true
                 }
                 else -> false
@@ -136,6 +141,11 @@ class MainActivity : AppCompatActivity() {
         //Фрагмент с примерами векторной анимации
         //val fragment = VectorAnimationFragment()
         launchFragment(fragment?: LaterFragment(), TAG_LATER_FRAGMENT)
+    }
+
+    fun launchSettingsFragment() {
+        val fragment = getExistFragmentByTag(TAG_SETTINGS_FRAGMENT)
+        launchFragment(fragment?: SettingsFragment(), TAG_SETTINGS_FRAGMENT)
     }
 
     fun launchFilmPageFragment(film: Film) {

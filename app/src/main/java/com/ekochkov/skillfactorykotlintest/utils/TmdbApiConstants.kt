@@ -26,4 +26,11 @@ object TmdbApiConstants {
     const val SERIALIZED_NAME_VOTE_AVERAGE = "vote_average"
     const val SERIALIZED_NAME_VOTE_COUNT = "vote_count"
 
+    //path для запроса getFilms
+    const val FILM_LIST_TYPE_TOP_RATED = "top_rated"
+    const val FILM_LIST_TYPE_UPCOMING = "upcoming"
+    const val FILM_LIST_TYPE_NOW_PLAYING = "now_playing"
+    const val FILM_LIST_TYPE_LATEST = "latest"
+    const val FILM_LIST_TYPE_POPULAR = "popular"
+
 }
