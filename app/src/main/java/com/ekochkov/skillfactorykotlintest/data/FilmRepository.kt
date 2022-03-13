@@ -10,15 +10,7 @@ class FilmRepository(dbHelper: DatabaseHelper) {
     private val sqlDb: SQLiteDatabase = dbHelper.writableDatabase
 
     fun putFilmInDB(film: Film) {
-        val cv = ContentValues()
-        cv.put(DatabaseHelper.COLUMN_TITLE, film.title)
-        cv.put(DatabaseHelper.COLUMN_DESCR, film.descr)
-        cv.put(DatabaseHelper.COLUMN_POSTER, film.poster)
-        cv.put(DatabaseHelper.COLUMN_RATING, film.rating)
-
-        val isInFav = if (film.isInFav) { 1 } else { 0 }
-        cv.put(DatabaseHelper.COLUMN_IN_FAV, isInFav)
-
+        val cv = convertToCVfromFilm(film)
         sqlDb.insert(DatabaseHelper.TABLE_NAME, null, cv)
     }
 
@@ -29,7 +21,7 @@ class FilmRepository(dbHelper: DatabaseHelper) {
         cursor.use {
             if (it.moveToFirst()) {
                 do {
-                    films.add(convertFillmfromCursor(it))
+                    films.add(convertToFilmfromCursor(it))
                 } while (it.moveToNext())
             }
         }
@@ -37,7 +29,18 @@ class FilmRepository(dbHelper: DatabaseHelper) {
         return films
     }
 
-    private fun convertFillmfromCursor(cursor: Cursor): Film {
+    private fun convertToCVfromFilm(film: Film): ContentValues {
+        val cv = ContentValues()
+        cv.put(DatabaseHelper.COLUMN_TITLE, film.title)
+        cv.put(DatabaseHelper.COLUMN_DESCR, film.descr)
+        cv.put(DatabaseHelper.COLUMN_POSTER, film.poster)
+        cv.put(DatabaseHelper.COLUMN_RATING, film.rating)
+        val isInFav = if (film.isInFav) { 1 } else { 0 }
+        cv.put(DatabaseHelper.COLUMN_IN_FAV, isInFav)
+        return cv
+    }
+
+    private fun convertToFilmfromCursor(cursor: Cursor): Film {
         val title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TITLE))
         val descr = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DESCR))
         val poster = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_POSTER))
