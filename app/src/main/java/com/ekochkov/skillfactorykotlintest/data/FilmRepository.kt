@@ -40,6 +40,31 @@ class FilmRepository(dbHelper: DatabaseHelper) {
         return value
     }
 
+    fun updateInFavFilmInDB(film: Film) {
+        val cv = ContentValues()
+        val value = if (film.isInFav) { 0 } else { 1 }
+        cv.put(DatabaseHelper.COLUMN_IN_FAV, value)
+        sqlDb.update(DatabaseHelper.TABLE_NAME, cv,DatabaseHelper.COLUMN_TITLE + "= ?", arrayOf(film.title))
+    }
+
+    fun deleteFilmFromDB(film: Film) {
+        sqlDb.delete(DatabaseHelper.TABLE_NAME, DatabaseHelper.COLUMN_TITLE + "= ?", arrayOf(film.title))
+    }
+
+    fun getInFavFilmsFromDB(): List<Film> {
+        val films = arrayListOf<Film>()
+        val cursor = sqlDb.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_NAME} WHERE ${DatabaseHelper.COLUMN_IN_FAV} = 1", null)
+        cursor.use {
+            if (it.moveToFirst()) {
+                do {
+                    films.add(convertToFilmfromCursor(it))
+                } while (it.moveToNext())
+            }
+        }
+
+        return films
+    }
+
     private fun convertToCVfromFilm(film: Film): ContentValues {
         val cv = ContentValues()
         cv.put(DatabaseHelper.COLUMN_TITLE, film.title)
