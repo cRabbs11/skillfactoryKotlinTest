@@ -10,13 +10,13 @@ class FilmRepository(dbHelper: DatabaseHelper) {
     private val sqlDb: SQLiteDatabase = dbHelper.writableDatabase
 
     fun putFilmInDB(film: Film) {
-        if (!isFilmInBD(film)) {
+        if (!isFilmInDB(film)) {
             val cv = convertToCVfromFilm(film)
             sqlDb.insert(DatabaseHelper.TABLE_NAME, null, cv)
         }
     }
 
-    fun getAllFilmsFromBD(): List<Film> {
+    fun getAllFilmsFromDB(): List<Film> {
         val films = arrayListOf<Film>()
 
         val cursor = sqlDb.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_NAME}", null)
@@ -31,7 +31,7 @@ class FilmRepository(dbHelper: DatabaseHelper) {
         return films
     }
 
-    private fun isFilmInBD(film: Film): Boolean {
+    private fun isFilmInDB(film: Film): Boolean {
         val cursor = sqlDb.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_NAME} WHERE ${DatabaseHelper.COLUMN_TITLE} = ?", arrayOf(film.title))
         var value: Boolean
         cursor.use {

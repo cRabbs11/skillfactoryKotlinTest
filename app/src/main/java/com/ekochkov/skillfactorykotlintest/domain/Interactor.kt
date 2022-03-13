@@ -15,7 +15,7 @@ import retrofit2.Response
 class Interactor(private val repository: FilmRepository, private val tmdbRetrofitService: TmdbAPI, private val preferenceProvider: PreferenceProvider) {
 
     fun getFilmsFromDB(): List<Film> {
-        return repository.getAllFilmsFromBD()
+        return repository.getAllFilmsFromDB()
     }
 
     fun putFilmInBd(film: Film) {
