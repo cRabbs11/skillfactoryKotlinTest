@@ -10,8 +10,10 @@ class FilmRepository(dbHelper: DatabaseHelper) {
     private val sqlDb: SQLiteDatabase = dbHelper.writableDatabase
 
     fun putFilmInDB(film: Film) {
-        val cv = convertToCVfromFilm(film)
-        sqlDb.insert(DatabaseHelper.TABLE_NAME, null, cv)
+        if (!isFilmInBD(film)) {
+            val cv = convertToCVfromFilm(film)
+            sqlDb.insert(DatabaseHelper.TABLE_NAME, null, cv)
+        }
     }
 
     fun getAllFilmsFromBD(): List<Film> {
