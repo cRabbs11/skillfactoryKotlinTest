@@ -29,6 +29,15 @@ class FilmRepository(dbHelper: DatabaseHelper) {
         return films
     }
 
+    fun isFilmInBD(film: Film): Boolean {
+        val cursor = sqlDb.rawQuery("SELECT * FROM ${DatabaseHelper.TABLE_NAME} WHERE ${DatabaseHelper.COLUMN_TITLE} = ?", arrayOf(film.title))
+        var value: Boolean
+        cursor.use {
+            value = it.moveToFirst()
+        }
+        return value
+    }
+
     private fun convertToCVfromFilm(film: Film): ContentValues {
         val cv = ContentValues()
         cv.put(DatabaseHelper.COLUMN_TITLE, film.title)
