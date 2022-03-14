@@ -13,7 +13,14 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Interactor(private val repository: FilmRepository, private val tmdbRetrofitService: TmdbAPI, private val preferenceProvider: PreferenceProvider) {
-    fun getFilmsDB(): List<Film> = repository.filmList
+
+    fun getFilmsFromDB(): List<Film> {
+        return repository.getAllFilmsFromDB()
+    }
+
+    fun putFilmInBd(film: Film) {
+        repository.putFilmInDB(film)
+    }
 
     fun getFilmsFromTmdb(page: Int, callBack: HomeFragmentViewModel.ApiCallback) {
         tmdbRetrofitService.getFilms(preferenceProvider.getDefaultTypeCategory(), API.KEY, "ru-RU", page).enqueue(object: Callback<PopularFilmsDataDTO> {

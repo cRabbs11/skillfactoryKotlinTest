@@ -54,10 +54,15 @@ class HomeFragmentViewModel: ViewModel() {
                 filmListLiveData.postValue(newList)
                 filmListSize = newList.size
                 isWaitingRequest = false
+
+                films.forEach {
+                    interactor.putFilmInBd(it)
+                }
             }
 
             override fun onFailure() {
                 isWaitingRequest = false
+                filmListLiveData.postValue(interactor.getFilmsFromDB())
             }
         })
     }
