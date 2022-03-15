@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,11 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.*
 import com.ekochkov.skillfactorykotlintest.FilmListAdapter
 import com.ekochkov.skillfactorykotlintest.ItemFilmAnimator
-import com.ekochkov.skillfactorykotlintest.data.FilmRepository
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentHomeBinding
 import com.ekochkov.skillfactorykotlintest.decoration.OffsetFilmItemDecoration
 import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
-import com.ekochkov.skillfactorykotlintest.domain.Film
 import com.ekochkov.skillfactorykotlintest.utils.AnimationHelper
 import com.ekochkov.skillfactorykotlintest.view.activities.MainActivity
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
