@@ -10,10 +10,10 @@ interface FilmDao {
     @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME}")
     fun getAllFilms(): List<Film>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertFilms(list: List<Film>)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertFilm(film: Film)
 
     @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME} WHERE title LIKE:title")
