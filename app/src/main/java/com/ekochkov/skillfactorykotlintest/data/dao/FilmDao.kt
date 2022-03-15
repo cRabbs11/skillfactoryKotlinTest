@@ -13,5 +13,8 @@ interface FilmDao {
     fun getAllFilms(): List<Film>
 
     @Insert
-    fun insertAll(list: List<Film>)
+    fun insertFilms(list: List<Film>)
+
+    @Insert
+    fun insertFilm(film: Film)
 }
