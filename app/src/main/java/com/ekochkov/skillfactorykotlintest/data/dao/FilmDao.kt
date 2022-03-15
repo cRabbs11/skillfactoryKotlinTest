@@ -1,8 +1,6 @@
 package com.ekochkov.skillfactorykotlintest.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.ekochkov.skillfactorykotlintest.data.AppDataBase
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
 
@@ -17,4 +15,16 @@ interface FilmDao {
 
     @Insert
     fun insertFilm(film: Film)
+
+    @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME} WHERE title LIKE:title")
+    fun getFilmByTitle(title: String): Film?
+
+    @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME} WHERE is_in_fav LIKE:inFavValue")
+    fun getFilmsInFav(inFavValue: Boolean): List<Film>
+
+    @Update
+    fun updateFilm(film: Film)
+
+    @Delete
+    fun deleteFilm(film: Film)
 }
