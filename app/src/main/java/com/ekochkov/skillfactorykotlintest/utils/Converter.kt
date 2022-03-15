@@ -1,7 +1,7 @@
 package com.ekochkov.skillfactorykotlintest.utils
 
 import com.ekochkov.skillfactorykotlintest.data.entity.TmdbFilm
-import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 
 object Converter {
 

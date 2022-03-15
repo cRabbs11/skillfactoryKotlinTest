@@ -3,7 +3,7 @@ package com.ekochkov.skillfactorykotlintest.data
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 
 class FilmRepository(dbHelper: DatabaseHelper) {
 

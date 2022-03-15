@@ -11,7 +11,7 @@ import androidx.transition.Fade
 import androidx.transition.Slide
 import androidx.transition.TransitionSet
 import com.bumptech.glide.Glide
-import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
 import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants

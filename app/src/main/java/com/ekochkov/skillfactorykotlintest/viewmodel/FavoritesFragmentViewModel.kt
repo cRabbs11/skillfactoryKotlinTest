@@ -3,7 +3,7 @@ package com.ekochkov.skillfactorykotlintest.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ekochkov.skillfactorykotlintest.App
-import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.domain.Interactor
 import javax.inject.Inject
 

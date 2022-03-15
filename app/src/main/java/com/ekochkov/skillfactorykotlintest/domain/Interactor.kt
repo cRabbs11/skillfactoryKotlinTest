@@ -3,6 +3,7 @@ package com.ekochkov.skillfactorykotlintest.domain
 import android.content.SharedPreferences
 import com.ekochkov.skillfactorykotlintest.data.FilmRepository
 import com.ekochkov.skillfactorykotlintest.data.PreferenceProvider
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.data.entity.PopularFilmsDataDTO
 import com.ekochkov.skillfactorykotlintest.utils.API
 import com.ekochkov.skillfactorykotlintest.utils.Converter
