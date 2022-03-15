@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.ekochkov.skillfactorykotlintest.App
 import com.ekochkov.skillfactorykotlintest.BuildConfig
 import com.ekochkov.skillfactorykotlintest.data.KEY_DEFAULT_TYPE_CATEGORY
-import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.domain.Interactor
 import com.ekochkov.skillfactorykotlintest.utils.BindsTestInterface
 import javax.inject.Inject

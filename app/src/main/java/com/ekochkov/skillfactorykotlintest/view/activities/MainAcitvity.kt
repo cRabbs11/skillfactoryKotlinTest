@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
-import com.ekochkov.skillfactorykotlintest.domain.Film
+import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.view.fragments.*
 import java.util.*
 
