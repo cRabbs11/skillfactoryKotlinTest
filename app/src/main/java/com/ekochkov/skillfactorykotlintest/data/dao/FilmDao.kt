@@ -10,7 +10,7 @@ import com.ekochkov.skillfactorykotlintest.data.entity.Film
 interface FilmDao {
 
     @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME}")
-    fun getAll() {}
+    fun getAllFilms(): List<Film>
 
     @Insert
     fun insertAll(list: List<Film>)
