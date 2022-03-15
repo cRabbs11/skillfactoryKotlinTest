@@ -16,12 +16,6 @@ class FilmRepository(private val filmDao: FilmDao) {
         return filmDao.getAllFilms()
     }
 
-    private fun isFilmInDB(film: Film): Boolean {
-        val resultFilm = filmDao.getFilmByTitle(film.title)
-        println("isFilmInBD = $resultFilm")
-        return resultFilm != null
-    }
-
     fun updateInFavFilmInDB(film: Film) {
         Executors.newSingleThreadExecutor().execute {
             filmDao.updateFilm(film)
