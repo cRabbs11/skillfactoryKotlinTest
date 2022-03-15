@@ -8,4 +8,8 @@ import com.ekochkov.skillfactorykotlintest.data.entity.Film
 @Database(entities = [Film::class], version = 1, exportSchema = true)
 abstract class AppDataBase: RoomDatabase() {
     abstract fun filmDao(): FilmDao
+
+    companion object {
+        const val CASHED_FILMS_TABLE_NAME = "cashed_films_table"
+    }
 }

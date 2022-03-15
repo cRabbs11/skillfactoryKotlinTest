@@ -4,12 +4,13 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ekochkov.skillfactorykotlintest.data.AppDataBase
 
 import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-@Entity(tableName = "cashed_films_table")
+@Entity(tableName = AppDataBase.CASHED_FILMS_TABLE_NAME)
 data class Film(
         @PrimaryKey(autoGenerate = true) val id: Int = 0,
         @ColumnInfo(name = "title") val title: String,
