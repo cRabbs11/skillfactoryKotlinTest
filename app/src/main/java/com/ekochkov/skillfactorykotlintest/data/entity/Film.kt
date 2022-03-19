@@ -3,6 +3,7 @@ package com.ekochkov.skillfactorykotlintest.data.entity
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.ekochkov.skillfactorykotlintest.data.AppDataBase
 
@@ -10,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-@Entity(tableName = AppDataBase.CASHED_FILMS_TABLE_NAME)
+@Entity(tableName = AppDataBase.CASHED_FILMS_TABLE_NAME, indices = [Index(value = ["title"], unique = true)])
 data class Film(
         @PrimaryKey(autoGenerate = true) val id: Int = 0,
         @ColumnInfo(name = "title") val title: String,
