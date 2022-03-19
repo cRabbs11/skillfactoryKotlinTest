@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,9 +40,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var isFragmentCreate = false
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
-    }
+    private val viewModel: HomeFragmentViewModel by viewModels()
 
     private var filmsDB = listOf<Film>()
         set(value) {
