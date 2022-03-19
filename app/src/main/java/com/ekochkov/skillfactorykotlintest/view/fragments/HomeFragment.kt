@@ -66,6 +66,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.filmListLiveData.observe(viewLifecycleOwner, {
             filmsDB = it
+            binding.swipeRefresh.isRefreshing = false
         })
 
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 1)
@@ -111,7 +112,6 @@ class HomeFragment : Fragment() {
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refreshFilms()
-            binding.swipeRefresh.isRefreshing = false
         }
         updateRecyclerView(filmsDB)
     }
