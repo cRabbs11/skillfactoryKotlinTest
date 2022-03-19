@@ -6,6 +6,12 @@ import java.util.concurrent.Executors
 
 class FilmRepository(private val filmDao: FilmDao) {
 
+    fun putFilmsInDB(list: List<Film>) {
+        Executors.newSingleThreadExecutor().execute {
+            filmDao.insertFilms(list)
+        }
+    }
+
     fun putFilmInDB(film: Film) {
         Executors.newSingleThreadExecutor().execute {
             filmDao.insertFilm(film)
