@@ -43,25 +43,27 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     private fun getFilmsFromTmdb() {
-        isWaitingRequest = true
-        interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
-            override fun onSuccess(films: List<Film>) {
-                tmdbFilmListPage++
-                val oldList = filmListLiveData.value
-                val newList = if (oldList!=null) {
-                    oldList + films
-                } else { films }
-                isWaitingRequest = false
+        if (!isWaitingRequest) {
+            isWaitingRequest = true
+            interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
+                override fun onSuccess(films: List<Film>) {
+                    tmdbFilmListPage++
+                    val oldList = filmListLiveData.value
+                    val newList = if (oldList!=null) {
+                        oldList + films
+                    } else { films }
+                    isWaitingRequest = false
 
-                films.forEach {
-                    interactor.putFilmInBd(it)
+                    films.forEach {
+                        interactor.putFilmInBd(it)
+                    }
                 }
-            }
 
-            override fun onFailure() {
-                isWaitingRequest = false
-            }
-        })
+                override fun onFailure() {
+                    isWaitingRequest = false
+                }
+            })
+        }
     }
 
     private fun setChangeTypeCategoryListener() {
