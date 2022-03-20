@@ -35,7 +35,6 @@ class HomeFragmentViewModel: ViewModel() {
 
     init {
         App.instance.dagger.inject(this)
-        //val films = interactor.getFilmsDB()
         setChangeTypeCategoryListener()
         testClass.doSomething()
         getFilmsFromTmdb()
@@ -48,15 +47,7 @@ class HomeFragmentViewModel: ViewModel() {
             interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
                 override fun onSuccess(films: List<Film>) {
                     tmdbFilmListPage++
-                    val oldList = filmListLiveData.value
-                    val newList = if (oldList!=null) {
-                        oldList + films
-                    } else { films }
                     isWaitingRequest = false
-
-                    films.forEach {
-                        interactor.putFilmInBd(it)
-                    }
                 }
 
                 override fun onFailure() {
