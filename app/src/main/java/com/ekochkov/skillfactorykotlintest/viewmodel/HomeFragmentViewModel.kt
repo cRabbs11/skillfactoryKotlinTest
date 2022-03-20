@@ -73,6 +73,7 @@ class HomeFragmentViewModel: ViewModel() {
 
     fun refreshFilms() {
         tmdbFilmListPage = 1
+        interactor.removeAllFilmsInDB()
         getFilmsFromTmdb()
     }
 
