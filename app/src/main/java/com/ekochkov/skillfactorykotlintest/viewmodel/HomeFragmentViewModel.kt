@@ -16,7 +16,6 @@ class HomeFragmentViewModel: ViewModel() {
     val filmListLiveData : LiveData<List<Film>>
     private var tmdbFilmListPage = 1
     private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 2
-    private var filmListSize = 0
     private var isWaitingRequest = false
 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _: SharedPreferences, key: String ->
@@ -52,7 +51,6 @@ class HomeFragmentViewModel: ViewModel() {
                 val newList = if (oldList!=null) {
                     oldList + films
                 } else { films }
-                filmListSize = newList.size
                 isWaitingRequest = false
 
                 films.forEach {
@@ -76,7 +74,8 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     fun getLastVisibleFilmInList(lastVisible: Int) {
-        if (filmListSize-INVISIBLE_FILMS_UNTIL_NEW_REQUEST<=lastVisible && !isWaitingRequest) {
+        val filmListSize = filmListLiveData.value?.size?:0
+        if ((filmListSize-INVISIBLE_FILMS_UNTIL_NEW_REQUEST)<=lastVisible && !isWaitingRequest) {
             if (BuildConfig.DEBUG) {
                 Log.d("TAG", "new getFilms request")
             }
