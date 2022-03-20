@@ -3,6 +3,7 @@ package com.ekochkov.skillfactorykotlintest.viewmodel
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ekochkov.skillfactorykotlintest.App
 import com.ekochkov.skillfactorykotlintest.BuildConfig
@@ -14,6 +15,7 @@ import javax.inject.Inject
 
 class HomeFragmentViewModel: ViewModel() {
     val filmListLiveData : LiveData<List<Film>>
+    val loadingProgressLiveData = MutableLiveData<Boolean>()
     private var tmdbFilmListPage = 1
     private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 2
     private var isWaitingRequest = false
@@ -44,14 +46,18 @@ class HomeFragmentViewModel: ViewModel() {
     private fun getFilmsFromTmdb() {
         if (!isWaitingRequest) {
             isWaitingRequest = true
+            loadingProgressLiveData.postValue(isWaitingRequest)
             interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
                 override fun onSuccess() {
                     tmdbFilmListPage++
                     isWaitingRequest = false
+                    loadingProgressLiveData.postValue(isWaitingRequest)
+
                 }
 
                 override fun onFailure() {
                     isWaitingRequest = false
+                    loadingProgressLiveData.postValue(isWaitingRequest)
                 }
             })
         }

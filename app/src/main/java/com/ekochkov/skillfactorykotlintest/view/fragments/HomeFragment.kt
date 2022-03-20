@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,6 +68,10 @@ class HomeFragment : Fragment() {
         viewModel.filmListLiveData.observe(viewLifecycleOwner, {
             filmsDB = it
             binding.swipeRefresh.isRefreshing = false
+        })
+
+        viewModel.loadingProgressLiveData.observe(viewLifecycleOwner, {
+            binding.progressCircular.isVisible = it
         })
 
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 1)
