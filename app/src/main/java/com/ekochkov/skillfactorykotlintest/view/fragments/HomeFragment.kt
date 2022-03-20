@@ -74,6 +74,10 @@ class HomeFragment : Fragment() {
             binding.progressCircular.isVisible = it
         })
 
+        viewModel.toastEventLiveData.observe(viewLifecycleOwner, {
+            showToast(it)
+        })
+
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 1)
         if (isFragmentCreate) {
             isFragmentCreate = false

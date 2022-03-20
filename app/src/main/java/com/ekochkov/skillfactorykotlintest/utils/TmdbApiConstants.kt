@@ -33,4 +33,6 @@ object TmdbApiConstants {
     const val FILM_LIST_TYPE_LATEST = "latest"
     const val FILM_LIST_TYPE_POPULAR = "popular"
 
+    const val RESPONSE_ON_FAILURE = "не удалось получить данные"
+
 }

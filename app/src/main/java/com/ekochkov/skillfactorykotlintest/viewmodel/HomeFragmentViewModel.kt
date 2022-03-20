@@ -11,11 +11,14 @@ import com.ekochkov.skillfactorykotlintest.data.KEY_DEFAULT_TYPE_CATEGORY
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.domain.Interactor
 import com.ekochkov.skillfactorykotlintest.utils.BindsTestInterface
+import com.ekochkov.skillfactorykotlintest.utils.SingleLiveEvent
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
 import javax.inject.Inject
 
 class HomeFragmentViewModel: ViewModel() {
     val filmListLiveData : LiveData<List<Film>>
     val loadingProgressLiveData = MutableLiveData<Boolean>()
+    val toastEventLiveData = SingleLiveEvent<String>()
     private var tmdbFilmListPage = 1
     private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 2
     private var isWaitingRequest = false
@@ -58,6 +61,7 @@ class HomeFragmentViewModel: ViewModel() {
                 override fun onFailure() {
                     isWaitingRequest = false
                     loadingProgressLiveData.postValue(isWaitingRequest)
+                    toastEventLiveData.postValue(TmdbApiConstants.RESPONSE_ON_FAILURE)
                 }
             })
         }
