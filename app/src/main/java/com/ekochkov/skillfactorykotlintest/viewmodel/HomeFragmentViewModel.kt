@@ -45,7 +45,7 @@ class HomeFragmentViewModel: ViewModel() {
         if (!isWaitingRequest) {
             isWaitingRequest = true
             interactor.getFilmsFromTmdb(tmdbFilmListPage, object: ApiCallback {
-                override fun onSuccess(films: List<Film>) {
+                override fun onSuccess() {
                     tmdbFilmListPage++
                     isWaitingRequest = false
                 }
@@ -82,7 +82,7 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     interface ApiCallback {
-        fun onSuccess(films: List<Film>)
+        fun onSuccess()
         fun onFailure()
     }
 }
