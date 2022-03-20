@@ -28,6 +28,7 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
         tmdbRetrofitService.getFilms(preferenceProvider.getDefaultTypeCategory(), API.KEY, "ru-RU", page).enqueue(object: Callback<PopularFilmsDataDTO> {
             override fun onResponse(call: Call<PopularFilmsDataDTO>, response: Response<PopularFilmsDataDTO>) {
                 callBack.onSuccess(Converter.convertTmdbListToDTOList(response.body()?.tmdbFilms))
+                repository.putFilmsInDB(Converter.convertTmdbListToDTOList(response.body()?.tmdbFilms))
             }
 
             override fun onFailure(call: Call<PopularFilmsDataDTO>, t: Throwable) {
