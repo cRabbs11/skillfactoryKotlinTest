@@ -38,4 +38,10 @@ class FilmRepository(private val filmDao: FilmDao) {
     fun getInFavFilmsFromDB(): List<Film> {
         return filmDao.getFilmsInFav(true)
     }
+
+    fun deleteAllFilmsInDB() {
+        Executors.newSingleThreadExecutor().execute {
+            filmDao.deleteAllFilms()
+        }
+    }
 }

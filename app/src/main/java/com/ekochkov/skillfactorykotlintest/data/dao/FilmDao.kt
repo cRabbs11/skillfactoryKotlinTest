@@ -28,4 +28,7 @@ interface FilmDao {
 
     @Delete
     fun deleteFilm(film: Film)
+
+    @Query("DELETE FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME}")
+    fun deleteAllFilms()
 }

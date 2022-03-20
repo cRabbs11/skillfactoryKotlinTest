@@ -24,6 +24,10 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
         repository.putFilmInDB(film)
     }
 
+    fun removeAllFilmsInDB() {
+        repository.deleteAllFilmsInDB()
+    }
+
     fun getFilmsFromTmdb(page: Int, callBack: HomeFragmentViewModel.ApiCallback) {
         tmdbRetrofitService.getFilms(preferenceProvider.getDefaultTypeCategory(), API.KEY, "ru-RU", page).enqueue(object: Callback<PopularFilmsDataDTO> {
             override fun onResponse(call: Call<PopularFilmsDataDTO>, response: Response<PopularFilmsDataDTO>) {
