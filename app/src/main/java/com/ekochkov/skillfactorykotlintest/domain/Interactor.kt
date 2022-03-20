@@ -1,6 +1,7 @@
 package com.ekochkov.skillfactorykotlintest.domain
 
 import android.content.SharedPreferences
+import androidx.lifecycle.LiveData
 import com.ekochkov.skillfactorykotlintest.data.FilmRepository
 import com.ekochkov.skillfactorykotlintest.data.PreferenceProvider
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
@@ -15,7 +16,7 @@ import retrofit2.Response
 
 class Interactor(private val repository: FilmRepository, private val tmdbRetrofitService: TmdbAPI, private val preferenceProvider: PreferenceProvider) {
 
-    fun getFilmsFromDB(): List<Film> {
+    fun getFilmsFromDB(): LiveData<List<Film>> {
         return repository.getAllFilmsFromDB()
     }
 

@@ -1,5 +1,6 @@
 package com.ekochkov.skillfactorykotlintest.data
 
+import androidx.lifecycle.LiveData
 import com.ekochkov.skillfactorykotlintest.data.dao.FilmDao
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import java.util.concurrent.Executors
@@ -18,7 +19,7 @@ class FilmRepository(private val filmDao: FilmDao) {
         }
     }
 
-    fun getAllFilmsFromDB(): List<Film> {
+    fun getAllFilmsFromDB(): LiveData<List<Film>> {
         return filmDao.getAllFilms()
     }
 
