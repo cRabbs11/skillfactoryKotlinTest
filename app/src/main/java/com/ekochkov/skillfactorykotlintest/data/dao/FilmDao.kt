@@ -1,5 +1,6 @@
 package com.ekochkov.skillfactorykotlintest.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.ekochkov.skillfactorykotlintest.data.AppDataBase
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
@@ -8,12 +9,12 @@ import com.ekochkov.skillfactorykotlintest.data.entity.Film
 interface FilmDao {
 
     @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME}")
-    fun getAllFilms(): List<Film>
+    fun getAllFilms(): LiveData<List<Film>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFilms(list: List<Film>)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFilm(film: Film)
 
     @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME} WHERE title LIKE:title")
@@ -27,4 +28,7 @@ interface FilmDao {
 
     @Delete
     fun deleteFilm(film: Film)
+
+    @Query("DELETE FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME}")
+    fun deleteAllFilms()
 }

@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,9 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var isFragmentCreate = false
 
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
-    }
+    private val viewModel: HomeFragmentViewModel by viewModels()
 
     private var filmsDB = listOf<Film>()
         set(value) {
@@ -68,6 +67,15 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.filmListLiveData.observe(viewLifecycleOwner, {
             filmsDB = it
+            binding.swipeRefresh.isRefreshing = false
+        })
+
+        viewModel.loadingProgressLiveData.observe(viewLifecycleOwner, {
+            binding.progressCircular.isVisible = it
+        })
+
+        viewModel.toastEventLiveData.observe(viewLifecycleOwner, {
+            showToast(it)
         })
 
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 1)
@@ -113,7 +121,6 @@ class HomeFragment : Fragment() {
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refreshFilms()
-            binding.swipeRefresh.isRefreshing = false
         }
         updateRecyclerView(filmsDB)
     }

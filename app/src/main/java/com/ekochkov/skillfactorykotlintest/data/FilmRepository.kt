@@ -1,10 +1,17 @@
 package com.ekochkov.skillfactorykotlintest.data
 
+import androidx.lifecycle.LiveData
 import com.ekochkov.skillfactorykotlintest.data.dao.FilmDao
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import java.util.concurrent.Executors
 
 class FilmRepository(private val filmDao: FilmDao) {
+
+    fun putFilmsInDB(list: List<Film>) {
+        Executors.newSingleThreadExecutor().execute {
+            filmDao.insertFilms(list)
+        }
+    }
 
     fun putFilmInDB(film: Film) {
         Executors.newSingleThreadExecutor().execute {
@@ -12,7 +19,7 @@ class FilmRepository(private val filmDao: FilmDao) {
         }
     }
 
-    fun getAllFilmsFromDB(): List<Film> {
+    fun getAllFilmsFromDB(): LiveData<List<Film>> {
         return filmDao.getAllFilms()
     }
 
@@ -30,5 +37,11 @@ class FilmRepository(private val filmDao: FilmDao) {
 
     fun getInFavFilmsFromDB(): List<Film> {
         return filmDao.getFilmsInFav(true)
+    }
+
+    fun deleteAllFilmsInDB() {
+        Executors.newSingleThreadExecutor().execute {
+            filmDao.deleteAllFilms()
+        }
     }
 }
