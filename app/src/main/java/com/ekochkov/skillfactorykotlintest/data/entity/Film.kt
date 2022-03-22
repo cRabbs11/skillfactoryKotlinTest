@@ -9,9 +9,10 @@ import com.ekochkov.skillfactorykotlintest.data.AppDataBase
 
 import kotlinx.android.parcel.Parcelize
 
+const val FILM_INDEX_TITLE = "title"
 
 @Parcelize
-@Entity(tableName = AppDataBase.CASHED_FILMS_TABLE_NAME, indices = [Index(value = ["title"], unique = true)])
+@Entity(tableName = AppDataBase.CASHED_FILMS_TABLE_NAME, indices = [Index(value = [FILM_INDEX_TITLE], unique = true)])
 data class Film(
         @PrimaryKey(autoGenerate = true) val id: Int = 0,
         @ColumnInfo(name = "title") val title: String,
