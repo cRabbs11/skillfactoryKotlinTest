@@ -20,6 +20,10 @@
     <string name="top_rated_movies">самые рейтинговые</string>
     <string name="popular_movies">популярные</string>
 
+    <string name="permission_storage_denied">В доступе к памяти к телефона отказано</string>
+    <string name="downloaded_into_gallery">"Постер сохранен"</string>
+    <string name="to_gallery">В галерею</string>
+
 
 
     <!-- строки для примеров -->
