@@ -4,12 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.ekochkov.skillfactorykotlintest.data.AppDataBase
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FilmDao {
 
     @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME}")
     fun getAllFilms(): LiveData<List<Film>>
+
+    @Query("SELECT * FROM ${AppDataBase.CASHED_FILMS_TABLE_NAME}")
+    fun getAllFilmsAsFlow(): Flow<List<Film>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFilms(list: List<Film>)

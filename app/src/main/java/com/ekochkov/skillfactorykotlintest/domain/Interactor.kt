@@ -10,14 +10,22 @@ import com.ekochkov.skillfactorykotlintest.utils.API
 import com.ekochkov.skillfactorykotlintest.utils.Converter
 import com.ekochkov.skillfactorykotlintest.utils.TmdbAPI
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class Interactor(private val repository: FilmRepository, private val tmdbRetrofitService: TmdbAPI, private val preferenceProvider: PreferenceProvider) {
 
     fun getFilmsFromDB(): LiveData<List<Film>> {
         return repository.getAllFilmsFromDB()
+    }
+
+    fun getFilmsFromDBAsFlow() : Flow<List<Film>> {
+        return repository.gatAllFilmsFromBDAsFlow()
     }
 
     fun putFilmInBd(film: Film) {
