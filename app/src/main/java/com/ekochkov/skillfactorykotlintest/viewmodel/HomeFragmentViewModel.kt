@@ -14,6 +14,7 @@ import com.ekochkov.skillfactorykotlintest.utils.SingleLiveEvent
 import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,8 +26,7 @@ class HomeFragmentViewModel: ViewModel() {
     private var tmdbFilmListPage = 1
     private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 2
     private var isWaitingRequest = false
-
-    private val homeFragmentScope = CoroutineScope(Dispatchers.IO)
+    val homeFragmentScope = CoroutineScope(Dispatchers.IO)
 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _: SharedPreferences, key: String ->
         when (key) {
@@ -47,9 +47,10 @@ class HomeFragmentViewModel: ViewModel() {
         App.instance.dagger.inject(this)
         setChangeTypeCategoryListener()
         testClass.doSomething()
-        getFilmsFromTmdb()
+
 
         homeFragmentScope.launch {
+            getFilmsFromTmdb()
             interactor.getFilmsFromDBAsFlow().collect {list ->
                 filmListLiveData.postValue(list)
             }
@@ -82,18 +83,24 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     fun refreshFilms() {
-        tmdbFilmListPage = 1
-        interactor.removeAllFilmsInDB()
-        getFilmsFromTmdb()
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
+            tmdbFilmListPage = 1
+            interactor.removeAllFilmsInDB()
+            getFilmsFromTmdb()
+        }
     }
 
     fun getLastVisibleFilmInList(lastVisible: Int) {
-        val filmListSize = filmListLiveData.value?.size?:0
-        if ((filmListSize-INVISIBLE_FILMS_UNTIL_NEW_REQUEST)<=lastVisible && !isWaitingRequest) {
-            if (BuildConfig.DEBUG) {
-                Log.d("TAG", "new getFilms request")
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
+            val filmListSize = filmListLiveData.value?.size ?: 0
+            if ((filmListSize - INVISIBLE_FILMS_UNTIL_NEW_REQUEST) <= lastVisible && !isWaitingRequest) {
+                if (BuildConfig.DEBUG) {
+                    Log.d("TAG", "new getFilms request")
+                }
+                getFilmsFromTmdb()
             }
-            getFilmsFromTmdb()
         }
     }
 
