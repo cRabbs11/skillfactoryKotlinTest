@@ -106,6 +106,7 @@ class HomeFragmentViewModel: ViewModel() {
 
     override fun onCleared() {
         interactor.unregisterPrefListener(prefListener)
+        homeFragmentScope.cancel()
         super.onCleared()
     }
 
