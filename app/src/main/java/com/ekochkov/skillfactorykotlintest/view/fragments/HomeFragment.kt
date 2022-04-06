@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var filmAdapter: FilmListAdapter
     private lateinit var binding: FragmentHomeBinding
     private var isFragmentCreate = false
-    private val homeFragmentScope = CoroutineScope(Dispatchers.Main)
+    private val homeFragmentScope = CoroutineScope(Dispatchers.IO)
 
     private val viewModel: HomeFragmentViewModel by viewModels()
 
@@ -55,6 +55,11 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isFragmentCreate = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        homeFragmentScope.cancel()
     }
 
     override fun onCreateView(
@@ -128,7 +133,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun searchFilmByTitle(query: String) {
-        homeFragmentScope.launch(Dispatchers.IO) {
+        homeFragmentScope.launch {
             val result = filmsDB.filter {
                 it.title.toLowerCase(Locale.getDefault())
                         .contains(query.toLowerCase(Locale.getDefault()))
@@ -143,7 +148,7 @@ class HomeFragment : Fragment() {
 
     private fun updateRecyclerView(films: List<Film>) {
         homeFragmentScope.launch {
-            launch(Dispatchers.Default) {
+            launch {
                 val diff = FilmDiff(filmAdapter.filmList, films)
                 val diffResult = DiffUtil.calculateDiff(diff)
                 filmAdapter.filmList.clear()
