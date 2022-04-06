@@ -45,7 +45,7 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
                 val flow = response.body()?.tmdbFilms?.asFlow()?.map {
                     Converter.convertTmdbListToDTOList(response.body()?.tmdbFilms)
                 }
-                CoroutineScope(Dispatchers.IO).launch {
+                val scope = CoroutineScope(Dispatchers.IO).launch {
                     flow?.collect {
                         repository.putFilmsInDB(it)
                     }
