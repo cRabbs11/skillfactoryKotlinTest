@@ -3,6 +3,7 @@ package com.ekochkov.skillfactorykotlintest.data
 import androidx.lifecycle.LiveData
 import com.ekochkov.skillfactorykotlintest.data.dao.FilmDao
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
+import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.Executors
 
 class FilmRepository(private val filmDao: FilmDao) {
@@ -21,6 +22,10 @@ class FilmRepository(private val filmDao: FilmDao) {
 
     fun getAllFilmsFromDB(): LiveData<List<Film>> {
         return filmDao.getAllFilms()
+    }
+
+    fun gatAllFilmsFromBDAsFlow(): Flow<List<Film>> {
+        return filmDao.getAllFilmsAsFlow()
     }
 
     fun updateInFavFilmInDB(film: Film) {

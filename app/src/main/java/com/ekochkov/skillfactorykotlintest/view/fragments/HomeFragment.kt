@@ -23,6 +23,7 @@ import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 import com.ekochkov.skillfactorykotlintest.utils.AnimationHelper
 import com.ekochkov.skillfactorykotlintest.view.activities.MainActivity
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
+import kotlinx.coroutines.*
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,6 +41,7 @@ class HomeFragment : Fragment() {
     private lateinit var filmAdapter: FilmListAdapter
     private lateinit var binding: FragmentHomeBinding
     private var isFragmentCreate = false
+    private val homeFragmentScope = CoroutineScope(Dispatchers.IO)
 
     private val viewModel: HomeFragmentViewModel by viewModels()
 
@@ -53,6 +55,11 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isFragmentCreate = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        homeFragmentScope.cancel()
     }
 
     override fun onCreateView(
@@ -126,11 +133,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun searchFilmByTitle(query: String) {
-        val result = filmsDB.filter {
-            it.title.toLowerCase(Locale.getDefault())
-                    .contains(query.toLowerCase(Locale.getDefault()))
+        homeFragmentScope.launch {
+            val result = filmsDB.filter {
+                it.title.toLowerCase(Locale.getDefault())
+                        .contains(query.toLowerCase(Locale.getDefault()))
+            }
+            updateRecyclerView(result)
         }
-        updateRecyclerView(result)
     }
 
     private fun showToast(text: String) {
@@ -138,11 +147,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateRecyclerView(films: List<Film>) {
-        val diff = FilmDiff(filmAdapter.filmList, films)
-        val diffResult = DiffUtil.calculateDiff(diff)
-        filmAdapter.filmList.clear()
-        filmAdapter.filmList.addAll(films)
-        diffResult.dispatchUpdatesTo(filmAdapter)
+        homeFragmentScope.launch {
+            launch {
+                val diff = FilmDiff(filmAdapter.filmList, films)
+                val diffResult = DiffUtil.calculateDiff(diff)
+                filmAdapter.filmList.clear()
+                filmAdapter.filmList.addAll(films)
+                this.launch(Dispatchers.Main) {
+                    diffResult.dispatchUpdatesTo(filmAdapter)
+                }
+            }
+        }
     }
 
     companion object {
