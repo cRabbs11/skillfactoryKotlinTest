@@ -12,11 +12,10 @@ import com.ekochkov.skillfactorykotlintest.domain.Interactor
 import com.ekochkov.skillfactorykotlintest.utils.BindsTestInterface
 import com.ekochkov.skillfactorykotlintest.utils.SingleLiveEvent
 import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class HomeFragmentViewModel: ViewModel() {
@@ -26,7 +25,7 @@ class HomeFragmentViewModel: ViewModel() {
     private var tmdbFilmListPage = 1
     private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 2
     private var isWaitingRequest = false
-    val homeFragmentScope = CoroutineScope(Dispatchers.IO)
+    val compositeDisposable = CompositeDisposable()
 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _: SharedPreferences, key: String ->
         when (key) {
@@ -48,13 +47,19 @@ class HomeFragmentViewModel: ViewModel() {
         setChangeTypeCategoryListener()
         testClass.doSomething()
 
+        val completable = Completable
+                .fromAction { getFilmsFromTmdb() }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        compositeDisposable.add(completable)
 
-        homeFragmentScope.launch {
-            getFilmsFromTmdb()
-            interactor.getFilmsFromDBAsFlow().collect {list ->
-                filmListLiveData.postValue(list)
+
+        val disposible = interactor.getFilmsFromDBAsObservable().subscribe(object: Consumer<List<Film>> {
+            override fun accept(t: List<Film>?) {
+                filmListLiveData.postValue(t)
             }
-        }
+        })
+        compositeDisposable.add(disposible)
     }
 
     private fun getFilmsFromTmdb() {
@@ -83,17 +88,17 @@ class HomeFragmentViewModel: ViewModel() {
     }
 
     fun refreshFilms() {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
+        val completable = Completable.fromAction {
             tmdbFilmListPage = 1
             interactor.removeAllFilmsInDB()
             getFilmsFromTmdb()
-        }
+        }.subscribeOn(Schedulers.io())
+                .subscribe()
+        compositeDisposable.add(completable)
     }
 
     fun getLastVisibleFilmInList(lastVisible: Int) {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
+        val completable = Completable.fromAction {
             val filmListSize = filmListLiveData.value?.size ?: 0
             if ((filmListSize - INVISIBLE_FILMS_UNTIL_NEW_REQUEST) <= lastVisible && !isWaitingRequest) {
                 if (BuildConfig.DEBUG) {
@@ -101,12 +106,14 @@ class HomeFragmentViewModel: ViewModel() {
                 }
                 getFilmsFromTmdb()
             }
-        }
+        }.subscribeOn(Schedulers.io())
+                .subscribe()
+        compositeDisposable.add(completable)
     }
 
     override fun onCleared() {
         interactor.unregisterPrefListener(prefListener)
-        homeFragmentScope.cancel()
+        compositeDisposable.dispose()
         super.onCleared()
     }
 
