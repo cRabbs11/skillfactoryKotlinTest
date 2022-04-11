@@ -10,15 +10,12 @@ import com.ekochkov.skillfactorykotlintest.utils.API
 import com.ekochkov.skillfactorykotlintest.utils.Converter
 import com.ekochkov.skillfactorykotlintest.utils.TmdbAPI
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+    import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class Interactor(private val repository: FilmRepository, private val tmdbRetrofitService: TmdbAPI, private val preferenceProvider: PreferenceProvider) {
 
@@ -26,8 +23,8 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
         return repository.getAllFilmsFromDB()
     }
 
-    fun getFilmsFromDBAsFlow() : Flow<List<Film>> {
-        return repository.gatAllFilmsFromBDAsFlow()
+    fun getFilmsFromDBAsObservable() : Observable<List<Film>> {
+        return repository.getAllFilmsFromBDAsObservable()
     }
 
     fun putFilmInBd(film: Film) {
@@ -42,13 +39,11 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
         tmdbRetrofitService.getFilms(preferenceProvider.getDefaultTypeCategory(), API.KEY, "ru-RU", page).enqueue(object: Callback<PopularFilmsDataDTO> {
             override fun onResponse(call: Call<PopularFilmsDataDTO>, response: Response<PopularFilmsDataDTO>) {
                 callBack.onSuccess()
-                val flow = response.body()?.tmdbFilms?.asFlow()?.map {
-                    Converter.convertTmdbListToDTOList(response.body()?.tmdbFilms)
-                }
-                val scope = CoroutineScope(Dispatchers.IO).launch {
-                    flow?.collect {
-                        repository.putFilmsInDB(it)
-                    }
+
+                val disposible = Single.just(response.body()?.tmdbFilms)
+                        .subscribeOn(Schedulers.io())
+                        .map { Converter.convertTmdbListToDTOList(it) }
+                        .subscribe { list -> repository.putFilmsInDB(list)
                 }
             }
 
