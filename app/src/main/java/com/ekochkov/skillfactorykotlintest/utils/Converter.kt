@@ -5,12 +5,14 @@ import com.ekochkov.skillfactorykotlintest.data.entity.Film
 
 object Converter {
 
+    const val POSTER_PATH_NOT_FOUND = "not found poster"
+
     fun convertTmdbListToDTOList(list: List<TmdbFilm>?) : List<Film> {
         var result = arrayListOf<Film>()
         list?.forEach {
             result.add(Film(
                     title = it.title,
-                    poster = it.poster_path,
+                    poster = it.poster_path?: POSTER_PATH_NOT_FOUND,
                     descr = it.overview,
                     isInFav = false,
                     rating = (it.vote_average*10).toInt()))

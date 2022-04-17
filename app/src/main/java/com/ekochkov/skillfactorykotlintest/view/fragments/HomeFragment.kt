@@ -23,7 +23,8 @@ import com.ekochkov.skillfactorykotlintest.diff.FilmDiff
 import com.ekochkov.skillfactorykotlintest.utils.AnimationHelper
 import com.ekochkov.skillfactorykotlintest.view.activities.MainActivity
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
-import kotlinx.coroutines.*
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,7 +42,7 @@ class HomeFragment : Fragment() {
     private lateinit var filmAdapter: FilmListAdapter
     private lateinit var binding: FragmentHomeBinding
     private var isFragmentCreate = false
-    private val homeFragmentScope = CoroutineScope(Dispatchers.IO)
+    val compositeDisposable = CompositeDisposable()
 
     private val viewModel: HomeFragmentViewModel by viewModels()
 
@@ -59,7 +60,7 @@ class HomeFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        homeFragmentScope.cancel()
+        compositeDisposable.dispose()
     }
 
     override fun onCreateView(
@@ -133,13 +134,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun searchFilmByTitle(query: String) {
-        homeFragmentScope.launch {
+        val completible = Completable.fromAction{
             val result = filmsDB.filter {
                 it.title.toLowerCase(Locale.getDefault())
                         .contains(query.toLowerCase(Locale.getDefault()))
             }
             updateRecyclerView(result)
-        }
+        }.subscribe()
+        compositeDisposable.add(completible)
     }
 
     private fun showToast(text: String) {
@@ -147,17 +149,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateRecyclerView(films: List<Film>) {
-        homeFragmentScope.launch {
-            launch {
-                val diff = FilmDiff(filmAdapter.filmList, films)
-                val diffResult = DiffUtil.calculateDiff(diff)
-                filmAdapter.filmList.clear()
-                filmAdapter.filmList.addAll(films)
-                this.launch(Dispatchers.Main) {
-                    diffResult.dispatchUpdatesTo(filmAdapter)
-                }
-            }
-        }
+        val completible = Completable.fromAction{
+            val diff = FilmDiff(filmAdapter.filmList, films)
+            val diffResult = DiffUtil.calculateDiff(diff)
+            filmAdapter.filmList.clear()
+            filmAdapter.filmList.addAll(films)
+            diffResult.dispatchUpdatesTo(filmAdapter)
+        }.subscribe()
+        compositeDisposable.add(completible)
     }
 
     companion object {
