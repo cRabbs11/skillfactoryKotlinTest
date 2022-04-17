@@ -10,7 +10,7 @@ import com.ekochkov.skillfactorykotlintest.utils.API
 import com.ekochkov.skillfactorykotlintest.utils.Converter
 import com.ekochkov.skillfactorykotlintest.utils.TmdbAPI
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
-    import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Call
