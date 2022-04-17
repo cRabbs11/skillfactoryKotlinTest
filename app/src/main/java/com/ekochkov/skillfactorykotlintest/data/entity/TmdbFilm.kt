@@ -34,7 +34,7 @@ data class TmdbFilm(
     @SerializedName(SERIALIZED_NAME_POPULARITY)
     val popularity: Double,
     @SerializedName(SERIALIZED_NAME_POSTER_PATH)
-    val poster_path: String,
+    val poster_path: String?,
     @SerializedName(SERIALIZED_NAME_RELEASE_DATE)
     val release_date: String,
     @SerializedName(SERIALIZED_NAME_TITLE)
