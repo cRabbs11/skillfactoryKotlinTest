@@ -24,8 +24,11 @@ import com.ekochkov.skillfactorykotlintest.utils.AnimationHelper
 import com.ekochkov.skillfactorykotlintest.view.activities.MainActivity
 import com.ekochkov.skillfactorykotlintest.viewmodel.HomeFragmentViewModel
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,35 +76,49 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.filmListLiveData.observe(viewLifecycleOwner, {
+        viewModel.filmListLiveData.observe(viewLifecycleOwner) {
             filmsDB = it
             binding.swipeRefresh.isRefreshing = false
-        })
+        }
 
-        viewModel.loadingProgressLiveData.observe(viewLifecycleOwner, {
+        viewModel.filmSearchListLiveData.observe(viewLifecycleOwner) {
+            filmsDB = it
+        }
+
+        viewModel.loadingProgressLiveData.observe(viewLifecycleOwner) {
             binding.progressCircular.isVisible = it
-        })
+        }
 
-        viewModel.toastEventLiveData.observe(viewLifecycleOwner, {
+        viewModel.toastEventLiveData.observe(viewLifecycleOwner) {
             showToast(it)
-        })
+        }
 
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 1)
         if (isFragmentCreate) {
             isFragmentCreate = false
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+        val observable = Observable.create<String> { sub->
+            binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText!= null) sub.onNext(newText)
+                    return true
+                }
+            })
+        }
+            .observeOn(Schedulers.io())
+            .debounce(800, TimeUnit.MILLISECONDS)
+            .subscribe {
+                viewModel.searchFilmsFromTmdb(it)
             }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) searchFilmByTitle(newText)
-                return true
-            }
+        compositeDisposable.add(observable)
 
-        })
+
         binding.searchView.setOnClickListener {
             binding.searchView.isIconified = false
         }
@@ -128,6 +145,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.swipeRefresh.setOnRefreshListener {
+            binding.searchView.setQuery("", false)
             viewModel.refreshFilms()
         }
         updateRecyclerView(filmsDB)

@@ -94,8 +94,9 @@ dependencies {
 
     //rxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.10'
 
     //rxJava with room
     implementation "androidx.room:room-rxjava3:$room_version"
+    implementation "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
 }

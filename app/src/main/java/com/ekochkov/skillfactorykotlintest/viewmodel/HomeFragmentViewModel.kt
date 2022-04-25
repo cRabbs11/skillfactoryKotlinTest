@@ -20,12 +20,16 @@ import javax.inject.Inject
 
 class HomeFragmentViewModel: ViewModel() {
     val filmListLiveData = MutableLiveData<List<Film>>()
+    val filmSearchListLiveData = MutableLiveData<List<Film>>()
     val loadingProgressLiveData = MutableLiveData<Boolean>()
     val toastEventLiveData = SingleLiveEvent<String>()
     private var tmdbFilmListPage = 1
+    private var tmdbSearchFilmListPage = 1
     private val INVISIBLE_FILMS_UNTIL_NEW_REQUEST = 2
     private var isWaitingRequest = false
     val compositeDisposable = CompositeDisposable()
+    private var isSearching = false
+    private var searchQuery = ""
 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _: SharedPreferences, key: String ->
         when (key) {
@@ -83,17 +87,38 @@ class HomeFragmentViewModel: ViewModel() {
         }
     }
 
+    fun searchFilmsFromTmdb(query: String) {
+        searchQuery = query
+        isSearching = query.length!=0
+        interactor.searchFilmsFromTmdb(query, tmdbSearchFilmListPage, object : ApiSearchCallback {
+            override fun onSuccess(list: List<Film>) {
+                tmdbSearchFilmListPage++
+                if (filmSearchListLiveData.value!=null) {
+                    filmSearchListLiveData.postValue(filmSearchListLiveData.value?.plus(list))
+                } else {
+                    filmSearchListLiveData.postValue(list)
+                }
+            }
+
+            override fun onFailure() {
+                toastEventLiveData.postValue(TmdbApiConstants.RESPONSE_ON_FAILURE)
+            }
+        })
+    }
+
     private fun setChangeTypeCategoryListener() {
         interactor.registerPrefListener(prefListener)
     }
 
     fun refreshFilms() {
         val completable = Completable.fromAction {
+            isSearching = false
             tmdbFilmListPage = 1
+            tmdbSearchFilmListPage = 1
             interactor.removeAllFilmsInDB()
             getFilmsFromTmdb()
         }.subscribeOn(Schedulers.io())
-                .subscribe()
+            .subscribe()
         compositeDisposable.add(completable)
     }
 
@@ -104,7 +129,12 @@ class HomeFragmentViewModel: ViewModel() {
                 if (BuildConfig.DEBUG) {
                     Log.d("TAG", "new getFilms request")
                 }
-                getFilmsFromTmdb()
+
+                if (isSearching) {
+                    searchFilmsFromTmdb(searchQuery)
+                } else {
+                    getFilmsFromTmdb()
+                }
             }
         }.subscribeOn(Schedulers.io())
                 .subscribe()
@@ -119,6 +149,11 @@ class HomeFragmentViewModel: ViewModel() {
 
     interface ApiCallback {
         fun onSuccess()
+        fun onFailure()
+    }
+
+    interface ApiSearchCallback {
+        fun onSuccess(list: List<Film>)
         fun onFailure()
     }
 }

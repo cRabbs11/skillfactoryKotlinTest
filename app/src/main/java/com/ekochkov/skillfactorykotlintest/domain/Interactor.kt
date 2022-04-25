@@ -43,14 +43,24 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
                 val disposible = Single.just(response.body()?.tmdbFilms)
                         .subscribeOn(Schedulers.io())
                         .map { Converter.convertTmdbListToDTOList(it) }
-                        .subscribe { list -> repository.putFilmsInDB(list)
-                }
+                        .subscribe { list -> repository.putFilmsInDB(list) }
             }
 
             override fun onFailure(call: Call<PopularFilmsDataDTO>, t: Throwable) {
                 callBack.onFailure()
             }
         })
+    }
+
+    fun searchFilmsFromTmdb(query: String, page: Int, callback: HomeFragmentViewModel.ApiSearchCallback) {
+        val observable = tmdbRetrofitService.searchFilmsByObservable(API.KEY, query, "ru-RU", page)
+            .subscribeOn(Schedulers.io())
+            .map {
+                Converter.convertTmdbListToDTOList(it.tmdbFilms)
+            }
+            .subscribe {
+                callback.onSuccess(it)
+            }
     }
 
     fun getDefaultTypeCategory(): String {
