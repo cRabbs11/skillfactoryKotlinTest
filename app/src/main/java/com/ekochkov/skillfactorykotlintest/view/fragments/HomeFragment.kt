@@ -76,22 +76,22 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.filmListLiveData.observe(viewLifecycleOwner, {
+        viewModel.filmListLiveData.observe(viewLifecycleOwner) {
             filmsDB = it
             binding.swipeRefresh.isRefreshing = false
-        })
+        }
 
-        viewModel.filmSearchListLiveData.observe(viewLifecycleOwner, {
+        viewModel.filmSearchListLiveData.observe(viewLifecycleOwner) {
             filmsDB = it
-        })
+        }
 
-        viewModel.loadingProgressLiveData.observe(viewLifecycleOwner, {
+        viewModel.loadingProgressLiveData.observe(viewLifecycleOwner) {
             binding.progressCircular.isVisible = it
-        })
+        }
 
-        viewModel.toastEventLiveData.observe(viewLifecycleOwner, {
+        viewModel.toastEventLiveData.observe(viewLifecycleOwner) {
             showToast(it)
-        })
+        }
 
         AnimationHelper.performFragmentCircularRevealAnimation(view, requireActivity(), 1)
         if (isFragmentCreate) {
@@ -111,7 +111,7 @@ class HomeFragment : Fragment() {
             })
         }
             .observeOn(Schedulers.io())
-            .debounce(2, TimeUnit.SECONDS)
+            .debounce(800, TimeUnit.MILLISECONDS)
             .subscribe {
                 viewModel.searchFilmsFromTmdb(it)
             }
