@@ -1,6 +1,6 @@
-package com.ekochkov.skillfactorykotlintest.utils
+package com.ekochkov.base_rest
 
-import com.ekochkov.skillfactorykotlintest.data.entity.PopularFilmsDataDTO
+import com.ekochkov.base_rest.entity.PopularFilmsDataDTO
 import io.reactivex.rxjava3.core.Observable
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,15 +14,7 @@ interface TmdbAPI {
             @Query("api_key") apiKey: String,
             @Query("language") language: String,
             @Query("page") page: Int,
-    ): Call<PopularFilmsDataDTO>
-
-    @GET("3/search/movie")
-    fun searchFilms(
-            @Query("api_key") apiKey: String,
-            @Query("query") query: String,
-            @Query("language") language: String,
-            @Query("page") page: Int,
-    ): Call<PopularFilmsDataDTO>
+    ): Observable<PopularFilmsDataDTO>
 
     @GET("3/search/movie")
     fun searchFilmsByObservable(
