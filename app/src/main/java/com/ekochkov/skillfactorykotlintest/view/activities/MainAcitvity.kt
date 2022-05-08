@@ -24,6 +24,9 @@ private const val TAG_LATER_FRAGMENT = "later_fragment"
 private const val TAG_COMPILE_FRAGMENT = "compile_fragment"
 private const val TAG_SETTINGS_FRAGMENT = "settings_fragment"
 
+private const val MESSAGE_BATTERY_LOW = "низкий уровень батареи"
+private const val MESSAGE_POWER_CONNECTED = "батарея заряжается"
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainRecyclerViewBinding
@@ -220,5 +223,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    inner class ChargeReceiver: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+        }
     }
 }
