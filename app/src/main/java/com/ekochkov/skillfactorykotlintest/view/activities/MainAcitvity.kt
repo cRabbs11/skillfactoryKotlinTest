@@ -3,6 +3,10 @@ package com.ekochkov.skillfactorykotlintest.view.activities
 import android.animation.Animator
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextThemeWrapper
@@ -30,6 +34,7 @@ private const val MESSAGE_POWER_CONNECTED = "батарея заряжается
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainRecyclerViewBinding
+    private val receiver = ChargeReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +79,16 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        val filter = IntentFilter(Intent.ACTION_BATTERY_LOW)
+        filter.addAction(Intent.ACTION_POWER_CONNECTED)
+        registerReceiver(receiver, filter)
+
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(receiver)
+        super.onDestroy()
     }
 
     private var backPressed = 0L
