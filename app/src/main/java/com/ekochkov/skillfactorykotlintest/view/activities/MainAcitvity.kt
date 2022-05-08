@@ -242,7 +242,14 @@ class MainActivity : AppCompatActivity() {
 
     inner class ChargeReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-
+            when (intent?.action) {
+                Intent.ACTION_BATTERY_LOW -> {
+                    showToast(MESSAGE_BATTERY_LOW)
+                }
+                Intent.ACTION_POWER_CONNECTED -> {
+                    showToast(MESSAGE_POWER_CONNECTED)
+                }
+            }
         }
     }
 }
