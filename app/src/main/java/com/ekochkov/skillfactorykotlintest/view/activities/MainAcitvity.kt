@@ -13,6 +13,7 @@ import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.ekochkov.skillfactorykotlintest.R
@@ -245,9 +246,11 @@ class MainActivity : AppCompatActivity() {
             when (intent?.action) {
                 Intent.ACTION_BATTERY_LOW -> {
                     showToast(MESSAGE_BATTERY_LOW)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 }
                 Intent.ACTION_POWER_CONNECTED -> {
                     showToast(MESSAGE_POWER_CONNECTED)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 }
             }
         }
