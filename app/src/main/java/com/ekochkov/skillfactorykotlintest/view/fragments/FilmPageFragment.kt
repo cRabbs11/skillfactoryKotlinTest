@@ -1,7 +1,12 @@
 package com.ekochkov.skillfactorykotlintest.view.fragments
 
 import android.Manifest
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -24,7 +29,9 @@ import com.bumptech.glide.Glide
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.FragmentFilmPageBinding
+import com.ekochkov.skillfactorykotlintest.utils.Constants
 import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
+import com.ekochkov.skillfactorykotlintest.view.activities.MainActivity
 import com.ekochkov.skillfactorykotlintest.viewmodel.FilmPageFragmentViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
@@ -46,6 +53,10 @@ class FilmPageFragment : Fragment() {
 
     companion object {
         const val FILM_OBJECT = "film"
+        const val SHOW_THIS_FILM = "посмотеть данное кино"
+        const val NOTIFICATION_CHANNEL_NAME = "channel_name"
+        const val NOTIFICATION_CHANNEL_DESCRIPTION = "channel_description"
+        const val NOTIFICATION_CHANNEL_ID = "1"
     }
 
     lateinit var binding: FragmentFilmPageBinding
@@ -77,6 +88,13 @@ class FilmPageFragment : Fragment() {
             startActivity(Intent.createChooser(intent, "Share:"))
         }
 
+        val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        binding.fabNotify.setOnClickListener {
+            val notificationId = 1
+            notificationManager.notify(notificationId, getFilmNotification(film, SHOW_THIS_FILM))
+        }
+
         binding.includeContent.text.text = film.descr
         binding.toolbar.title = film.title
         Glide.with(requireContext())
@@ -84,8 +102,49 @@ class FilmPageFragment : Fragment() {
                 .centerCrop()
                 .into(binding.image)
         //binding.image.setImageResource(film.poster)
-
+        createNotificationChannel()
         return binding.root
+    }
+
+    private fun getFilmNotification(film : Film, text: String): Notification {
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.BUNDLE_KEY_FILM, film)
+        bundle.putInt(Constants.BUNDLE_KEY_INTENT, Constants.BUNDLE_INTENT_OPEN_FILM_FRAGMENT)
+        intent.putExtra(Constants.BUNDLE_KEY, bundle)
+
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        println("!!! bundle = ${bundle}")
+
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
+            val notification = Notification.Builder(requireContext(), NOTIFICATION_CHANNEL_ID)
+                    .setContentTitle(film.title)
+                    .setContentText(text)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(androidx.transition.R.drawable.notification_icon_background)
+                    .build()
+            return notification
+        } else {
+            val notification = Notification.Builder(requireContext())
+                    .setContentTitle(film.title)
+                    .setContentText(text)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(androidx.transition.R.drawable.notification_icon_background)
+                    .build()
+            return notification
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, importance)
+            channel.description = NOTIFICATION_CHANNEL_DESCRIPTION
+            val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     private fun setFavIcon(film: Film) {
