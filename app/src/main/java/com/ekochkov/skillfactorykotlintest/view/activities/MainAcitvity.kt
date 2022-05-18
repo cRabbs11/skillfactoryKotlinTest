@@ -3,12 +3,17 @@ package com.ekochkov.skillfactorykotlintest.view.activities
 import android.animation.Animator
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
 import com.ekochkov.skillfactorykotlintest.R
@@ -24,9 +29,13 @@ private const val TAG_LATER_FRAGMENT = "later_fragment"
 private const val TAG_COMPILE_FRAGMENT = "compile_fragment"
 private const val TAG_SETTINGS_FRAGMENT = "settings_fragment"
 
+private const val MESSAGE_BATTERY_LOW = "низкий уровень батареи"
+private const val MESSAGE_POWER_CONNECTED = "батарея заряжается"
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainRecyclerViewBinding
+    private val receiver = ChargeReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +80,16 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        val filter = IntentFilter(Intent.ACTION_BATTERY_LOW)
+        filter.addAction(Intent.ACTION_POWER_CONNECTED)
+        registerReceiver(receiver, filter)
+
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(receiver)
+        super.onDestroy()
     }
 
     private var backPressed = 0L
@@ -220,5 +239,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    inner class ChargeReceiver: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                Intent.ACTION_BATTERY_LOW -> {
+                    showToast(MESSAGE_BATTERY_LOW)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                Intent.ACTION_POWER_CONNECTED -> {
+                    showToast(MESSAGE_POWER_CONNECTED)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
+            }
+        }
     }
 }
