@@ -19,6 +19,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
+import com.ekochkov.skillfactorykotlintest.utils.Constants
 import com.ekochkov.skillfactorykotlintest.view.fragments.*
 import java.util.*
 
@@ -42,13 +43,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainRecyclerViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val bundle = intent.extras?.getBundle(Constants.BUNDLE_KEY)
+
         runSplashScreen(1, object: Animator.AnimatorListener {
             override fun onAnimationStart(p0: Animator?) {}
             override fun onAnimationCancel(p0: Animator?) {}
             override fun onAnimationRepeat(p0: Animator?) {}
             override fun onAnimationEnd(p0: Animator?) {
                 binding.lottieAnim.visibility = View.GONE
-                launchHomeFragment()
+
+                when (bundle?.getInt(Constants.BUNDLE_KEY_INTENT)) {
+                    Constants.BUNDLE_INTENT_OPEN_FILM_FRAGMENT -> {
+                        val film = bundle.getParcelable<Film>(Constants.BUNDLE_KEY_FILM)
+                        film?.let { launchFilmPageFragment(it) }
+                    }
+                    else -> {
+                        launchHomeFragment()
+                    }
+                }
             }
         })
         //binding.container!!.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
