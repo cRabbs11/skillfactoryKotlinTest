@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".view.activities.ViewPagerActivity">
         </activity>
+
+        <receiver android:name=".recievers.NotificationReceiver"/>
     </application>
 
 </manifest>
