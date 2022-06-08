@@ -105,7 +105,7 @@ class HomeFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText!= null) sub.onNext(newText)
+                    if (!newText.isNullOrEmpty()) sub.onNext(newText)
                     return true
                 }
             })

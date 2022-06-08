@@ -33,6 +33,10 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
 
     fun getFilmsFromTmdb(page: Int, callBack: HomeFragmentViewModel.ApiCallback) {
         val observable = tmdbRetrofitService.getFilms(preferenceProvider.getDefaultTypeCategory(), API.KEY, "ru-RU", page)
+            .onErrorComplete {
+                callBack.onFailure()
+                false
+            }
             .subscribeOn(Schedulers.io())
             .map {
                 Converter.convertTmdbListToDTOList(it.tmdbFilms)
@@ -51,6 +55,10 @@ class Interactor(private val repository: FilmRepository, private val tmdbRetrofi
 
     fun searchFilmsFromTmdb(query: String, page: Int, callback: HomeFragmentViewModel.ApiSearchCallback) {
         val observable = tmdbRetrofitService.searchFilmsByObservable(API.KEY, query, "ru-RU", page)
+            .onErrorComplete {
+                callback.onFailure()
+                true
+            }
             .subscribeOn(Schedulers.io())
             .map {
                 Converter.convertTmdbListToDTOList(it.tmdbFilms)
