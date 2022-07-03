@@ -36,8 +36,31 @@ android {
         jvmTarget = '1.8'
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding true
+    }
+
+    flavorDimensions "version"
+
+    productFlavors {
+        basic {
+            dimension "version"
+        }
+        full {
+            dimension "version"
+        }
+    }
+    sourceSets {
+        basic {
+            java {
+                srcDirs 'src\\basic\\java'
+            }
+        }
+        full {
+            java {
+                srcDirs 'src\\full\\java'
+            }
+        }
     }
 }
 
@@ -100,7 +123,7 @@ dependencies {
     //rxJava with room
     implementation "androidx.room:room-rxjava3:$room_version"
 
-    implementation project(':core')
+    //implementation project(':core')
     implementation dagger
     kapt daggerCompiler
 }

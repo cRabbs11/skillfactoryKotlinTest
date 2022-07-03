@@ -146,10 +146,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun launchFragment(fragment: Fragment, tag: String?) {
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.nav_host_fragment, fragment, tag)
-                .addToBackStack(tag)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.nav_host_fragment, fragment, tag)
+            .addToBackStack(tag)
+            .commit()
     }
 
     fun launchHomeFragment() {
