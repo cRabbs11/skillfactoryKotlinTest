@@ -16,11 +16,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
+import com.bumptech.glide.Glide
+import com.ekochkov.skillfactorykotlintest.App
 import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.utils.Constants
+import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
 import com.ekochkov.skillfactorykotlintest.view.fragments.*
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import java.util.*
 
 private const val TAG_HOME_FRAGMENT = "home_fragment"
@@ -96,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         val filter = IntentFilter(Intent.ACTION_BATTERY_LOW)
         filter.addAction(Intent.ACTION_POWER_CONNECTED)
         registerReceiver(receiver, filter)
-
+        showWatchFilm()
     }
 
     override fun onDestroy() {
@@ -251,6 +256,44 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showWatchFilm() {
+        if (!App.instance.isWatchFilmShown) {
+            //Получаем доступ к Remote Config
+            val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+            //Устанавливаем настройки
+            val configSettings = FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(0)
+                .build()
+            firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+            //Вызываем метод, который получит данные с сервера и вешаем слушатель
+            firebaseRemoteConfig.fetch()
+                .addOnCompleteListener {
+                    //Если все получилось успешно
+                    if (it.isSuccessful) {
+                        //активируем последний полученный конфиг с сервера
+                        firebaseRemoteConfig.activate()
+                        //Получаем ссылку
+                        val filmLink = firebaseRemoteConfig.getString("film_link")
+                        //Если поле не пустое
+                        if (filmLink.isNotBlank
+                                ()) {
+                            //Ставим флаг, что уже промо показали
+                            App.instance.isWatchFilmShown = true
+                            //Включаем промо верстку
+                            binding.watchFilm.root.visibility = View.VISIBLE
+                            binding.watchFilm.image.setOnClickListener {
+                                binding.watchFilm.root.visibility = View.GONE
+                            }
+                            Glide.with(binding.watchFilm.root)
+                                .load(TmdbApiConstants.IMAGES_URL  + "w500" + filmLink)
+                                .centerCrop()
+                                .into(binding.watchFilm.image)
+                        }
+                    }
+                }
+        }
     }
 
     inner class ChargeReceiver: BroadcastReceiver() {
