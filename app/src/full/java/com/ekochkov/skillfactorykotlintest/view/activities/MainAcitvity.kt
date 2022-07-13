@@ -22,6 +22,8 @@ import com.ekochkov.skillfactorykotlintest.R
 import com.ekochkov.skillfactorykotlintest.databinding.ActivityMainRecyclerViewBinding
 import com.ekochkov.skillfactorykotlintest.data.entity.Film
 import com.ekochkov.skillfactorykotlintest.utils.Constants
+import com.ekochkov.skillfactorykotlintest.utils.Constants.FIREBASE_REMOTE_CONFIG_FILM_LINK
+import com.ekochkov.skillfactorykotlintest.utils.Constants.REMOTE_CONFIG_FILM_LINK_INTERVAL
 import com.ekochkov.skillfactorykotlintest.utils.TmdbApiConstants
 import com.ekochkov.skillfactorykotlintest.view.fragments.*
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -264,7 +266,7 @@ class MainActivity : AppCompatActivity() {
             val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
             //Устанавливаем настройки
             val configSettings = FirebaseRemoteConfigSettings.Builder()
-                .setMinimumFetchIntervalInSeconds(0)
+                .setMinimumFetchIntervalInSeconds(REMOTE_CONFIG_FILM_LINK_INTERVAL)
                 .build()
             firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
             //Вызываем метод, который получит данные с сервера и вешаем слушатель
@@ -275,7 +277,7 @@ class MainActivity : AppCompatActivity() {
                         //активируем последний полученный конфиг с сервера
                         firebaseRemoteConfig.activate()
                         //Получаем ссылку
-                        val filmLink = firebaseRemoteConfig.getString("film_link")
+                        val filmLink = firebaseRemoteConfig.getString(FIREBASE_REMOTE_CONFIG_FILM_LINK)
                         //Если поле не пустое
                         if (filmLink.isNotBlank
                                 ()) {
