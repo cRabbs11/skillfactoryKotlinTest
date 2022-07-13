@@ -17,6 +17,7 @@ import com.ekochkov.skillfactorykotlintest.utils.NotificationConstants.NOTIFICAT
 
 class App: Application() {
     lateinit var dagger: AppComponent
+    var isWatchFilmShown = false
 
     override fun onCreate() {
         super.onCreate()

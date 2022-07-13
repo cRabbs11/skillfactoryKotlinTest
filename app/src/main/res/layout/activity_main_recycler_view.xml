@@ -34,4 +34,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
+    <include
+        android:id="@+id/watch_film"
+        layout="@layout/layout_watch_film"
+        android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
